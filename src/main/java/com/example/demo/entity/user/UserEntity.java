@@ -32,18 +32,13 @@ public class UserEntity {
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_groups",
-            joinColumns =@JoinColumn(name = "customer_id", referencedColumnName = "id"),
+            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
     private Set<Group> userGroups = new HashSet<>();
 
     public void addUserGroups(Group group){
         userGroups.add(group);
         group.getUsers().add(this);
-    }
-
-    public void removeUserGroups(Group group){
-        userGroups.remove(group);
-        group.getUsers().remove(this);
     }
 
     public boolean isAccountVerified() {
