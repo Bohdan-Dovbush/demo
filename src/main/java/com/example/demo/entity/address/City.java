@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,7 +18,12 @@ public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "city_id")
     private Long cityId;
     @Column(nullable = false, length = 30)
     private String name;
+
+    @OneToMany
+    @JoinColumn(name = "address_id")
+    private Set<Address> addresses;
 }

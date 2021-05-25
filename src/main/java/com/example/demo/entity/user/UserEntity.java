@@ -2,9 +2,7 @@ package com.example.demo.entity.user;
 
 import lombok.*;
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -30,15 +28,26 @@ public class UserEntity {
     @OneToMany(mappedBy = "user")
     private Set<SecureToken> tokens;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_details",
+            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "details_id"))
+    private Set<Details> userDetailsList = new HashSet<>();
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_groups",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
     private Set<Group> userGroups = new HashSet<>();
 
-    public void addUserGroups(Group group){
+    public void addUserGroups(Group group) {
         userGroups.add(group);
         group.getUsers().add(this);
+    }
+
+    public void addUserDetails(Details details) {
+        userDetailsList.add(details);
+        details.getUsers().add(this);
     }
 
     public boolean isAccountVerified() {

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,11 +19,16 @@ public class Gender {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "gender_id")
     private Long genderId;
     private String name;
-    @OneToMany(mappedBy = "actorGender")
-    private List<Actor> actorList;
-    @OneToMany(mappedBy = "userDetailsGender")
-    private List<UserDetails> userDetailsList;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "actor_id")
+    private Set<Actor> actors;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "details_id")
+    private Set<Details> details;
 
 }
