@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -27,7 +28,37 @@ public class Rating {
     @JoinColumn(name = "film_id")
     private Film film;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "details_id")
     private Details details;
+
+    public Rating(Integer rating, Integer evaluation) {
+        this.rating = rating;
+        this.evaluation = evaluation;
+    }
+
+    public Rating(Integer rating, Integer evaluation, Film film) {
+        this.rating = rating;
+        this.evaluation = evaluation;
+        this.film = film;
+    }
+
+    public Rating(Integer rating, Integer evaluation, Details details) {
+        this.rating = rating;
+        this.evaluation = evaluation;
+        this.details = details;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Rating)) return false;
+        Rating rating = (Rating) o;
+        return Objects.equals(ratingId, rating.ratingId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ratingId);
+    }
 }

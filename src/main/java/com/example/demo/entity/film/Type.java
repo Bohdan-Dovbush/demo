@@ -13,24 +13,24 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Data
-@Table(name = "category")
-public class Category {
+@Table(name = "type")
+public class Type {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
-    private Long categoryId;
+    @Column(name = "type_id")
+    private Long typeId;
     private String name;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "film_id")
     private Film film;
 
-    public Category(String name) {
+    public Type(String name) {
         this.name = name;
     }
 
-    public Category(String name, Film film) {
+    public Type(String name, Film film) {
         this.name = name;
         this.film = film;
     }
@@ -38,13 +38,13 @@ public class Category {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Category)) return false;
-        Category category = (Category) o;
-        return Objects.equals(categoryId, category.categoryId);
+        if (!(o instanceof Type)) return false;
+        Type type = (Type) o;
+        return Objects.equals(typeId, type.typeId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(categoryId);
+        return Objects.hash(typeId);
     }
 }

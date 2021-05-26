@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -24,5 +26,19 @@ public class Country {
     private String name;
 
     @OneToMany(mappedBy = "country")
-    private Set<Address> addresses;
+    @JoinColumn(name = "city_id")
+    private List<City> cities = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Country)) return false;
+        Country country = (Country) o;
+        return Objects.equals(countryId, country.countryId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(countryId);
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.demo.entity.address;
 
+import com.example.demo.entity.booking.Cinema;
 import com.example.demo.entity.user.Contact;
 import lombok.Data;
 import lombok.Getter;
@@ -7,6 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -28,11 +32,22 @@ public class Address {
     @JoinColumn(name = "city_id")
     private City city;
 
-    @ManyToOne
-    @JoinColumn(name = "country_id")
-    private Country country;
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Contact> contacts = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "contact_id")
-    private Contact contacts;
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Cinema> cinemas = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Address)) return false;
+        Address address = (Address) o;
+        return Objects.equals(addressId, address.addressId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(addressId);
+    }
 }

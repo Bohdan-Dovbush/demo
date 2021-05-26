@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,9 +28,15 @@ public class Contact {
     @JoinColumn(name = "user_id")
     private UserEntity users;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "contact_address",
             joinColumns = @JoinColumn(name = "contact_id"),
             inverseJoinColumns = @JoinColumn(name = "address_id"))
-    private Set<Address> contactAddress = new HashSet<>();
+    private List<Address> contactAddress = new ArrayList<>();
+
+    public Contact(String phone, UserEntity users, List<Address> contactAddress) {
+        this.phone = phone;
+        this.users = users;
+        this.contactAddress = contactAddress;
+    }
 }
