@@ -1,6 +1,10 @@
 package com.example.demo.entity.user;
 
-import lombok.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -28,17 +32,13 @@ public class UserEntity {
     @OneToMany(mappedBy = "user")
     private Set<SecureToken> tokens;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_details",
-            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "details_id"))
-    private Set<Details> userDetails = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "details_id")
+    private List<Details> userDetails = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_contact",
-            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "contact_id"))
-    private Set<Contact> userContact = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "contact_id")
+    private List<Contact> userContact = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_groups",
@@ -49,6 +49,16 @@ public class UserEntity {
     public void addUserGroups(Group group) {
         userGroups.add(group);
         group.getUsers().add(this);
+    }
+
+    public void addUserDetails(Details details){
+        userDetails.add(details);
+        details.setUsers(this);
+    }
+
+    public void addUserContact(Contact contact){
+        userContact.add(contact);
+        contact.setUsers(this);
     }
 
     public boolean isAccountVerified() {

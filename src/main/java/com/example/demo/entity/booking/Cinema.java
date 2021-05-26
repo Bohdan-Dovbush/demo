@@ -37,32 +37,12 @@ public class Cinema {
     private Seo seo;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "cinema_image",
-            joinColumns = @JoinColumn(name = "cinema_id"),
-            inverseJoinColumns = @JoinColumn(name = "image_id"))
+    @JoinColumn(name = "image_id")
     private List<Image> cinemaImages = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "hall_id")
     private List<Hall> halls = new ArrayList<>();
-
-    public Cinema(String name, String description, String rules, String mainImage, String logoImage, String upperBannerImage) {
-        this.name = name;
-        this.description = description;
-        this.rules = rules;
-        this.mainImage = mainImage;
-        this.logoImage = logoImage;
-        this.upperBannerImage = upperBannerImage;
-    }
-
-    public Cinema(String name, String description, String rules, String mainImage, String logoImage, String upperBannerImage, Seo seo) {
-        this.name = name;
-        this.description = description;
-        this.rules = rules;
-        this.mainImage = mainImage;
-        this.logoImage = logoImage;
-        this.upperBannerImage = upperBannerImage;
-        this.seo = seo;
-    }
 
     public void addCinemaImage(Image image){
         cinemaImages.add(image);

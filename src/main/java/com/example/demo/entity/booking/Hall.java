@@ -20,6 +20,7 @@ public class Hall {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "hall_id")
     private Long hallId;
     private String name;
     @Column(columnDefinition = "text", length = 2000)
@@ -36,28 +37,16 @@ public class Hall {
     private Seo seo;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "hall_image",
-            joinColumns = @JoinColumn(name = "hall_id"),
-            inverseJoinColumns = @JoinColumn(name = "image_id"))
+    @JoinColumn(name = "image_id")
     private List<Image> hallImages = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "place_id")
     private List<Place> hallPlaces = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "seance_id")
     private List<Seance> seances = new ArrayList<>();
-
-    public Hall(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
-
-    public Hall(String name, String description, String schemaImage, String bannerImage) {
-        this.name = name;
-        this.description = description;
-        this.schemaImage = schemaImage;
-        this.bannerImage = bannerImage;
-    }
 
     public void addHallImage(Image image){
         hallImages.add(image);

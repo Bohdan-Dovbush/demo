@@ -9,6 +9,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Data
 @Table(name = "ticket")
@@ -21,13 +22,6 @@ public class Ticket {
     private Integer price;
     private Boolean isBooked;
     private LocalDateTime createTicket = LocalDateTime.now();
-
-    public Ticket(Integer price, Boolean isBooked, LocalDateTime createTicket, Seance seance) {
-        this.price = price;
-        this.isBooked = isBooked;
-        this.createTicket = createTicket;
-        this.seance = seance;
-    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seance_id")

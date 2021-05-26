@@ -19,6 +19,7 @@ public class Seance {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "seance_id")
     private Long seanceId;
     private LocalDate date;
     private LocalTime time;

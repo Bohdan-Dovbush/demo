@@ -15,18 +15,13 @@ public class Place {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "place_id")
     private Long placeId;
     private Integer row;
     private Integer seats;
     private Boolean active;
 
-    public Place(Integer row, Integer seats, Boolean active) {
-        this.row = row;
-        this.seats = seats;
-        this.active = active;
-    }
-
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "hall_id")
     private Hall hall;
 

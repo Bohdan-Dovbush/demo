@@ -1,17 +1,16 @@
 package com.example.demo.entity.user;
 import com.example.demo.entity.address.Address;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Data
 @Table(name = "contact")
@@ -28,15 +27,25 @@ public class Contact {
     @JoinColumn(name = "user_id")
     private UserEntity users;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "contact_address",
-            joinColumns = @JoinColumn(name = "contact_id"),
-            inverseJoinColumns = @JoinColumn(name = "address_id"))
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
     private List<Address> contactAddress = new ArrayList<>();
 
-    public Contact(String phone, UserEntity users, List<Address> contactAddress) {
-        this.phone = phone;
-        this.users = users;
-        this.contactAddress = contactAddress;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Contact)) return false;
+        Contact contact = (Contact) o;
+        return Objects.equals(contactId, contact.contactId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(contactId);
+    }
+
+    public void addContactAddress(Address address){
+        contactAddress.add(address);
+        address.setContact(this);
     }
 }

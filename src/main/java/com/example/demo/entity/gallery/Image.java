@@ -4,10 +4,7 @@ import com.example.demo.entity.booking.Cinema;
 import com.example.demo.entity.booking.Hall;
 import com.example.demo.entity.film.Film;
 import com.example.demo.entity.user.Details;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -15,6 +12,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Data
 @Table(name = "image")
@@ -33,7 +31,7 @@ public class Image {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "details_id")
-    private Details details;
+    private Details detail;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hall_id")
