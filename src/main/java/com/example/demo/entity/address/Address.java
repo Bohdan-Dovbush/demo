@@ -32,10 +32,10 @@ public class Address {
     @JoinColumn(name = "city_id")
     private City city;
 
-    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Contact> contacts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cinema> cinemas = new ArrayList<>();
 
     @Override

@@ -25,7 +25,7 @@ public class Booking {
     private LocalDateTime createDate = LocalDateTime.now();
     private Boolean pay;
 
-    @OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id")
     private List<Ticket> tickets = new ArrayList<>();
 

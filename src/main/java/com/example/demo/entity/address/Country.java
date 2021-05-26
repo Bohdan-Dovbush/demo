@@ -25,7 +25,7 @@ public class Country {
     @Column(nullable = false, length = 30)
     private String name;
 
-    @OneToMany(mappedBy = "country")
+    @OneToMany
     @JoinColumn(name = "city_id")
     private List<City> cities = new ArrayList<>();
 

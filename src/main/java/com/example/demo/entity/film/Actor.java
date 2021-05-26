@@ -30,7 +30,7 @@ public class Actor {
     @JoinColumn(name = "film_id")
     private Film film;
 
-    @OneToMany(mappedBy = "actor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "actor_gender",
             joinColumns = @JoinColumn(name = "actor_id"),
             inverseJoinColumns = @JoinColumn(name = "gender_id"))

@@ -36,13 +36,13 @@ public class Cinema {
     @JoinColumn(name = "seos_id")
     private Seo seo;
 
-    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "cinema_image",
             joinColumns = @JoinColumn(name = "cinema_id"),
             inverseJoinColumns = @JoinColumn(name = "image_id"))
     private List<Image> cinemaImages = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cinema",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Hall> halls = new ArrayList<>();
 
     public Cinema(String name, String description, String rules, String mainImage, String logoImage, String upperBannerImage) {
