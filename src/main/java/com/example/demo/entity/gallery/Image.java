@@ -2,9 +2,12 @@ package com.example.demo.entity.gallery;
 
 import com.example.demo.entity.film.Film;
 import com.example.demo.entity.user.Details;
-import lombok.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -20,11 +23,11 @@ public class Image {
     private Long imageId;
     private String image;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "film_id")
-    private Set<Film> films;
+    private Film films;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "details_id")
-    private Set<Details> details;
+    private Details details;
 }

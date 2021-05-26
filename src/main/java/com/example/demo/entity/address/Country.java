@@ -23,7 +23,6 @@ public class Country {
     @Column(nullable = false, length = 30)
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "address_id")
+    @OneToMany(mappedBy = "country")
     private Set<Address> addresses;
 }

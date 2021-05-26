@@ -24,14 +24,13 @@ public class Contact {
     @Column(length = 9)
     private String phone;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity users;
+
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "contact_address",
             joinColumns = @JoinColumn(name = "contact_id"),
             inverseJoinColumns = @JoinColumn(name = "address_id"))
     private Set<Address> contactAddress = new HashSet<>();
-
-    public void addContactAddress(Address address) {
-        contactAddress.add(address);
-        address.getContacts().add(this);
-    }
 }

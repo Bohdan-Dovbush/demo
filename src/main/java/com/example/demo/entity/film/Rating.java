@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -24,11 +23,11 @@ public class Rating {
     private Integer rating; // How much stars
     private Integer evaluation; // Vote stars
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "film_id")
-    private Set<Film> film;
+    private Film film;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "details_id")
-    private Set<Details> details;
+    private Details details;
 }

@@ -24,18 +24,13 @@ public class Actor {
     private Long actorId;
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "film_id")
-    private Set<Film> film;
+    private Film film;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "actor_gender",
             joinColumns = @JoinColumn(name = "actor_id"),
             inverseJoinColumns = @JoinColumn(name = "gender_id"))
     private Set<Gender> actorGender = new HashSet<>();
-
-    public void addActorGender(Gender gender) {
-        actorGender.add(gender);
-        gender.getActors().add(this);
-    }
 }

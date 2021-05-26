@@ -32,22 +32,23 @@ public class UserEntity {
     @JoinTable(name = "user_details",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "details_id"))
-    private Set<Details> userDetailsList = new HashSet<>();
+    private Set<Details> userDetails = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_contact",
+            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "contact_id"))
+    private Set<Contact> userContact = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_groups",
             joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id"))
+            inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"))
     private Set<Group> userGroups = new HashSet<>();
 
     public void addUserGroups(Group group) {
         userGroups.add(group);
         group.getUsers().add(this);
-    }
-
-    public void addUserDetails(Details details) {
-        userDetailsList.add(details);
-        details.getUsers().add(this);
     }
 
     public boolean isAccountVerified() {

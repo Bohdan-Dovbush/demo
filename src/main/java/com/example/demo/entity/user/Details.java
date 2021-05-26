@@ -27,9 +27,9 @@ public class Details {
     private String language;
     private LocalDate birthday;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "user_id")
-    private Set<UserEntity> users;
+    private UserEntity users;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "details_image",
@@ -48,19 +48,4 @@ public class Details {
             joinColumns = @JoinColumn(name = "details_id"),
             inverseJoinColumns = @JoinColumn(name = "rating_id"))
     private Set<Rating> detailsRating = new HashSet<>();
-
-    public void addDetailsImage(Image image) {
-        detailsImage.add(image);
-        image.getDetails().add(this);
-    }
-
-    public void addDetailsGender(Gender gender) {
-        detailsGender.add(gender);
-        gender.getDetails().add(this);
-    }
-
-    public void addDetailsRating(Rating rating) {
-        detailsRating.add(rating);
-        rating.getDetails().add(this);
-    }
 }
