@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cinemas</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+</head>
+<body>
+<div th:insert="~{/admin/fragments/header :: header}"></div>
+<div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+<label for="cinemaIdToDelete"></label><input id="cinemaIdToDelete" hidden value="text">
+<div class="modal fade" id="modal-lg" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete cinema?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure ?</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button onclick="deleteCinema()" type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Cinemas</h3>
+                </div>
+                <form  th:action="@{/templates/admin/createCinema.html}" >
+                    <div class="card-body">
+                        <button   class="btn btn-app addSubImgButton" >
+                            <i class="fas fa-plus" ></i>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="width: 10px">Id</th>
+                            <th>Cinema Name</th>
+
+                            <th style="width: 40px">Edit</th>
+                            <th style="width: 40px">Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:object="${cinema}"  th:id="${'tr'}+*{getCinemaId()}" th:each="cinema:${cinemas}">
+                            <td th:text="*{getCinemaId()}"></td>
+                            <td th:text="*{getName()}"></td>
+                            <td>
+                                <form  th:action="@{/account/editCinema}">
+                                    <label>
+                                        <input hidden th:value="*{getCinemaId()}" name="cinemaId">
+                                    </label>
+                                    <button  class="btn btn-block btn-warning btn-flat">Edit</button>
+                                </form>
+                            </td>
+                            <td>
+                                <button th:onclick="'toggleModal(\'' + *{getCinemaId()} + '\')'"  class="btn btn-block btn-danger btn-flat">Delete</button>
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</div>
+
+
+<script>
+
+    function toggleModal(id) {
+        $('#cinemaIdToDelete').val(id);
+        let modal = $('#modal-lg');
+        modal.modal('toggle');
+
+    }
+    function deleteCinema() {
+        let cinemaId = $('#cinemaIdToDelete').val();
+        let modal = $('#modal-lg');
+        modal.modal('hide');
+        $.ajax({
+            url:'/account/deleteCinema',
+            data:{cinemaId:cinemaId},
+            success:function () {
+                $('#tr'+cinemaId).remove();
+            }
+        });
+    }
+</script>
+</body>
+</html>
