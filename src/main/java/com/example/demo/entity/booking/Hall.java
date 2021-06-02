@@ -1,7 +1,7 @@
 package com.example.demo.entity.booking;
 
 import com.example.demo.entity.gallery.Image;
-import com.example.demo.entity.user.Seo;
+import com.example.demo.entity.film.Seo;
 import lombok.*;
 
 import javax.persistence.*;

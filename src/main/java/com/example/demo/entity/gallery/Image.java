@@ -23,7 +23,6 @@ public class Image {
     @Column(name = "image_id")
     private Long imageId;
     private String image;
-    private String url;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "film_id")
@@ -41,26 +40,22 @@ public class Image {
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
 
-    public Image(String image, String url) {
+    public Image(String image) {
         this.image = image;
-        this.url = url;
     }
 
-    public Image(String image, String url, Film films) {
+    public Image(String image, Film films) {
         this.image = image;
-        this.url = url;
         this.films = films;
     }
 
-    public Image(String image, String url, Hall hall) {
+    public Image(String image, Hall hall) {
         this.image = image;
-        this.url = url;
         this.hall = hall;
     }
 
-    public Image(String image, String url, Cinema cinema) {
+    public Image(String image, Cinema cinema) {
         this.image = image;
-        this.url = url;
         this.cinema = cinema;
     }
 

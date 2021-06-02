@@ -1,0 +1,268 @@
+.ticketBlock{
+    background-color: #005cbf;
+    height: 30px;
+    width: 30px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    border-radius: 15%;
+    display: inline-block;
+}
+.purchased{
+    background-color: black;
+}
+.selected{
+    background-color: orangered;
+}
+.hallSchema{
+    width: 500px;
+    height: 400px;
+    padding: 20px;
+
+}
+.movieBlock{
+    background-size:contain;
+    background-repeat: no-repeat;
+    position: relative;
+    /*display: flex;
+    flex-direction: row;
+    justify-content: flex-end;*/
+}
+
+.movieTypeBlock{
+    position: absolute;
+    width: 55px;
+
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+}
+.typeElement{
+    margin-bottom: 5px;
+}
+.addSubImgButton{
+    height: 100%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.childInCenter{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.testBox{
+    background-color: blueviolet;
+    width: 100%;
+    height: 200px;
+}
+.box{
+    background-color: blueviolet;
+    font-size: 30px;
+}
+.elem{
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background-color: rgba(0, 0, 0, .85);
+    display: block;
+    box-sizing: border-box;
+}
+>>>>>>> bf0d404da72faaeeee6527d04e7cd736c0261199
+.btn {
+    font-weight: bold;
+}
+
+.mainContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    /*background-color: aqua;*/
+}
+.enemyBox{
+    width: 100%;
+    height: auto;
+    padding-bottom: 5px;
+    /*background-color: grey;*/
+}
+.enemyName{
+    width: auto;
+    height: auto;
+    background-color: #6f42c1;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+}
+.enemyDeck{
+    width: 600px;
+    height: auto;
+    /*background-color: #007bff;*/
+}
+.table1{
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    /*background-color: white;*/
+}
+
+
+
+.gameField{
+    width: 70%;
+    height: 100%;
+    /*background-color: black;*/
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.playerHand{
+    width: 100%;
+    height: auto;
+    /*background-color: #491217;*/
+}
+
+.deck{
+    height: 400px;
+    width: 15%;
+    padding-left: 30px;
+
+    /*background-color: #007bff;*/
+}
+.deckCardBlock{
+    width: 100%;
+    height: 70%;
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    /*background-color: red;*/
+}
+.cardBlock{
+    width: 100%;
+    height: auto;
+    min-height: 160px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /*background-color: #1c7430;*/
+}
+.actionButtonBlock{
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /*background-color: black;*/
+}
+.tableCard{
+    /*transition: all 5s;*/
+    /*transform-style: preserve-3d;*/
+}
+/*.tableCard:before{*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    width: 4px;*/
+/*    height: 150px;*/
+/*    transform-origin: left;*/
+/*    transform: rotateY(90deg) translateZ(5px);*/
+/*    background: url("/images/cards/side.png") center;*/
+/*}*/
+/*.tableCard:after{*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    width: 115px;*/
+/*    height: 100%;*/
+/*    transform-origin: center;*/
+/*    background: url("/images/cards/back.png") no-repeat;*/
+/*    background-size: contain;*/
+/*    transform: rotateY(180deg) translateZ(4px);*/
+/*}*/
+/*.tableCard:active{*/
+/*    transform: rotateY(180deg);*/
+/*}*/
+/*.tableCard:hover{*/
+/*    transform:rotateY(180deg);*/
+/*}*/
+.cardSide{
+    width: 5px;
+    height: 160px;
+    background-color: black;
+}
+.gameCard{
+    width: 115px;
+    height: 160px;
+    border-radius: 5%;
+    background-size:contain;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+
+
+.upperCard{
+    top: 50px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.rotatedCard{
+    transform: rotate(-90deg);
+    position: absolute;
+}
+.preLastCard{
+    left: 40px;
+}
+.preLastCardBlock{
+    height: 160px;
+    width: 140px;
+    margin-left: 40px;
+    margin-top: 3px;
+    display: flex;
+}
+.myModal{
+    width: 300px;
+    height: 250px;
+    padding: 10px;
+    top: -10%;
+    left: 50%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    border-radius: 5px;
+    z-index: 1021;
+    box-shadow: 5px 5px 3px rgba(0,0,0,0.2);
+
+    transition: 0.5s ease-out ;
+}
+.displayNone{
+    display: none;
+}
+
+
+

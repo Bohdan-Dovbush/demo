@@ -36,7 +36,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Cinemas</h3>
                 </div>
-                <form  th:action="@{/templates/admin/createCinema.html}" >
+                <form  th:action="@{/admin/cinema/createCinema}" >
                     <div class="card-body">
                         <button   class="btn btn-app addSubImgButton" >
                             <i class="fas fa-plus" ></i>
@@ -59,8 +59,9 @@
                         <tr th:object="${cinema}"  th:id="${'tr'}+*{getCinemaId()}" th:each="cinema:${cinemas}">
                             <td th:text="*{getCinemaId()}"></td>
                             <td th:text="*{getName()}"></td>
+                            <td th:text="*{getMainImage()}"></td>
                             <td>
-                                <form  th:action="@{/account/editCinema}">
+                                <form  th:action="@{/admin/cinema/editCinema}">
                                     <label>
                                         <input hidden th:value="*{getCinemaId()}" name="cinemaId">
                                     </label>
@@ -98,10 +99,10 @@
         let modal = $('#modal-lg');
         modal.modal('hide');
         $.ajax({
-            url:'/account/deleteCinema',
+            url:'/admin/cinema/deleteCinema',
             data:{cinemaId:cinemaId},
             success:function () {
-                $('#tr'+cinemaId).remove();
+                $('#tr'+ cinemaId).remove();
             }
         });
     }

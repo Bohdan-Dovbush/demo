@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Contacts Page</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+</head>
+<body>
+<div th:insert="~{/admin/fragments/header :: header}"></div>
+<div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+
+<div class="content-wrapper">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Create Contacts Page</h3>
+        </div>
+        <form enctype="multipart/form-data"  th:action="@{/admin/saveContactsPage}">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="pageName">Contacts Page Name</label>
+                    <input required  type="text" value="Contacts Page" class="form-control" name="contactsPageName"
+                           id="pageName" placeholder="Enter Name">
+                </div>
+                <div  class="form-group">
+                    <label >Status</label>
+                    <select   name="pageStatus"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
+                        <option value=true >On</option>
+                        <option value=false  >Off</option>
+                    </select>
+                </div>
+                <div >
+                    <div th:insert="~{/admin/fragments/seoFragment :: seoFragment(
+                    url= '',
+                    title='',
+                    keywords='',
+                    description='')}"></div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit"  class="btn btn-primary">Save</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>

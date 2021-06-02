@@ -36,7 +36,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Contacts</h3>
                 </div>
-                <form  th:action="@{/templates/admin/createContact}" >
+                <form  th:action="@{/admin/createContact}" >
                     <div class="card-body">
                         <button   class="btn btn-app addSubImgButton" >
                             <i class="fas fa-plus" ></i>
@@ -61,7 +61,7 @@
                             <td th:text="*{getCinemaName()}"></td>
                             <td th:text="*{getAddress()}"></td>
                             <td>
-                                <form  th:action="@{/templates/admin/editContact}">
+                                <form  th:action="@{/admin/editContact}">
                                     <input hidden th:value="*{getContactId()}" name="contactId">
                                     <button  class="btn btn-block btn-warning btn-flat">Edit</button>
                                 </form>

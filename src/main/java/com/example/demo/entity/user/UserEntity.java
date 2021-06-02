@@ -61,12 +61,16 @@ public class UserEntity {
         contact.setUsers(this);
     }
 
-    public boolean isAccountVerified() {
+    public Boolean isAccountVerified() {
         return accountVerified;
     }
 
-    public boolean isLoginDisabled() {
+    public Boolean isLoginDisabled() {
         return loginDisabled;
+    }
+
+    public void setLoginDisabled(boolean loginDisabled) {
+        this.loginDisabled = loginDisabled;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.example.demo.security;
 
-import com.example.demo.service.interfaces.BruteForceProtectionService;
+import com.example.demo.service.interfaces.user.BruteForceProtectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;

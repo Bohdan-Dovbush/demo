@@ -39,7 +39,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Advertisements</h3>
                 </div>
-                <form  th:action="@{/templates/admin/createAdvertisement}" >
+                <form  th:action="@{/admin/createAdvertisement}" >
                     <div class="card-body">
                         <button   class="btn btn-app addSubImgButton" >
                             <i class="fas fa-plus" ></i>
@@ -63,7 +63,7 @@
                             <td th:text="*{getName()}"></td>
 
                             <td>
-                                <form  th:action="@{/templates/admin/editAdvertisement}">
+                                <form  th:action="@{/admin/editAdvertisement}">
                                     <input hidden th:value="*{getAdvertisementId()}" name="advertisementId">
                                     <button  class="btn btn-block btn-warning btn-flat">Edit</button>
                                 </form>

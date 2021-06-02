@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Contact</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+</head>
+<body>
+<div th:insert="~{/admin/fragments/header :: header}"></div>
+<div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+
+<div class="content-wrapper">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Edit Contact</h3>
+        </div>
+
+        <form th:object="${contact}" enctype="multipart/form-data" method="post"  th:action="@{/admin/updateContact}">
+            <input id="contactId" name="contactId" type="hidden" th:value="*{getContactId()}">
+            <div class="card-body" >
+                <div class="form-group">
+                    <label for="contactCinemaName">Contact Cinema Name</label>
+                    <input required type="text" th:value="*{getCinemaName()}" class="form-control" name="contactCinemaName"
+                            id="contactCinemaName" placeholder="Enter Cinema Name">
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input  th:value="*{getAddress()}" class="form-control"  name="contactAddress"
+                               placeholder="Enter Address">
+                </div>
+                <div class="form-group">
+                    <label>Coordinates</label>
+                    <input th:value="*{getMapCoordinates()}" class="form-control"  name="contactMapCoordinates"
+                               placeholder="Enter Coordinates">
+                </div>
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Logo Image</h3>
+                    </div>
+                    <div class="form-group ">
+                        <div class="card-body childInCenter">
+                            <img id="logoImage" th:src="*{'/'+getLogoImage()}" class="img-fluid pad"  style="max-height: 400px"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input hidden type="file" id="logoImageInput" onchange="loadNewLogoImage(this)" name="contactLogoImage" >
+                        <div class="card-body">
+                            <a onclick="addLogoImage()" class="btn btn-app addSubImgButton" >
+                                <i class="fas fa-edit" ></i>Edit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <button type="submit"  class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<script>
+
+    function addLogoImage() {
+        $('#logoImageInput').click();
+    }
+    function loadNewLogoImage(input) {
+        loadImage(input,$('#logoImage'));
+    }
+
+    function loadImage(input,imageToShow) {
+        let file = input.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $(imageToShow).attr('src',e.target.result);
+        }
+        reader.readAsDataURL(file)
+    }
+
+</script>
+</html>

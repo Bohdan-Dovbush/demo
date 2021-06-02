@@ -39,7 +39,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Cities</h3>
                 </div>
-                <form  th:action="@{/templates/admin/createCity}" >
+                <form  th:action="@{/admin/createCity}" >
                     <div class="card-body">
                         <button   class="btn btn-app addSubImgButton" >
                             <i class="fas fa-plus" ></i>
@@ -62,7 +62,7 @@
                             <td th:text="*{getName()}"></td>
 
                             <td>
-                                <form  th:action="@{/templates/admin/editCity}">
+                                <form  th:action="@{/admin/editCity}">
                                     <input hidden th:value="*{getCityId()}" name="cityId">
                                     <button  class="btn btn-block btn-warning btn-flat">Edit</button>
                                 </form>

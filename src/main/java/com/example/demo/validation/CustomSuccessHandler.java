@@ -15,21 +15,21 @@ import java.io.IOException;
 
 public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-    private final GrantedAuthority adminAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
+    private final GrantedAuthority adminAuthority = new SimpleGrantedAuthority("ADMIN");
 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         if(isAdminAuthority(authentication)){
-            String targetUrl = "home/admin";
+            String targetUrl = "/admin/home";
             clearAuthenticationAttributes(request);
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
         }
         else{
-            String targetUrl= determineTargetUrl(request, response); // using the super class to do this work for us
+            String targetUrl = determineTargetUrl(request, response); // using the super class to do this work for us
 
             // this logic is only for demo purpose, please do not use it on production application.
             if(StringUtils.isEmpty(targetUrl) || StringUtils.equals(targetUrl, "/")){
-                targetUrl= "/account/home";
+                targetUrl = "/account/home";
             }
             clearAuthenticationAttributes(request);
             getRedirectStrategy().sendRedirect(request, response, targetUrl);

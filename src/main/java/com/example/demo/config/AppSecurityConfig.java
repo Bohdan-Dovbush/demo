@@ -44,18 +44,23 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login", "/register", "/home", "/forgotPassword", "/changePassword").permitAll()
-                .antMatchers("/account/**").hasAuthority("CUSTOMER")
+                .antMatchers("/login", "/register", "/home", "/forgotPassword", "/changePassword", "/core**").permitAll()
+                .antMatchers("/dist/**", "/plugins/**", "/js/**", "/image/**").permitAll()
+                .antMatchers("/account/**").hasAnyAuthority("CUSTOMER", "ADMIN")
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
+//
+//                .antMatchers("/login", "/register","/home").permitAll()
+//                .antMatchers("/account/**").hasAnyAuthority("CUSTOMER", "ADMIN")
 
                 // Remember me configurations
                 .and()
-                .rememberMe().tokenRepository(persistentTokenRepository())
-                .rememberMeCookieDomain("domain")
-                .rememberMeCookieName("custom-remember-me-cookie")
+                .rememberMe()
+                .tokenRepository(persistentTokenRepository())
+//                .rememberMeCookieDomain("domain")
+//                .rememberMeCookieName("custom-remember-me-cookie")
                 .userDetailsService(this.userDetailsService)
-                .tokenValiditySeconds(2000)
-                .useSecureCookie(true)
+                .tokenValiditySeconds(86400)
+//                .useSecureCookie(true)
 
                 //Login configurations
                 .and()
@@ -69,11 +74,16 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 //logout configurations
                 .and()
                 .logout().permitAll()
+                .logoutUrl("/logout")
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
                 .deleteCookies("dummyCookie")
                 .logoutSuccessUrl("/login")
 
                 .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
+                .and()
+                .csrf().disable();
                 /*
                 .and()
                 .sessionManagement()
@@ -115,7 +125,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web){
-        web.ignoring().antMatchers("/resources/**", "/static/**");
+        web.ignoring()
+                .antMatchers("/resources/**", "/static/**");
     }
 
     @Bean

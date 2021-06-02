@@ -1,22 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="core/head :: head">  <meta charset="utf-8">
+    <title>Registration</title>
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
-    <div class="register-logo">
-        <a href="#">Welcome to Spring Security Course</a>
-    </div>
-  <div class="col-md-12">
-    <div class="form-group" data-select2-id="13">
-      <label>Select Language</label>
-      <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1"
-              tabindex="-1" aria-hidden="true" id="locale">
-          <option value="en" th:text="#{lang.eng}"  th:selected="__${#locale}__=='en'"></option>
-        <option value="de" th:text="#{lang.de}" th:selected="__${#locale}__=='de'"></option>
-      </select>
-    </div>
-  </div>
     <div class="card">
         <div class="card-body register-card-body">
             <div class="alert alert-success" role="alert" th:if="${registrationMsg != null}">
@@ -66,22 +54,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Retype password">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
-                    <div class="col-8">
-                        <div class="icheck-primary">
-                            <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                            <label for="agreeTerms">
-                                I agree to the <a href="#">terms</a>
-                            </label>
-                        </div>
+                    <div class="col-8 mt-2">
+                        <a href="login" class="text-center">I already have an Account</a>
                     </div>
                     <!-- /.col -->
                     <div class="col-4">
@@ -90,8 +65,6 @@
                     <!-- /.col -->
                 </div>
             </form>
-
-            <a href="login" class="text-center">I already have an Account</a>
         </div>
         <!-- /.form-box -->
     </div><!-- /.card -->
@@ -104,16 +77,5 @@
 <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <!-- AdminLTE App -->
 <script th:src="@{/dist/js/adminlte.min.js}"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#locale").change(function () {
-            var selectedOption = $('#locale').val();
-            if (selectedOption != '') {
-                window.location.replace('?lang=' + selectedOption);
-            }
-        });
-    });
-
-</script>
 </body>
 </html>

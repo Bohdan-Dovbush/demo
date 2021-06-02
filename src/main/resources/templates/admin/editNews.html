@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit News</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+</head>
+<body>
+<div th:insert="~{/admin/fragments/header :: header}"></div>
+<div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+
+<div class="content-wrapper">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Edit News</h3>
+        </div>
+        <form th:object="${news}" enctype="multipart/form-data" method="post" th:action="@{/admin/updateNews}">
+            <input id="newsId" th:value="*{getNewsId()}" type="hidden" name="newsId" >
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="newsName">News Name</label>
+                    <input required  type="text" th:value="*{getName()}" class="form-control" name="newsName"
+                           id="newsName" placeholder="Enter Name">
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea th:text="*{getDescription()}" class="form-control" rows="3" name="newsDescription"
+                               placeholder="Enter Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="videoLink">Video Link</label>
+                    <input th:value="*{getVideoLink()}" type="text" class="form-control" name="newsVideoLink"
+                           id="videoLink" placeholder="Video Link">
+                </div>
+                <div  class="form-group">
+                    <label >Status</label>
+                    <select   name="newsStatus"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
+                        <option value=true th:selected="*{getActive() == true}" >On</option>
+                        <option value=false th:selected="*{getActive() == false}">Off</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Publish Date</label>
+                    <div class="input-group date"  id="reservationdate" data-target-input="nearest">
+                        <input required type="text" th:value="*{getPublishDate()}" name="newsPublishDate" class="form-control datetimepicker-input" data-target="#reservationdate">
+                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-primary">
+                    <div class="card-header">
+                         <h3 class="card-title">Main Image</h3>
+                    </div>
+                    <div class="form-group ">
+                        <div class="card-body childInCenter">
+                            <img id="mainImage" th:src="*{'/'+getMainImage()}" class="img-fluid pad"  style="max-height: 400px"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input hidden type="file"  name="newsMainImage" onchange="loadNewMainImage(this)" id="mainImageInput"  >
+                        <div class="card-body">
+                            <a onclick="addMainImage()" class="btn btn-app addSubImgButton" >
+                                <i class="fas fa-edit" ></i>Edit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Additional Images</h3>
+                    </div>
+                    <div class="form-group">
+                        <div class="card-body">
+                            <a  onclick="addNewImages()" class="btn btn-app addSubImgButton" >
+                                <i class="fas fa-plus" ></i>Add
+                            </a>
+                        </div>
+                        <input hidden type="number" id="deletedImageInput" >
+
+                        <div id="imagesRow" class="row">
+                            <div style="display: none" id="emptyCard" class="col-md-6">
+                                <div class="card card-widget">
+                                    <div class="card-header">
+                                        <div class="user-block">
+                                            <span class="description"></span>
+                                        </div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool  deleteButton" >
+                                                <input type="file" hidden >
+                                                <i class="fas fa-times" style="color: red"></i>
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="card-body">
+                                        <img class="img-fluid pad" src="" alt="Photo">
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:each="image:*{getImages()}" class="col-md-6">
+                                <div class="card card-widget">
+                                    <div class="card-header">
+                                        <div class="user-block">
+                                            <span th:text="${image.getImage()}" class="description"><a href="#"></a></span>
+                                        </div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool"  data-card-widget="collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <button onclick="removeImageCard(this)" type="button" class="btn btn-tool deleteButton" >
+                                                <input type="number"  hidden th:value="${image.getNewsImageId()}">
+                                                <i class="fas fa-times" style="color: red"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <img class="img-fluid pad" th:src="${'/'+image.getImage()}" alt="Photo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div th:insert="~{/admin/fragments/seoFragment :: seoFragment(
+                    url=*{seo != null} ? *{seo.url} : '',
+                    title=*{seo != null} ? *{seo.title} : '',
+                    keywords=*{seo != null} ? *{seo.keywords}  : '',
+                    description=*{seo != null} ? *{seo.description}  : '')}"></div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit"  class="btn btn-primary">Save</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+<script>
+    function addNewImages() {
+        let emptyCard = $('#emptyCard');
+        let emptyClone = $(emptyCard).clone();
+        let input = $(emptyClone).find('input');
+
+
+        $(input).attr('name','newsImages');
+        $(input).change(function () {
+            let file = this.files[0];
+            let reader = new FileReader();
+
+
+            reader.onload = function (e) {
+                $(emptyClone).find('span').text(file.name);
+                $(emptyClone).find('img').attr('src',e.target.result);
+                $(emptyClone).find('.deleteButton').click(function () {
+                    removeCard(this);
+                });
+                $(emptyCard).after(emptyClone);
+                $(emptyClone).show();
+            }
+            reader.readAsDataURL(file);
+        });
+        $(input).click();
+    }
+    function removeCard(button) {
+        $(button).parents('.col-md-6').remove();
+    }
+    function removeImageCard(button) {
+        let imageId = $(button).children('input').attr('value');
+        let deletedImageInput = $('#deletedImageInput');
+        let inputClone = $(deletedImageInput).clone();
+        $(inputClone).val(imageId);
+        $(inputClone).attr('name','deletedImages')
+        $(deletedImageInput).after(inputClone);
+        $(button).parents('.col-md-6').remove();
+    }
+    function addMainImage() {
+        $('#mainImageInput').click();
+    }
+    function loadNewMainImage(input){
+        let file = input.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#mainImage').attr('src',e.target.result);
+        }
+        reader.readAsDataURL(file)
+    }
+</script>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create City</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+</head>
+<body>
+<div th:insert="~{/admin/fragments/header :: header}"></div>
+<div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+<div class="content-wrapper">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Create City</h3>
+        </div>
+        <form  id="saveUserForm"    th:action="@{/admin/saveCity}">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="cityName">City Name</label>
+                    <input  type="text" class="form-control" name="cityName"
+                           id="cityName" placeholder="Enter Name">
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit"  class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+</body>
+</html>

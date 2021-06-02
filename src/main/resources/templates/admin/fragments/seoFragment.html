@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="seoFragment (url, title, keywords, description)">
+
+    <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">SEO Block</h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="seoURL">URL</label>
+                    <input type="text" th:value="${url}" class="form-control" name="seoURL" id="seoURL" placeholder="URL">
+                </div>
+                <div class="form-group">
+                    <label for="seoTitle">Title</label>
+                    <input type="text" th:value="${title}" class="form-control" name="seoTitle" id="seoTitle" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <label for="seoKeywords">Keywords</label>
+                    <input type="text" th:value="${keywords}" class="form-control" name="seoKeyWords" id="seoKeywords" placeholder="Keywords">
+                </div>
+                <div class="form-group">
+                    <label for="seoDescription">Description</label>
+                    <input type="text" th:value="${description}" class="form-control" name="seoDescription" id="seoDescription" placeholder="Description">
+                </div>
+
+            </div>
+    </div>
+
+
+
+
+
+</div>
+
+</html>

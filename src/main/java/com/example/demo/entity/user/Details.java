@@ -32,7 +32,7 @@ public class Details {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private UserEntity users;
 

@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.exeption.InvalidTokenException;
 import com.example.demo.exeption.UnkownIdentifierException;
-import com.example.demo.service.interfaces.UserAccountService;
+import com.example.demo.service.interfaces.user.UserAccountService;
 import com.example.demo.validation.ResetPasswordData;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.MessageSource;

@@ -4,7 +4,6 @@ import com.example.demo.entity.enums.Genre;
 import com.example.demo.entity.enums.Language;
 import com.example.demo.entity.enums.Type;
 import com.example.demo.entity.gallery.Image;
-import com.example.demo.entity.user.Seo;
 import lombok.*;
 
 import javax.persistence.*;

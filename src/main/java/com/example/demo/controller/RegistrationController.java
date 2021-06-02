@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.exeption.InvalidTokenException;
 import com.example.demo.exeption.UserAlreadyExistException;
-import com.example.demo.service.interfaces.UserEntityService;
+import com.example.demo.service.interfaces.user.UserEntityService;
 import com.example.demo.validation.UserData;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.MessageSource;

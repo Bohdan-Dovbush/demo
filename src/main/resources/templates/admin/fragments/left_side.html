@@ -1,0 +1,177 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="left_side">
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="position: fixed">
+    <!-- Brand Logo -->
+    <a href="/admin/home" class="brand-link">
+        <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">Admin Panel</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <span style="color: #dae0e5" class="hidden-xs"  sec:authentication="name"></span>
+            </div>
+        </div>
+
+        <!-- SidebarSearch Form -->
+        <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item">
+                    <a href="/admin/statistic" class="nav-link">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>
+                            Statistic
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/advertisements" class="nav-link">
+                        <i class="nav-icon fas fa-ad"></i>
+                        <p>
+                            Advertisement
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/movies" class="nav-link">
+                        <i class="nav-icon fas fa-beer"></i>
+                        <p>
+                            Bar Page
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/movies" class="nav-link">
+                        <i class="nav-icon fas fa-child"></i>
+                        <p>
+                            Child Room Page
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/cinema" class="nav-link">
+                        <i class="nav-icon fas fa-video"></i>
+                        <p>
+                            Cinema
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/cities" class="nav-link">
+                        <i class="nav-icon fas fa-city"></i>
+                        <p>
+                            City
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/contacts" class="nav-link">
+                        <i class="nav-icon fas fa-address-book"></i>
+                        <p>
+                            Contacts
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/movies" class="nav-link">
+                        <i class="nav-icon fas fa-couch"></i>
+                        <p>
+                            Hall
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/movies" class="nav-link">
+                        <i class="nav-icon fas fa-language"></i>
+                        <p>
+                            Language
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/movies" class="nav-link">
+                        <i class="nav-icon fas fa-film"></i>
+                        <p>
+                            Movies
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/news" class="nav-link">
+                        <i class="nav-icon fas fa-newspaper"></i>
+                        <p>
+                            News
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/promotions" class="nav-link">
+                        <i class="nav-icon fas fa-percent"></i>
+                        <p>
+                            Promotion
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/sessions" class="nav-link">
+                        <i class="nav-icon fas fa-calendar"></i>
+                        <p>
+                            Seance
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/pages" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Pages
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/users" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Users
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/movies" class="nav-link">
+                        <i class="nav-icon fas fa-crown"></i>
+                        <p>
+                            Vip Hall Page
+                        </p>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+</div>
+</body>
+
+
+</html>

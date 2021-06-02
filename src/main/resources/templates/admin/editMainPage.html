@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Main Page</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+</head>
+<body>
+<div th:insert="~{/admin/fragments/header :: header}"></div>
+<div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+
+<div class="content-wrapper">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Create Main Page</h3>
+        </div>
+        <form th:object="${mainPage}" enctype="multipart/form-data"  th:action="@{/admin/updateMainPage}">
+            <input type="number" hidden th:value="*{getMainPageId()}" name="mainPageId">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="pageName">Main Page Name</label>
+                    <input required  type="text" th:value="*{getName()}" class="form-control" name="mainPageName"
+                           id="pageName" placeholder="Enter Name">
+                </div>
+                <div class="form-group">
+                    <label >Phone 1</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                        </div>
+                        <input type="text" th:value="*{getFirstPhone()}" name="firstPhone" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label >Phone 2</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                        </div>
+                        <input type="text" th:value="*{getSecondPhone()}" name="secondPhone" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label>SEO Text</label>
+                    <textarea th:text="*{getSEOText()}" class="form-control" rows="3" name="SEOText"
+                               placeholder="Enter Description"></textarea>
+                </div>
+                <div  class="form-group">
+                    <label >Status</label>
+                    <select   name="pageStatus"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
+                        <option value=true th:selected="*{isActive() == true}" >On</option>
+                        <option value=false th:selected="*{isActive() == false}">Off</option>
+                    </select>
+                </div>
+
+                <div th:object="${mainPage}">
+                    <div th:insert="~{/admin/fragments/seoFragment :: seoFragment(
+                    url=*{seo != null} ? *{seo.url} : '',
+                    title=*{seo != null} ? *{seo.title} : '',
+                    keywords=*{seo != null} ? *{seo.keywords}  : '',
+                    description=*{seo != null} ? *{seo.description}  : '')}"></div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit"  class="btn btn-primary">Save</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+<script>
+    function addNewImages() {
+        let emptyCard = $('#emptyCard');
+        let emptyClone = $(emptyCard).clone();
+        let input = $(emptyClone).find('input');
+
+
+        $(input).attr('name','pageImages');
+        $(input).change(function () {
+            let file = this.files[0];
+            let reader = new FileReader();
+
+
+            reader.onload = function (e) {
+                $(emptyClone).find('span').text(file.name);
+                $(emptyClone).find('img').attr('src',e.target.result);
+                $(emptyClone).find('.deleteButton').click(function () {
+                    removeCard(this);
+                });
+                $(emptyCard).after(emptyClone);
+                $(emptyClone).show();
+            }
+            reader.readAsDataURL(file);
+        });
+        $(input).click();
+    }
+    function removeCard(button) {
+        $(button).parents('.col-md-6').remove();
+    }
+    function addMainImage() {
+        $('#mainImageInput').click();
+    }
+    function loadNewMainImage(input){
+        let file = input.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#mainImage').attr('src',e.target.result);
+        }
+        reader.readAsDataURL(file)
+    }
+</script>
+</html>

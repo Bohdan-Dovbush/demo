@@ -28,7 +28,7 @@ public class AdminController {
         List<SessionInformation> sessions = sessionRegistry.getAllSessions
                 (authentication.getPrincipal(), false);
         model.addAttribute("currentSession", sessions);
-        return "index";
+        return "admin/dashboard";
     }
 
     private void setDummyCookie(HttpServletResponse response){
