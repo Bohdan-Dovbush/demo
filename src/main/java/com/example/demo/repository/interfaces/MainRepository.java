@@ -8,7 +8,7 @@ public interface MainRepository<T> {
     List<T> findAll();
     Optional<T> findById(long id);
     void delete(T object);
-    void deleteById(long id);
+    void deleteById(Long id);
     void update(T object);
     void save(T object);
 }

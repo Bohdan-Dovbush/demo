@@ -9,6 +9,9 @@ public interface MainService<T> {
     Optional<T> findById(long id);
     void delete(T object);
     void deleteById(long id);
+
+    void deleteById(Long id);
+
     void update(T object);
     void save(T object);
     String saveImageAndGetName(MultipartFile file);

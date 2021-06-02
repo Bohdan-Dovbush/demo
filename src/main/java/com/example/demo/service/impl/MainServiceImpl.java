@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
-public class MainServiceImpl<T> implements MainService<T> {
+public abstract class MainServiceImpl<T> implements MainService<T> {
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -31,7 +31,7 @@ public class MainServiceImpl<T> implements MainService<T> {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         mainRepository.deleteById(id);
     }
 
@@ -61,7 +61,7 @@ public class MainServiceImpl<T> implements MainService<T> {
 
     protected boolean saveFile(String fileName, MultipartFile file) {
         try {
-            file.transferTo(new File(uploadPath + fileName));
+            file.transferTo(new File(uploadPath + "/"+  fileName));
         } catch (IOException e) {
             e.printStackTrace();
         }

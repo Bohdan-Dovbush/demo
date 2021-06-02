@@ -41,7 +41,7 @@ public abstract class MainRepositoryImpl<T> implements MainRepository<T> {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         try (Session session = sessionFactory.openSession()) {
             T object = session.get(getClassType(), id);
             if (object != null) {

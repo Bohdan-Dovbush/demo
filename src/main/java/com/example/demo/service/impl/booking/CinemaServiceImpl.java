@@ -134,7 +134,7 @@ public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements Cinema
             if (!cinema.getSeo().equals(seo)){
                 cinema.setSeo(seo);
             }
-            cinemaRepository.save(cinema);
+            cinemaRepository.update(cinema);
 
             if (deletedImages != null){
                 imageRepository.deleteByListOfId(deletedImages);
@@ -155,5 +155,10 @@ public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements Cinema
         if (cinemaImages != null){
             cinemaImages.forEach(image -> cinema.addCinemaImage(new Image(saveImageAndGetName(image))));
         }
+    }
+
+    @Override
+    public void deleteById(long id) {
+
     }
 }

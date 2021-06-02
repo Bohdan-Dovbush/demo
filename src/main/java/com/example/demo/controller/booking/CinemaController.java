@@ -119,7 +119,7 @@ public class CinemaController {
         return "redirect:/admin/cinema";
     }
 
-    @DeleteMapping("/deleteCinema")
+    @GetMapping("/deleteCinema")
     @ResponseBody
     public void deleteCinema(@RequestParam Long id) {
         cinemaService.deleteById(id);
