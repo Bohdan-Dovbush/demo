@@ -19,8 +19,9 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" th:object="${cinema}" th:each="cinema:${cinemas}">
                 <p>Are you sure ?</p>
+                <p th:text="*{'To delete ' + getCinemaId() + ' ' + getName()}"></p>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -61,7 +62,7 @@
                             <td th:text="*{getName()}"></td>
                             <td th:text="*{getMainImage()}"></td>
                             <td>
-                                <form  th:action="@{/admin/cinema/editCinema}">
+                                <form  th:action="@{/admin/cinema/editCinema/}">
                                     <label>
                                         <input hidden th:value="*{getCinemaId()}" name="cinemaId">
                                     </label>
@@ -99,7 +100,7 @@
         let modal = $('#modal-lg');
         modal.modal('hide');
         $.ajax({
-            url:'/admin/cinema/deleteCinema',
+            url:'/admin/cinema/deleteCinema/',
             data:{cinemaId:cinemaId},
             success:function () {
                 $('#tr'+ cinemaId).remove();

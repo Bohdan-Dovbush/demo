@@ -1,6 +1,5 @@
-package com.example.demo.entity.booking;
+package com.example.demo.entity.film;
 
-import com.example.demo.entity.film.Film;
 import lombok.*;
 
 import javax.persistence.*;

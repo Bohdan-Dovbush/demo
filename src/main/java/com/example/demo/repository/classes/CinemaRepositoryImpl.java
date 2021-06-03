@@ -1,7 +1,6 @@
-package com.example.demo.repository.classes.booking;
+package com.example.demo.repository.classes;
 
-import com.example.demo.entity.booking.Cinema;
-import com.example.demo.repository.classes.MainRepositoryImpl;
+import com.example.demo.entity.film.Cinema;
 import com.example.demo.repository.interfaces.CinemaRepository;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;

@@ -1,8 +1,8 @@
-package com.example.demo.repository.classes.booking;
+package com.example.demo.repository.classes;
 
-import com.example.demo.entity.gallery.Image;
+import com.example.demo.entity.gallery.CinemaImage;
 import com.example.demo.repository.classes.MainRepositoryImpl;
-import com.example.demo.repository.interfaces.ImageRepository;
+import com.example.demo.repository.interfaces.CinemaImageRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -11,22 +11,22 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class ImageRepositoryImpl extends MainRepositoryImpl<Image> implements ImageRepository {
+public class CinemaImageRepositoryImpl extends MainRepositoryImpl<CinemaImage> implements CinemaImageRepository {
 
-    public ImageRepositoryImpl(SessionFactory sessionFactory) {
+    public CinemaImageRepositoryImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
     @Override
-    public Class<Image> getClassType() {
-        return null;
+    public Class<CinemaImage> getClassType() {
+        return CinemaImage.class;
     }
 
     @Override
     public void deleteByImageName(String name) {
         try (Session session = sessionFactory.openSession()){
             Transaction ts = session.beginTransaction();
-            session.createQuery("DELETE FROM Image img WHERE img.image = :name")
+            session.createQuery("DELETE FROM CinemaImage img WHERE img.image = :name")
                     .setParameter("name",name)
                     .executeUpdate();
             ts.commit();
@@ -37,7 +37,7 @@ public class ImageRepositoryImpl extends MainRepositoryImpl<Image> implements Im
     public void deleteByListOfId(List<Long> deletedImages) {
         try (Session session = sessionFactory.openSession()){
             Transaction ts = session.beginTransaction();
-            session.createQuery("DELETE FROM Image  img WHERE img.id IN :list")
+            session.createQuery("DELETE FROM CinemaImage  img WHERE img.id IN :list")
                     .setParameter("list",deletedImages)
                     .executeUpdate();
             ts.commit();

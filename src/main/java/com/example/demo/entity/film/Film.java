@@ -3,7 +3,7 @@ package com.example.demo.entity.film;
 import com.example.demo.entity.enums.Genre;
 import com.example.demo.entity.enums.Language;
 import com.example.demo.entity.enums.Type;
-import com.example.demo.entity.gallery.Image;
+import com.example.demo.entity.gallery.FilmImage;
 import lombok.*;
 
 import javax.persistence.*;
@@ -44,12 +44,10 @@ public class Film {
     @JoinColumn(name = "seos_id")
     private Seo seo;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "image_id")
-    private List<Image> filmImages = new ArrayList<>();
+    @OneToMany(mappedBy = "film", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<FilmImage> filmImages = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "actor_id")
+    @OneToMany(mappedBy = "film", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Actor> filmActor = new ArrayList<>();
 
     @Override
@@ -65,9 +63,9 @@ public class Film {
         return Objects.hash(filmId);
     }
 
-    public void addFilmImage(Image image){
+    public void addFilmImage(FilmImage image){
         filmImages.add(image);
-        image.setFilms(this);
+        image.setFilm(this);
     }
 
     public void addFilmActor(Actor actor){

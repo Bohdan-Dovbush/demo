@@ -21,14 +21,13 @@ public class Contact {
     @Column(name = "contact_id")
     private Long contactId;
     @Column(length = 9)
-    private String phone;
+    private Integer phone;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private UserEntity users;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id")
     private List<Address> contactAddress = new ArrayList<>();
 
     @Override

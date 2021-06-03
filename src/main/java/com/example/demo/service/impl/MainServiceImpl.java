@@ -21,7 +21,7 @@ public abstract class MainServiceImpl<T> implements MainService<T> {
     }
 
     @Override
-    public Optional<T> findById(long id) {
+    public Optional<T> findById(Long id) {
         return mainRepository.findById(id);
     }
 

@@ -1,14 +1,11 @@
 package com.example.demo.entity.user;
 
-import com.example.demo.entity.enums.Language;
-import com.example.demo.entity.gallery.Image;
 import com.example.demo.entity.enums.Gender;
+import com.example.demo.entity.enums.Language;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -27,6 +24,7 @@ public class Details {
     private String firstName;
     private String lastName;
     private LocalDate birthday;
+    private String avatar;
     @Enumerated(EnumType.STRING)
     private Language language;
     @Enumerated(EnumType.STRING)
@@ -35,10 +33,6 @@ public class Details {
     @OneToOne
     @JoinColumn(name = "user_id")
     private UserEntity users;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "image_id")
-    private List<Image> detailsImage = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -51,10 +45,5 @@ public class Details {
     @Override
     public int hashCode() {
         return Objects.hash(detailsId);
-    }
-
-    public void addDetailsImage(Image image){
-        detailsImage.add(image);
-        image.setDetail(this);
     }
 }

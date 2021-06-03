@@ -1,6 +1,6 @@
 package com.example.demo.repository.interfaces;
 
-import com.example.demo.entity.booking.Cinema;
+import com.example.demo.entity.film.Cinema;
 
 import java.util.Optional;
 

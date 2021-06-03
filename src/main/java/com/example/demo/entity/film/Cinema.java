@@ -1,10 +1,10 @@
-package com.example.demo.entity.booking;
+package com.example.demo.entity.film;
 
-import com.example.demo.entity.gallery.Image;
-import com.example.demo.entity.film.Seo;
+import com.example.demo.entity.gallery.CinemaImage;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,9 +13,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Entity
-@Data
 @Table(name = "cinema")
 public class Cinema {
 
@@ -23,6 +21,7 @@ public class Cinema {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cinema_id")
     private Long cinemaId;
+    @NotNull(message = "please put some name")
     private String name;
     private Boolean active;
     @Column(columnDefinition = "text", length = 2000)
@@ -36,15 +35,13 @@ public class Cinema {
     @JoinColumn(name = "seos_id")
     private Seo seo;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "image_id")
-    private List<Image> cinemaImages = new ArrayList<>();
+    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CinemaImage> cinemaImages = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "hall_id")
+    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Hall> halls = new ArrayList<>();
 
-    public void addCinemaImage(Image image){
+    public void addCinemaImage(CinemaImage image){
         cinemaImages.add(image);
         image.setCinema(this);
     }

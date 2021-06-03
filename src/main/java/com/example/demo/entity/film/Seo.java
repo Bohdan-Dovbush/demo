@@ -8,9 +8,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
-@Data
 @Table(name = "seo")
 public class Seo {
 
@@ -29,6 +27,17 @@ public class Seo {
         this.title = title;
         this.keywords = keywords;
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Seo{" +
+                "seoID=" + seoId +
+                ", url='" + url + '\'' +
+                ", title='" + title + '\'' +
+                ", keywords='" + keywords + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 
     @Override

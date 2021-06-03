@@ -1,12 +1,11 @@
-package com.example.demo.service.impl.booking;
+package com.example.demo.service.impl;
 
-import com.example.demo.entity.booking.Cinema;
+import com.example.demo.entity.film.Cinema;
 import com.example.demo.entity.film.Seo;
-import com.example.demo.entity.gallery.Image;
+import com.example.demo.entity.gallery.CinemaImage;
+import com.example.demo.repository.interfaces.CinemaImageRepository;
 import com.example.demo.repository.interfaces.CinemaRepository;
-import com.example.demo.repository.interfaces.ImageRepository;
-import com.example.demo.service.impl.MainServiceImpl;
-import com.example.demo.service.interfaces.booking.CinemaService;
+import com.example.demo.service.interfaces.CinemaService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,9 +16,9 @@ import java.util.Optional;
 public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements CinemaService {
 
     private final CinemaRepository cinemaRepository;
-    private final ImageRepository imageRepository;
+    private final CinemaImageRepository imageRepository;
 
-    public CinemaServiceImpl(CinemaRepository cinemaRepository, ImageRepository imageRepository) {
+    public CinemaServiceImpl(CinemaRepository cinemaRepository, CinemaImageRepository imageRepository) {
         super(cinemaRepository);
         this.cinemaRepository = cinemaRepository;
         this.imageRepository = imageRepository;
@@ -50,7 +49,7 @@ public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements Cinema
         Optional<Cinema> optionalCinema = cinemaRepository.findById(cinemaId);
         if (optionalCinema.isPresent() && !file.isEmpty()){
             Cinema cinema = optionalCinema.get();
-            String fileName = getRandomUUID() + file.getOriginalFilename();
+            String fileName = getRandomUUID() + "." + file.getOriginalFilename();
             if (saveFile(fileName,file)){
                 cinema.setMainImage(fileName);
                 update(cinema);
@@ -65,7 +64,7 @@ public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements Cinema
         Optional<Cinema> optionalCinema = cinemaRepository.findById(cinemaId);
         if (optionalCinema.isPresent() && !file.isEmpty()){
             Cinema cinema = optionalCinema.get();
-            String fileName = getRandomUUID() + file.getOriginalFilename();
+            String fileName = getRandomUUID() + "." + file.getOriginalFilename();
             if (saveFile(fileName,file)){
                 cinema.setLogoImage(fileName);
                 update(cinema);
@@ -80,7 +79,7 @@ public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements Cinema
         Optional<Cinema> optionalCinema = cinemaRepository.findById(cinemaId);
         if (optionalCinema.isPresent() && !file.isEmpty()){
             Cinema cinema = optionalCinema.get();
-            String fileName = getRandomUUID() + file.getOriginalFilename();
+            String fileName = getRandomUUID() + "." + file.getOriginalFilename();
             if (saveFile(fileName,file)){
                 cinema.setUpperBannerImage(fileName);
                 update(cinema);
@@ -96,13 +95,13 @@ public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements Cinema
     }
 
     @Override
-    public Image addImageToCinema(long cinemaId, MultipartFile file) {
+    public CinemaImage addImageToCinema(long cinemaId, MultipartFile file) {
         Optional<Cinema> optionalCinema = cinemaRepository.findWithImagesById(cinemaId);
         if (optionalCinema.isPresent() && !file.isEmpty()){
             Cinema cinema = optionalCinema.get();
-            String fileName = getRandomUUID() + file.getOriginalFilename();
+            String fileName = getRandomUUID() + "." + file.getOriginalFilename();
             if (saveFile(fileName,file)){
-                Image image = new Image(fileName);
+                CinemaImage image = new CinemaImage(fileName);
                 cinema.addCinemaImage(image);
                 update(cinema);
                 return image;
@@ -152,13 +151,8 @@ public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements Cinema
         if (!cinemaUpperBannerImage.isEmpty()){
             cinema.setUpperBannerImage(saveImageAndGetName(cinemaUpperBannerImage));
         }
-        if (cinemaImages != null){
-            cinemaImages.forEach(image -> cinema.addCinemaImage(new Image(saveImageAndGetName(image))));
+        if (!cinemaImages.isEmpty()){
+            cinemaImages.forEach(image -> cinema.addCinemaImage(new CinemaImage(saveImageAndGetName(image))));
         }
-    }
-
-    @Override
-    public void deleteById(long id) {
-
     }
 }

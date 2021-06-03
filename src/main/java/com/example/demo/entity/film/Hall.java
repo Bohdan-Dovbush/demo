@@ -1,7 +1,7 @@
-package com.example.demo.entity.booking;
+package com.example.demo.entity.film;
 
-import com.example.demo.entity.gallery.Image;
-import com.example.demo.entity.film.Seo;
+import com.example.demo.entity.booking.Place;
+import com.example.demo.entity.gallery.HallImage;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,9 +36,8 @@ public class Hall {
     @JoinColumn(name = "seos_id")
     private Seo seo;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "image_id")
-    private List<Image> hallImages = new ArrayList<>();
+    @OneToMany(mappedBy = "hall",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<HallImage> hallImages = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
@@ -48,7 +47,7 @@ public class Hall {
     @JoinColumn(name = "seance_id")
     private List<Seance> seances = new ArrayList<>();
 
-    public void addHallImage(Image image){
+    public void addHallImage(HallImage image){
         hallImages.add(image);
         image.setHall(this);
     }

@@ -1,8 +1,8 @@
-package com.example.demo.controller.booking;
+package com.example.demo.controller.film;
 
-import com.example.demo.entity.booking.Cinema;
+import com.example.demo.entity.film.Cinema;
 import com.example.demo.entity.film.Seo;
-import com.example.demo.service.interfaces.booking.CinemaService;
+import com.example.demo.service.interfaces.CinemaService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,7 +54,6 @@ public class CinemaController {
     }
 
     @PostMapping(value = "/addCinemaUpperBannerImage")
-    @ResponseBody
     public String setCinemaUpperBannerImage(@RequestParam MultipartFile file, @RequestParam Long cinemaId) {
         return cinemaService.setUpperBannerImageToCinema(cinemaId, file);
     }

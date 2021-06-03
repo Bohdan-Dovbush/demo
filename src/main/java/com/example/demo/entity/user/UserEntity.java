@@ -33,11 +33,9 @@ public class UserEntity {
     private Set<SecureToken> tokens;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "details_id")
     private List<Details> userDetails = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "contact_id")
     private List<Contact> userContact = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

@@ -1,7 +1,7 @@
 package com.example.demo.entity.user;
 
 import com.example.demo.entity.film.Seo;
-import com.example.demo.entity.gallery.NewsImage;
+import com.example.demo.entity.gallery.PageImage;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,31 +15,29 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Data
-@Table(name = "news")
-public class News {
+@Table(name = "page")
+public class Page {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "news_id")
-    private Long newsId;
+    @Column(name = "page_id")
+    private Long pageId;
     private String name;
     private LocalDateTime creationDate = LocalDateTime.now();
-    private LocalDateTime publishDate;
     @Column(columnDefinition = "text", length = 2000)
     private String description;
     private String mainImage;
-    private String videoLink;
     private Boolean active;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "seo_id")
     private Seo seo;
 
-    @OneToMany (mappedBy = "news", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<NewsImage> newsImages = new ArrayList<>();
+    @OneToMany(mappedBy = "page",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<PageImage> images = new ArrayList<>();
 
-    public void addNewsImage(NewsImage image) {
-        newsImages.add(image);
-        image.setNews(this);
+    public void addPageImage(PageImage pageImage){
+        images.add(pageImage);
+        pageImage.setPage(this);
     }
 }

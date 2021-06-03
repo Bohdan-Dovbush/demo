@@ -1,30 +1,27 @@
-package com.example.demo.service.impl.booking;
+package com.example.demo.service.impl;
 
-import com.example.demo.entity.booking.Hall;
+import com.example.demo.entity.film.Hall;
 import com.example.demo.entity.film.Seo;
-import com.example.demo.entity.gallery.Image;
-import com.example.demo.repository.interfaces.ImageRepository;
+import com.example.demo.entity.gallery.HallImage;
 import com.example.demo.repository.interfaces.CinemaRepository;
 import com.example.demo.repository.interfaces.HallRepository;
-import com.example.demo.service.interfaces.booking.HallService;
-import org.springframework.beans.factory.annotation.Value;
+import com.example.demo.repository.interfaces.HallImageRepository;
+import com.example.demo.service.interfaces.HallService;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-public class HallServiceImpl implements HallService {
+@Service
+public class HallServiceImpl extends MainServiceImpl<Hall> implements HallService {
 
-    @Value("${upload.path}")
-    private String imagePath;
     private final HallRepository hallRepository;
-    private final ImageRepository imageRepository;
+    private final HallImageRepository imageRepository;
     private final CinemaRepository cinemaRepository;
 
-    public HallServiceImpl(HallRepository hallRepository, ImageRepository imageRepository, CinemaRepository cinemaRepository) {
+    public HallServiceImpl(HallRepository hallRepository, HallImageRepository imageRepository, CinemaRepository cinemaRepository) {
+        super(hallRepository);
         this.hallRepository = hallRepository;
         this.imageRepository = imageRepository;
         this.cinemaRepository = cinemaRepository;
@@ -36,8 +33,8 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
-    public Optional<Hall> findByHallImagesAndSeances(Long image, Long seance) {
-        return hallRepository.findByHallImagesAndSeances(image, seance);
+    public Optional<Hall> findByHallImagesAndSeances(Long id) {
+        return hallRepository.findByHallImagesAndSeances(id);
     }
 
     @Override
@@ -50,10 +47,10 @@ public class HallServiceImpl implements HallService {
         Optional<Hall> optionalHall = hallRepository.findById(id);
         if (optionalHall.isPresent() && !multipartFile.isEmpty()){
             Hall hall = optionalHall.get();
-            String fileName = getRandomUUID() + multipartFile.getOriginalFilename();
+            String fileName = getRandomUUID() + "." + multipartFile.getOriginalFilename();
             if (saveFile(fileName,multipartFile)){
                 hall.setSchemaImage(fileName);
-                hallRepository.saveAndFlush(hall);
+                hallRepository.update(hall);
                 return fileName;
             }
         }
@@ -65,10 +62,10 @@ public class HallServiceImpl implements HallService {
         Optional<Hall> optionalHall = hallRepository.findById(id);
         if (optionalHall.isPresent() && !multipartFile.isEmpty()){
             Hall hall = optionalHall.get();
-            String fileName = getRandomUUID() + multipartFile.getOriginalFilename();
+            String fileName = getRandomUUID() + "." + multipartFile.getOriginalFilename();
             if (saveFile(fileName,multipartFile)){
                 hall.setBannerImage(fileName);
-                hallRepository.saveAndFlush(hall);
+                hallRepository.update(hall);
                 return fileName;
             }
         }
@@ -76,15 +73,15 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
-    public Image addHallImage(Long id, MultipartFile multipartFile) {
+    public HallImage addHallImage(Long id, MultipartFile multipartFile) {
         Optional<Hall> optionalHall = hallRepository.findById(id);
         if (optionalHall.isPresent() && !multipartFile.isEmpty()){
             Hall hall = optionalHall.get();
-            String fileName = getRandomUUID() + multipartFile.getOriginalFilename();
+            String fileName = getRandomUUID() + "." + multipartFile.getOriginalFilename();
             if (saveFile(fileName,multipartFile)){
-                Image image = new Image(fileName);
+                HallImage image = new HallImage(fileName);
                 hall.addHallImage(image);
-                hallRepository.saveAndFlush(hall);
+                hallRepository.update(hall);
                 return image;
             }
         }
@@ -100,13 +97,24 @@ public class HallServiceImpl implements HallService {
             hall.setCinema(cinema);
             hall.setSeo(seo);
             checkHallImage(hall, hallSchemaImage, hallBannerImage, hallImages);
-            hallRepository.saveAndFlush(hall);
+            hallRepository.save(hall);
         });
     }
 
     @Override
     public void updateHall(Long id, String name, String description, MultipartFile hallSchemaImage, MultipartFile hallBannerImage, List<MultipartFile> hallImages, List<Long> deletedImages, Seo seo) {
-
+        hallRepository.findByHallImages(id).ifPresent(hall -> {
+            hall.setName(name);
+            hall.setDescription(description);
+            if (!hall.getSeo().equals(seo)) {
+                hall.setSeo(seo);
+            }
+            checkHallImage(hall, hallSchemaImage, hallBannerImage, hallImages);
+            hallRepository.update(hall);
+            if (deletedImages != null){
+                imageRepository.deleteByListOfId(deletedImages);
+            }
+        });
     }
 
     @Override
@@ -122,29 +130,7 @@ public class HallServiceImpl implements HallService {
             hall.setBannerImage(saveImageAndGetName(hallBannerImage));
         }
         if (hallImages != null){
-            hallImages.forEach(image -> hall.addHallImage(new Image(saveImageAndGetName(image))));
+            hallImages.forEach(image -> hall.addHallImage(new HallImage(saveImageAndGetName(image))));
         }
-    }
-
-    public String saveImageAndGetName(MultipartFile file) {
-        if (!file.isEmpty()){
-            String filename = getRandomUUID() + file.getOriginalFilename();
-            saveFile(filename,file);
-            return filename;
-        }
-        return null;
-    }
-
-    public boolean saveFile(String fileName, MultipartFile file) {
-        try {
-            file.transferTo(new File(imagePath + fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public String getRandomUUID(){
-        return UUID.randomUUID().toString();
     }
 }

@@ -1,17 +1,11 @@
 package com.example.demo.repository.interfaces;
 
-import com.example.demo.entity.booking.Hall;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.example.demo.entity.film.Hall;
 
-import java.util.List;
 import java.util.Optional;
 
-@Repository
-public interface HallRepository extends JpaRepository<Hall, Long>{
+public interface HallRepository extends MainRepository<Hall>{
 
     Optional<Hall> findByHallImages(Long id);
-    Optional<Hall> findByHallImagesAndSeances(Long image, Long seance);
-
-    List<Hall> findAll();
+    Optional<Hall> findByHallImagesAndSeances(Long id);
 }

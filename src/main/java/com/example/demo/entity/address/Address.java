@@ -1,6 +1,6 @@
 package com.example.demo.entity.address;
 
-import com.example.demo.entity.booking.Cinema;
+import com.example.demo.entity.film.Cinema;
 import com.example.demo.entity.user.Contact;
 import lombok.*;
 
