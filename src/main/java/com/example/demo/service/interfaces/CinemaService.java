@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Optional;
 
-public interface CinemaService extends MainService<Cinema> {
+public interface CinemaService {
 
     Optional<Cinema> findWithImagesById(long id);
     Optional<Cinema> findWithHallsById(long id);
@@ -27,4 +27,6 @@ public interface CinemaService extends MainService<Cinema> {
     void updateCinema(Long id, String name, String description, String rules, MultipartFile mainImage,
                       MultipartFile logoImage, MultipartFile upperBannerImage,
                       List<MultipartFile> cinemaImages, List<Long> deletedImages, Seo seo);
+
+    void deleteById(Long id);
 }

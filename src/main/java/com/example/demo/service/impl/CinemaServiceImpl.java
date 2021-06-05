@@ -6,27 +6,35 @@ import com.example.demo.entity.gallery.CinemaImage;
 import com.example.demo.repository.interfaces.CinemaImageRepository;
 import com.example.demo.repository.interfaces.CinemaRepository;
 import com.example.demo.service.interfaces.CinemaService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
-public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements CinemaService {
+@Transactional
+public class CinemaServiceImpl implements CinemaService {
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     private final CinemaRepository cinemaRepository;
     private final CinemaImageRepository imageRepository;
 
     public CinemaServiceImpl(CinemaRepository cinemaRepository, CinemaImageRepository imageRepository) {
-        super(cinemaRepository);
         this.cinemaRepository = cinemaRepository;
         this.imageRepository = imageRepository;
     }
 
     @Override
     public Optional<Cinema> findWithImagesById(long id) {
-        return cinemaRepository.findWithImagesById(id);
+        return cinemaRepository.findCinemaByCinemaImages(id);
     }
 
     @Override
@@ -52,7 +60,7 @@ public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements Cinema
             String fileName = getRandomUUID() + "." + file.getOriginalFilename();
             if (saveFile(fileName,file)){
                 cinema.setMainImage(fileName);
-                update(cinema);
+                cinemaRepository.save(cinema);
                 return fileName;
             }
         }
@@ -67,7 +75,7 @@ public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements Cinema
             String fileName = getRandomUUID() + "." + file.getOriginalFilename();
             if (saveFile(fileName,file)){
                 cinema.setLogoImage(fileName);
-                update(cinema);
+                cinemaRepository.save(cinema);
                 return fileName;
             }
         }
@@ -82,7 +90,7 @@ public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements Cinema
             String fileName = getRandomUUID() + "." + file.getOriginalFilename();
             if (saveFile(fileName,file)){
                 cinema.setUpperBannerImage(fileName);
-                update(cinema);
+                cinemaRepository.save(cinema);
                 return fileName;
             }
         }
@@ -96,14 +104,14 @@ public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements Cinema
 
     @Override
     public CinemaImage addImageToCinema(long cinemaId, MultipartFile file) {
-        Optional<Cinema> optionalCinema = cinemaRepository.findWithImagesById(cinemaId);
+        Optional<Cinema> optionalCinema = cinemaRepository.findCinemaByCinemaImages(cinemaId);
         if (optionalCinema.isPresent() && !file.isEmpty()){
             Cinema cinema = optionalCinema.get();
             String fileName = getRandomUUID() + "." + file.getOriginalFilename();
             if (saveFile(fileName,file)){
                 CinemaImage image = new CinemaImage(fileName);
                 cinema.addCinemaImage(image);
-                update(cinema);
+                cinemaRepository.save(cinema);
                 return image;
             }
         }
@@ -133,7 +141,7 @@ public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements Cinema
             if (!cinema.getSeo().equals(seo)){
                 cinema.setSeo(seo);
             }
-            cinemaRepository.update(cinema);
+            cinemaRepository.save(cinema);
 
             if (deletedImages != null){
                 imageRepository.deleteByListOfId(deletedImages);
@@ -141,18 +149,49 @@ public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements Cinema
         });
     }
 
+    @Override
+    public void deleteById(Long id) {
+        cinemaRepository.deleteById(id);
+    }
+
     void checkCinemaImage(Cinema cinema, MultipartFile mainImage, MultipartFile cinemaLogoImage, MultipartFile cinemaUpperBannerImage, List<MultipartFile> cinemaImages) {
-        if (!mainImage.isEmpty() && mainImage != null){
+        if (!mainImage.isEmpty()){
             cinema.setMainImage(saveImageAndGetName(mainImage));
         }
-        if (!cinemaLogoImage.isEmpty() && cinemaLogoImage != null){
+        if (!cinemaLogoImage.isEmpty()){
             cinema.setLogoImage(saveImageAndGetName(cinemaLogoImage));
         }
-        if (!cinemaUpperBannerImage.isEmpty() && cinemaUpperBannerImage != null){
+        if (!cinemaUpperBannerImage.isEmpty()){
             cinema.setUpperBannerImage(saveImageAndGetName(cinemaUpperBannerImage));
         }
         if (!cinemaImages.isEmpty()){
             cinemaImages.forEach(image -> cinema.addCinemaImage(new CinemaImage(saveImageAndGetName(image))));
         }
+    }
+
+    public String saveImageAndGetName(MultipartFile file) {
+        if (!file.isEmpty()){
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            String fileName = getRandomUUID() + "." + file.getOriginalFilename();
+            saveFile(fileName,file);
+            return fileName;
+        }
+        return null;
+    }
+
+    protected boolean saveFile(String fileName, MultipartFile file) {
+        try {
+            file.transferTo(new File(uploadPath + "/"+  fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    protected String getRandomUUID(){
+        return UUID.randomUUID().toString();
     }
 }
