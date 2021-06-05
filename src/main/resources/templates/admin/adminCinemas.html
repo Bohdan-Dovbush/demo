@@ -19,11 +19,10 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body" th:object="${cinema}" th:each="cinema:${cinemas}">
+            <div class="modal-body">
                 <p>Are you sure ?</p>
-                <p th:text="*{'To delete ' + getCinemaId() + ' ' + getName()}"></p>
             </div>
-            <div class="modal-footer justify-content-between">
+            <div class="modal-footer justify-content-between" th:object="${cinema}" th:each="cinema:${cinemas}">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button onclick="deleteCinema()" type="button" class="btn btn-danger">Delete</button>
             </div>
@@ -51,26 +50,40 @@
                         <tr>
                             <th style="width: 10px">Id</th>
                             <th>Cinema Name</th>
-                            <th style="width: 40px">Cinema main image</th>
+                            <th style="width: 40px">Logo</th>
                             <th style="width: 40px">Edit</th>
                             <th style="width: 40px">Delete</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:object="${cinema}"  th:id="${'tr'}+*{getCinemaId()}" th:each="cinema:${cinemas}">
-                            <td th:text="*{getCinemaId()}"></td>
-                            <td th:text="*{getName()}"></td>
-                            <td th:text="*{getMainImage()}"></td>
-                            <td>
+                            <td style="width: 1%" >
+                                <div class="card-body childInCenter" th:text="*{getCinemaId()}"></div>
+                            </td>
+                            <td style="width: 10%" >
+                                <div class="card-body childInCenter" th:text="*{getName()}"></div>
+                            </td>
+                            <td style="width: 40%" th:src="*{getLogoImage()}">
+                                <div class="card-body childInCenter">
+                                    <img id="logoImage" class="img-fluid pad" th:src="@{'/images/' + ${cinema.getLogoImage()}}" style="size: 100px" alt="logoImage"/>
+                                </div>
+                                <input hidden type="file" id="logoImageInput" onload="loadNewLogoImage(this)" name="logoImageFile" >
+                            </td>
+                            <td style="width: 10%" >
                                 <form  th:action="@{/admin/cinema/editCinema/}">
                                     <label>
                                         <input hidden th:value="*{getCinemaId()}" name="cinemaId">
                                     </label>
-                                    <button  class="btn btn-block btn-warning btn-flat">Edit</button>
+                                    <div class="card-body childInCenter">
+                                        <button  class="btn btn-block btn-warning btn-flat">Edit</button>
+                                    </div>
                                 </form>
                             </td>
-                            <td>
-                                <button th:onclick="'toggleModal(\'' + *{getCinemaId()} + '\')'"  class="btn btn-block btn-danger btn-flat">Delete</button>
+                            <td style="width: 10%">
+                                <div class="card-body childInCenter">
+<!--                                    <button th:onclick="'toggleModal(\'' + *{getCinemaId()} + '\')'"  class="btn btn-block btn-danger btn-flat">Delete</button>-->
+                                    <button th:onclick="|toggleModal(*{getCinemaId()})|"  class="btn btn-block btn-danger btn-flat">Delete</button>
+                                </div>
                             </td>
 
                         </tr>
@@ -106,6 +119,18 @@
                 $('#tr'+ cinemaId).remove();
             }
         });
+    }
+    function loadNewLogoImage(input) {
+        loadImage(input,$('#logoImage'));
+    }
+    function loadImage(input,imageToShow) {
+        let file = input.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $(imageToShow).attr('src',e.target.result);
+        }
+        reader.readAsDataURL(file)
     }
 </script>
 </body>

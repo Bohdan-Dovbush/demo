@@ -35,24 +35,10 @@ public class FilmServiceImpl extends MainServiceImpl<Film> implements FilmServic
     }
 
     @Override
-    public Optional<Film> findTypesById(Long id) {
-        return filmRepository.findTypesById(id);
-    }
-
-    @Override
-    public Optional<Film> findImagesAndTypesById(Long id) {
-        return filmRepository.findImagesAndTypesById(id);
-    }
-
-    @Override
     public List<Film> findAll() {
         return filmRepository.findAll();
     }
 
-    @Override
-    public List<Film> findAllWithTypes() {
-        return filmRepository.findAllWithTypes();
-    }
 
     @Override
     public String addMainImage(Long id, MultipartFile file) {
@@ -152,10 +138,10 @@ public class FilmServiceImpl extends MainServiceImpl<Film> implements FilmServic
     }
 
     void checkFilmImage(Film film, MultipartFile mainImage, List<MultipartFile> cinemaImages) {
-        if (!mainImage.isEmpty()){
+        if (!(mainImage.isEmpty())) {
             film.setMainImage(saveImageAndGetName(mainImage));
         }
-        if (!cinemaImages.isEmpty()){
+        if (!cinemaImages.isEmpty()) {
             cinemaImages.forEach(image -> film.addFilmImage(new FilmImage(saveImageAndGetName(image))));
         }
     }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Edit Movie</title>
@@ -13,11 +13,12 @@
 <div class="content-wrapper">
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Edit Cinema</h3>
+            <h3 class="card-title">Create Cinema</h3>
         </div>
 
         <form  id="saveMovieForm" enctype="multipart/form-data" method="post"   th:action="@{/admin/cinema/saveCinema}">
             <div class="card-body">
+
                 <div class="form-group">
                     <label for="cinemaName">Cinema Name</label>
                     <input required type="text" class="form-control" name="cinemaName"
@@ -29,6 +30,7 @@
                     <textarea required  class="form-control" rows="3" name="cinemaDescription"
                               id="description" placeholder="Enter Description"></textarea>
                 </div>
+
                 <div class="form-group">
                     <label>Rules</label>
                     <textarea required class="form-control" rows="3" name="cinemaRules"
@@ -41,7 +43,7 @@
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="mainImage" class="img-fluid pad" style="max-height: 400px"/>
+                            <img id="mainImage" class="img-fluid pad" style="max-height: 100px"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -55,13 +57,14 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Logo Image</h3>
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="logoImage" class="img-fluid pad"  style="max-height: 400px"/>
+                            <img id="logoImage" class="img-fluid pad"  style="size: 100px"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -79,7 +82,7 @@
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="upperBannerImage" class="img-fluid pad"  style="max-height: 400px"/>
+                            <img id="upperBannerImage" class="img-fluid pad"  style="size: 100px"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -133,7 +136,11 @@
 
 
                 <div >
-                    <div th:insert="~{/admin/fragments/seoFragment :: seoFragment(url, title, keywords, description)}"></div>
+                    <div th:insert="~{/admin/fragments/seoFragment :: seoFragment(
+                    url,
+                    title,
+                    keywords,
+                    description)}"></div>
                 </div>
             </div>
 

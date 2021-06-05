@@ -142,13 +142,13 @@ public class CinemaServiceImpl extends MainServiceImpl<Cinema> implements Cinema
     }
 
     void checkCinemaImage(Cinema cinema, MultipartFile mainImage, MultipartFile cinemaLogoImage, MultipartFile cinemaUpperBannerImage, List<MultipartFile> cinemaImages) {
-        if (!mainImage.isEmpty()){
+        if (!mainImage.isEmpty() && mainImage != null){
             cinema.setMainImage(saveImageAndGetName(mainImage));
         }
-        if (!cinemaLogoImage.isEmpty()){
+        if (!cinemaLogoImage.isEmpty() && cinemaLogoImage != null){
             cinema.setLogoImage(saveImageAndGetName(cinemaLogoImage));
         }
-        if (!cinemaUpperBannerImage.isEmpty()){
+        if (!cinemaUpperBannerImage.isEmpty() && cinemaUpperBannerImage != null){
             cinema.setUpperBannerImage(saveImageAndGetName(cinemaUpperBannerImage));
         }
         if (!cinemaImages.isEmpty()){

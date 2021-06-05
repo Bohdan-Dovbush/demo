@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.utraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.utraq.net.nz/thymeleaf/layout" lang="en"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.utraq.net.nz/thymeleaf/layout ">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title layout:title-pattern="$CONTENT_TITLE - $DECORATOR_TITLE">AdminLTE 3 | Dashboard</title>
-    <style th:replace="/admin/share/style"></style>
+    <style th:replace="/admin/fragments/style"></style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
-    <div class="wrapper">
-        <div th:replace="/admin/share/header"></div>
-        <div th:replace="/admin/share/left_side"></div>
+<div class="wrapper">
+    <div th:replace="/admin/fragments/header"></div>
+    <div th:replace="/admin/fragments/left_side"></div>
 
-        <div class="content-wrapper">
+    <div class="content-wrapper">
 
 
-        </div>
-
-        <div th:replace="/admin/share/footer"></div>
-
-        <div th:replace="/admin/share/script"></div>
     </div>
+
+    <div th:replace="/admin/fragments/footer"></div>
+
+    <div th:replace="/admin/fragments/script"></div>
+</div>
 </body>
 </html>

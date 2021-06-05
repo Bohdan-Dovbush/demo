@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.admin;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.session.SessionInformation;

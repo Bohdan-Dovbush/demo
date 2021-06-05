@@ -1,4 +1,4 @@
-package com.example.demo.controller.film;
+package com.example.demo.controller.admin;
 
 import com.example.demo.entity.film.Cinema;
 import com.example.demo.entity.film.Seo;

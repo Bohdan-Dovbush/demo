@@ -43,7 +43,7 @@ public class HallServiceImpl extends MainServiceImpl<Hall> implements HallServic
     }
 
     @Override
-    public String setSchemaImage(Long id, MultipartFile multipartFile) {
+    public String addSchemaImage(Long id, MultipartFile multipartFile) {
         Optional<Hall> optionalHall = hallRepository.findById(id);
         if (optionalHall.isPresent() && !multipartFile.isEmpty()){
             Hall hall = optionalHall.get();
@@ -58,7 +58,7 @@ public class HallServiceImpl extends MainServiceImpl<Hall> implements HallServic
     }
 
     @Override
-    public String setBannerImage(Long id, MultipartFile multipartFile) {
+    public String addBannerImage(Long id, MultipartFile multipartFile) {
         Optional<Hall> optionalHall = hallRepository.findById(id);
         if (optionalHall.isPresent() && !multipartFile.isEmpty()){
             Hall hall = optionalHall.get();
@@ -89,7 +89,7 @@ public class HallServiceImpl extends MainServiceImpl<Hall> implements HallServic
     }
 
     @Override
-    public void createHall(String name, String description, Long cinemaId, MultipartFile hallSchemaImage, MultipartFile hallBannerImage, List<MultipartFile> hallImages, List<Long> deletedImages, Seo seo) {
+    public void createHall(String name, String description, Long cinemaId, MultipartFile hallSchemaImage, MultipartFile hallBannerImage, List<MultipartFile> hallImages, Seo seo) {
         cinemaRepository.findWithHallsById(cinemaId).ifPresent(cinema -> {
             Hall hall = new Hall();
             hall.setName(name);
@@ -129,7 +129,7 @@ public class HallServiceImpl extends MainServiceImpl<Hall> implements HallServic
         if (!hallBannerImage.isEmpty()){
             hall.setBannerImage(saveImageAndGetName(hallBannerImage));
         }
-        if (hallImages != null){
+        if (!hallImages.isEmpty()){
             hallImages.forEach(image -> hall.addHallImage(new HallImage(saveImageAndGetName(image))));
         }
     }

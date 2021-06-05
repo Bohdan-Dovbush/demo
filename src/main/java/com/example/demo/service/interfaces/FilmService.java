@@ -16,10 +16,7 @@ import java.util.Optional;
 public interface FilmService extends MainService<Film>{
 
     Optional<Film> findImagesById(Long id);
-    Optional<Film> findTypesById(Long id);
-    Optional<Film> findImagesAndTypesById(Long id);
     List<Film> findAll();
-    List<Film> findAllWithTypes();
     String addMainImage(Long id, MultipartFile file);
     String addActor(Long id);
     FilmImage addImageToFilm(Long id, MultipartFile file);

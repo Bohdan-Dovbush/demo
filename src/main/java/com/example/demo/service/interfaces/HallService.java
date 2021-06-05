@@ -13,13 +13,13 @@ public interface HallService extends MainService<Hall> {
     Optional<Hall> findByHallImages(Long id);
     Optional<Hall> findByHallImagesAndSeances(Long id);
     List<Hall> findAll();
-    String setSchemaImage(Long  id, MultipartFile multipartFile);
-    String setBannerImage(Long  id, MultipartFile multipartFile);
+    String addSchemaImage(Long  id, MultipartFile multipartFile);
+    String addBannerImage(Long  id, MultipartFile multipartFile);
     HallImage addHallImage(Long  id, MultipartFile multipartFile);
 
     void createHall(String name, String description, Long cinemaId,
                     MultipartFile hallSchemaImage, MultipartFile hallBannerImage,
-                    List<MultipartFile> hallImages, List<Long> deletedImages, Seo seo);
+                    List<MultipartFile> hallImages, Seo seo);
     void updateHall(Long id, String name, String description, MultipartFile hallSchemaImage,
                     MultipartFile hallBannerImage, List<MultipartFile> hallImages,
                     List<Long> deletedImages, Seo seo);
