@@ -30,7 +30,7 @@ public class Cinema {
     private String mainImage;
 
     @Transient
-    public String getLogoImage() {
+    public String getLogoImagePath() {
         if(logoImage == null || cinemaId == null) return null;
         return "/images/" + logoImage;
     }
