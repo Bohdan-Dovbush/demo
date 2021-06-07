@@ -29,7 +29,7 @@ public class CinemaController {
         return "admin/adminCinemas";
     }
 
-    @GetMapping("/editCinema")
+    @GetMapping(value = "/edit", params = {"cinemaId"})
     public String editCinema(Model model, @RequestParam Long cinemaId) {
         Optional<Cinema> optionalCinema = cinemaService.findWithImagesAndHallsById(cinemaId);
         if (optionalCinema.isPresent()) {
@@ -118,10 +118,10 @@ public class CinemaController {
         return "redirect:/admin/cinema";
     }
 
-    @GetMapping("/deleteCinema")
-    @ResponseBody
-    public void deleteCinema(@RequestParam Long id) {
-        cinemaService.deleteById(id);
+    @GetMapping(value = "/delete", params = {"cinemaId"})
+    public String deleteCinema(@RequestParam Long cinemaId) {
+        cinemaService.deleteById(cinemaId);
+        return "redirect:/admin/cinema";
     }
 
     private String getUserName() {

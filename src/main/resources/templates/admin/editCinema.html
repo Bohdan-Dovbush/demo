@@ -9,26 +9,7 @@
 <body>
 <div th:insert="~{/admin/fragments/header :: header}"></div>
 <div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
-<input id="hallIdToDelete" hidden value="text">
-<div class="modal fade" id="modal-lg" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Delete hall?</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure ?</p>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button onclick="deleteHall()" type="button" class="btn btn-danger">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="content-wrapper">
     <div class="card card-primary">
         <div class="card-header">
@@ -63,7 +44,7 @@
                     <div class="form-group ">
                         <div class="card-body childInCenter">
                             <div class="img-bordered">
-                                <img id="mainImage" class="img-fluid pad" th:src="@{'/images/' + ${cinema.getMainImage()}}" style="size: 100px" alt="mainImage"/>
+                                <img id="mainImage" class="img-fluid pad" th:src="@{${cinema.getMainImage()}}" style="size: 100px" alt="mainImage"/>
                             </div>
                         </div>
                     </div>
@@ -71,7 +52,7 @@
                         <input hidden type="file" id="mainImageInput" onchange="loadNewMainImage(this)" name="mainImageFile">
                         <div class="card-body">
                             <a onclick="addMainImage()"  class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-edit" ></i>Edit
+                                <i class="fas fa-edit"></i> Edit
                             </a>
                         </div>
                     </div>
@@ -83,14 +64,14 @@
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="logoImage" class="img-fluid pad" th:src="@{'/images/' + ${cinema.getLogoImage()}}" style="size: 100px" alt="logoImage"/>
+                            <img id="logoImage" class="img-fluid pad" th:src="@{${cinema.getLogoImage()}}" style="size: 100px" alt="logoImage"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <input hidden type="file" id="logoImageInput" onchange="loadNewLogoImage(this)" name="logoImageFile" >
                         <div class="card-body">
                             <a  onclick="addLogoImage()" class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-edit" ></i>Edit
+                                <i class="fas fa-edit" ></i> Edit
                             </a>
                         </div>
                     </div>
@@ -102,14 +83,14 @@
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="upperBannerImage" class="img-fluid pad" th:src="@{'/images/'+ ${cinema.getUpperBannerImage()}}" style="size: 100px" alt="upperBannerImage"/>
+                            <img id="upperBannerImage" class="img-fluid pad" th:src="@{${cinema.getUpperBannerImage()}}" style="size: 100px" alt="upperBannerImage"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <input hidden type="file" id="UpperBannerImageInput" onchange="loadNewUpperBannerImage(this)" name="UpperBannerImageFile" >
                         <div class="card-body">
                             <a  onclick="addUpperBannerImage()" class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-edit" ></i>Edit
+                                <i class="fas fa-edit" ></i> Edit
                             </a>
                         </div>
                     </div>
@@ -122,7 +103,7 @@
                     <div class="form-group">
                         <div class="card-body">
                             <a  onclick="addNewImages()"  class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-plus" ></i>Add
+                                <i class="fas fa-plus" ></i>
                             </a>
                         </div>
                         <input hidden type="number" id="deletedImageInput" >
@@ -193,22 +174,38 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th style="width: 10px">Id</th>
-                                <th>Hall Name</th>
-
-                                <th style="width: 40px">Edit</th>
-                                <th style="width: 40px">Delete</th>
+                                <th style="width: 1%; text-align: center">Id</th>
+                                <th style="width: 79%; text-align: center">Hall Name</th>
+                                <th style="width: 10%; text-align: center">Edit</th>
+                                <th style="width: 10%; text-align: center">Delete</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:object="${hall}"  th:id="${'tr'}+*{getHallId()}" th:each="hall:${cinema.getHalls()}">
-                                <td th:text="*{getHallId()}"></td>
-                                <td th:text="*{getName()}"></td>
-                                <td>
-                                    <a th:href="@{/admin/editHall(hallId=*{getHallId()},cinemaId=${cinema.getCinemaId()})}"  class="btn btn-block btn-warning btn-flat">Edit</a>
+                            <tr th:object="${hall}" th:each="hall:${cinema.getHalls()}">
+
+                                <td style="width: 1%" >
+                                    <div class="card-body childInCenter" th:text="*{getHallId()}"></div>
                                 </td>
-                                <td>
-                                    <a th:onclick="'toggleModal(\'' + *{getHallId()} + '\')'"  class="btn btn-block btn-danger btn-flat">Delete</a>
+
+                                <td style="width: 10%" >
+                                    <div class="card-body childInCenter" th:text="*{getName()}"></div>
+                                </td>
+
+                                <td style="width: 10%">
+                                    <div class="card-body childInCenter">
+                                        <a th:href="@{/admin/hall/edit (hallId = ${hall.hallId})}">
+                                            <button type="button" class="btn btn-warning btn-flat">Edit</button>
+                                        </a>
+                                    </div>
+<!--                                    <a th:href="@{/admin/hall/edit (hallId=*{getHallId()},cinemaId=${cinema.getCinemaId()})}"  class="btn btn-block btn-warning btn-flat">Edit</a>-->
+                                </td>
+
+                                <td style="width: 10%">
+                                    <div class="card-body childInCenter">
+                                        <a th:href="@{/admin/hall/delete (hallId = ${hall.hallId})}">
+                                            <button type="button" class="btn btn-danger btn-flat">Delete</button>
+                                        </a>
+                                    </div>
                                 </td>
 
                             </tr>
@@ -307,28 +304,6 @@
         $(deletedImageInput).after(inputClone);
         $(button).parents('.col-md-6').remove();
 
-    }
-
-    function toggleModal(id) {
-        $('#hallIdToDelete').val(id);
-        let modal = $('#modal-lg');
-        modal.modal('toggle');
-
-    }
-    function removeCard(button) {
-        $(button).parents('.col-md-6').remove();
-    }
-    function deleteHall() {
-        let hallId = $('#hallIdToDelete').val();
-        let modal = $('#modal-lg');
-        modal.modal('hide');
-        $.ajax({
-            url:'/admin/deleteHall',
-            data:{hallId:hallId},
-            success:function () {
-                $('#tr'+hallId).remove();
-            }
-        });
     }
 
 </script>

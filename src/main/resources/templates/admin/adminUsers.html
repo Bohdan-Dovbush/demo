@@ -9,27 +9,6 @@
 <body>
 <div th:insert="~{/admin/fragments/header :: header}"></div>
 <div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
-<input id="userIdToDelete" hidden value="text">
-<div class="modal fade" id="modal-lg" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Delete user?</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure ?</p>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button onclick="deleteUser()" type="button" class="btn btn-danger">Delete</button>
-            </div>
-        </div>
-    </div>
-
-
 
 </div>
 <div class="content-wrapper">
@@ -62,23 +41,19 @@
                             <td th:text="${user.getLastName()}"></td>
                             <td th:text="${user.getEmail()}"></td>
                             <td>
-                                <form  th:action="@{/admin/editUser}">
+                                <form  th:action="@{/admin/user/edit}">
                                     <input hidden th:value="${user.getUserId()}" name="userId">
-                                    <button  class="btn btn-block btn-warning btn-flat">Edit</button>
+                                    <button type="button" class="btn btn-block btn-warning btn-flat">Edit</button>
                                 </form>
                             </td>
                             <td>
-                                <button th:onclick="'toggleModal(\'' + ${user.getUserId()} + '\')'"  class="btn btn-block btn-danger btn-flat">Delete</button>
+                                <button type="button"  class="btn btn-block btn-danger btn-flat">Delete</button>
                             </td>
-
                         </tr>
-
                         </tbody>
                     </table>
                 </div>
-
             </div>
-
         </div>
     </section>
 

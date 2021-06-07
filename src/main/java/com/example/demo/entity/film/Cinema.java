@@ -28,6 +28,13 @@ public class Cinema {
     private String description;
     private String rules;
     private String mainImage;
+
+    @Transient
+    public String getLogoImage() {
+        if(logoImage == null || cinemaId == null) return null;
+        return "/images/" + logoImage;
+    }
+
     private String logoImage;
     private String upperBannerImage;
 

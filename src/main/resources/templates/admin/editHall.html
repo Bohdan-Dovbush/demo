@@ -9,33 +9,14 @@
 <body>
 <div th:insert="~{/admin/fragments/header :: header}"></div>
 <div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
-<input id="sessionIdToDelete" hidden value="text">
-<div class="modal fade" id="modal-lg" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Delete session?</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure ?</p>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button onclick="deleteSession()" type="button" class="btn btn-danger">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="content-wrapper">
     <div class="card card-primary">
         <div class="card-header">
             <h3 class="card-title">Edit Hall</h3>
         </div>
 
-        <form th:object="${hall}" id="saveMovieForm"  enctype="multipart/form-data" method="post" th:action="@{/admin/updateHall}">
+        <form th:object="${hall}" id="saveMovieForm"  enctype="multipart/form-data" method="post" th:action="@{/admin/hall/updateHall}">
             <input id="hallId" name="hallId" type="hidden" th:value="*{getHallId()}">
             <input id="cinemaId" name="cinemaId" type="hidden" th:value="${cinemaId}">
             <div class="card-body">
@@ -51,15 +32,15 @@
                               id="description" placeholder="Enter Description"></textarea>
                 </div>
 
-                <!--SESSIONS-->
+                <!--Seances-->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Sesions</h3>
+                        <h3 class="card-title">Seances</h3>
                     </div>
                     <div class="card-body">
                         <input hidden th:value="*{getHallId()}" name="hallId">
                         <div class="card-body">
-                            <a th:href="@{/admin/createSession(hallId=*{getHallId()})}"  class="btn btn-app addSubImgButton" >
+                            <a th:href="@{/admin/seance/createSeance (hallId=${hallId})}"  class="btn btn-app addSubImgButton" >
                                 <i class="fas fa-plus" ></i>
                             </a>
                         </div>
@@ -68,19 +49,16 @@
                             <tr>
                                 <th style="width: 10px">Id</th>
                                 <th>Date</th>
-
                                 <th style="width: 40px">Edit</th>
                                 <th style="width: 40px">Delete</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:object="${sessionn}"  th:id="${'tr'} + *{getSessionId()}" th:each="sessionn:${hall.getSessions()}">
-                                <td th:text="*{getSessionId()}"></td>
+                            <tr th:object="${seance}" th:each="seance:${hall.getSeances()}">
+                                <td th:text="*{getSeanceId()}"></td>
                                 <td th:text="*{getDate()}"></td>
                                 <td>
-
                                     <a th:href="@{/admin/editSession(sessionId=*{getSessionId()},hallId=${hall.getHallId()})}"  class="btn btn-block btn-warning btn-flat">Edit</a>
-
                                 </td>
                                 <td>
                                     <a th:onclick="'toggleModal(\'' + *{getSessionId()} + '\')'"  class="btn btn-block btn-danger btn-flat">Delete</a>

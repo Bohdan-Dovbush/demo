@@ -4,6 +4,7 @@ import com.example.demo.entity.enums.Genre;
 import com.example.demo.entity.enums.Language;
 import com.example.demo.entity.enums.Type;
 import com.example.demo.entity.film.Actor;
+import com.example.demo.entity.film.Film;
 import com.example.demo.entity.film.Seo;
 import com.example.demo.service.interfaces.FilmService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("admin/film")
@@ -64,14 +66,15 @@ public class FilmController {
         return "redirect:/admin/film";
     }
 
-    @PostMapping(value = "/editFilm")
+    @PostMapping(value = "/edit", params = {"id"})
     public String editMovie(Model model, @RequestParam Long id) {
-        filmService.findImagesById(id).ifPresent(film -> {
+        Optional<Film> filmOptional = filmService.findImagesById(id);
+        if(filmOptional.isPresent()) {
             model.addAttribute("userName", getUserName());
-            model.addAttribute("film", film);
-            model.addAttribute("filmImage", film.getMainImage());
-        });
-        return "admin/editFilm";
+            model.addAttribute("film", filmOptional.get());
+            return "admin/editFilm";
+        }
+        return "redirect:admin/film";
     }
 
     @RequestMapping("/addMainImage")
@@ -107,10 +110,10 @@ public class FilmController {
         return "redirect:/admin/adminFilm";
     }
 
-    @GetMapping("/deleteFilm")
-    @ResponseBody
-    public void deleteFilm(@RequestParam Long id) {
+    @GetMapping(value = "/delete", params = {"id"})
+    public String deleteFilm(@RequestParam Long id) {
         filmService.deleteById(id);
+        return "redirect:admin/film";
     }
 
     @PostMapping(value = "/addFilmImage")

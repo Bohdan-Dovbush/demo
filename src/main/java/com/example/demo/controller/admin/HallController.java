@@ -27,7 +27,7 @@ public class HallController {
         this.hallService = hallService;
     }
 
-    @GetMapping("/editHall")
+    @GetMapping(value = "/editHall", params = {"cinemaId", "hallId"})
     public String editHall(Model model,
                            @RequestParam Long cinemaId,
                            @RequestParam Long hallId) {
