@@ -154,6 +154,12 @@ public class CinemaServiceImpl implements CinemaService {
         cinemaRepository.deleteById(id);
     }
 
+    @Override
+    public Cinema save(Cinema cinema) {
+        cinemaRepository.save(cinema);
+        return cinema;
+    }
+
     void checkCinemaImage(Cinema cinema, MultipartFile mainImage, MultipartFile cinemaLogoImage, MultipartFile cinemaUpperBannerImage, List<MultipartFile> cinemaImages) {
         if (!mainImage.isEmpty()){
             cinema.setMainImage(saveImageAndGetName(mainImage));

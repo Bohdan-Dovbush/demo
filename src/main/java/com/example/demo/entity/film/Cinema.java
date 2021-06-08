@@ -1,10 +1,12 @@
 package com.example.demo.entity.film;
 
 import com.example.demo.entity.gallery.CinemaImage;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,20 +23,12 @@ public class Cinema {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cinema_id")
     private Long cinemaId;
-    @NotNull(message = "please put some name")
     private String name;
     private Boolean active;
     @Column(columnDefinition = "text", length = 2000)
     private String description;
     private String rules;
     private String mainImage;
-
-    @Transient
-    public String getLogoImagePath() {
-        if(logoImage == null || cinemaId == null) return null;
-        return "/images/" + logoImage;
-    }
-
     private String logoImage;
     private String upperBannerImage;
 
@@ -73,5 +67,11 @@ public class Cinema {
     @Override
     public int hashCode() {
         return Objects.hash(cinemaId);
+    }
+
+    @Transient
+    public String getLogoImagePath() {
+        if(logoImage == null || cinemaId == null) return null;
+        return "/images/" + logoImage;
     }
 }

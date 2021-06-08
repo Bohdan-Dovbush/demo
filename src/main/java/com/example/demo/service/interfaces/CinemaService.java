@@ -29,4 +29,6 @@ public interface CinemaService {
                       List<MultipartFile> cinemaImages, List<Long> deletedImages, Seo seo);
 
     void deleteById(Long id);
+
+    Cinema save(Cinema cinema);
 }
