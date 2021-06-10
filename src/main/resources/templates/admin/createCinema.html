@@ -37,13 +37,18 @@
                                                          id="rules" placeholder="Enter Rules"></textarea>
                 </div>
 
+                <div class="form-group">
+                    <label for="isActive">Active</label>
+                    <input required type="checkbox" class="input m-1" name="isActive" id="isActive">
+                </div>
+
                 <div class="card card-primary">
                     <div class="card-header">
                          <h3 class="card-title">Main Image</h3>
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="mainImage" class="img-fluid pad" style="size: 100px"/>
+                            <img id="mainImage" class="img-fluid pad" style="width: 100px"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -64,14 +69,14 @@
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="logoImage" class="img-fluid pad"  style="size: 100px"/>
+                            <img id="logoImage" class="img-fluid pad"  style="width: 100px"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <input hidden type="file" id="logoImageInput" onchange="loadNewLogoImage(this)" name="logoImageFile">
                         <div class="card-body">
                             <a onclick="addLogoImage()"  class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-edit" ></i> Edit
+                                <i class="fas fa-edit" ></i>
                             </a>
                         </div>
                     </div>
@@ -82,14 +87,14 @@
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="upperBannerImage" class="img-fluid pad"  style="size: 100px"/>
+                            <img id="upperBannerImage" class="img-fluid pad"  style="width: 100px"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <input hidden type="file" onchange="loadNewUpperBannerImage(this)" id="UpperBannerImageInput" name="UpperBannerImageFile" >
                         <div class="card-body">
                             <a  onclick="addUpperBannerImage()"  class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-edit" ></i>Edit
+                                <i class="fas fa-edit" ></i>
                             </a>
                         </div>
                     </div>
@@ -101,8 +106,8 @@
                     </div>
                     <div class="form-group">
                         <div class="card-body">
-                            <a onclick="addNewImages()"  class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-plus" ></i>Add
+                            <a onclick="addNewImages()"  class="btn btn-app addSubImgButton">
+                                <i class="fas fa-plus" ></i>
                             </a>
                         </div>
 
@@ -115,14 +120,13 @@
                                         </div>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                <i class="fas fa-minus"></i>
+                                                <i class="fas fa-minus" style="color: orange"></i>
                                             </button>
                                             <button type="button" class="btn btn-tool  deleteButton" >
-                                                <input type="file" hidden >
+                                                <input type="file" hidden>
                                                 <i class="fas fa-times" style="color: red"></i>
                                             </button>
                                         </div>
-
                                     </div>
                                     <div class="card-body">
                                         <img class="img-fluid pad" src="" alt="Photo">
@@ -209,7 +213,5 @@
     function removeCard(button) {
         $(button).parents('.col-md-6').remove();
     }
-
-
 </script>
 </html>

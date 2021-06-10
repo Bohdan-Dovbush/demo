@@ -44,7 +44,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login", "/register", "/home", "/forgotPassword", "/changePassword", "/core**").permitAll()
+                .antMatchers("/login", "/register", "/home", "/forgotPassword", "/changePassword", "/core**", "./uploads/**").permitAll()
                 .antMatchers("/dist/**", "/plugins/**", "/js/**", "/image/**").permitAll()
                 .antMatchers("/account/**").hasAnyAuthority("CUSTOMER", "ADMIN")
                 .antMatchers("/admin/**").hasAuthority("ADMIN")

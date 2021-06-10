@@ -1,13 +1,16 @@
 package com.example.demo.entity.film;
 
-import com.example.demo.entity.gallery.CinemaImage;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,30 +31,20 @@ public class Cinema {
     private String description;
     private String rules;
     private String mainImage;
-
-    @Transient
-    public String getLogoImagePath() {
-        if(logoImage == null || cinemaId == null) return null;
-        return "/images/" + logoImage;
-    }
-
     private String logoImage;
     private String upperBannerImage;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "cinema_images", joinColumns = @JoinColumn(name = "cinema_id"))
+    @Column(name = "images")
+    private Set<String> cinemaImages;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "seos_id")
     private Seo seo;
 
-    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CinemaImage> cinemaImages = new ArrayList<>();
-
     @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Hall> halls = new ArrayList<>();
-
-    public void addCinemaImage(CinemaImage image){
-        cinemaImages.add(image);
-        image.setCinema(this);
-    }
 
     public void addCinemaHall(Hall hall){
         halls.add(hall);
@@ -73,5 +66,11 @@ public class Cinema {
     @Override
     public int hashCode() {
         return Objects.hash(cinemaId);
+    }
+
+    @Transient
+    public String getLogoImagePath() {
+        if(cinemaId == null || logoImage == null) return null;
+        return "/uploads/" + logoImage;
     }
 }

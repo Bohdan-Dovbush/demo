@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Locale;
 
 @Configuration
@@ -63,13 +62,14 @@ public class AppConfig implements WebMvcConfigurer {
         return bean;
     }
 
+    @Value("${upload.path}")
+    private String uploadPath;
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
-        Path images = Paths.get("./images");
-        String imageUploadPath = images.toFile().getAbsolutePath();
-        registry.addResourceHandler("/images/**")
-                .addResourceLocations("file:/" + imageUploadPath + "/");
+
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:" + uploadPath);
     }
 }

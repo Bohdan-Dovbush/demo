@@ -44,7 +44,7 @@
                     <div class="form-group ">
                         <div class="card-body childInCenter">
                             <div class="img-bordered">
-                                <img id="mainImage" class="img-fluid pad" th:src="@{${cinema.getMainImage()}}" style="size: 100px" alt="mainImage"/>
+                                <img id="mainImage" class="img-fluid pad" th:src="@{'/uploads/'+${cinema.mainImage}}" style="width: 100px" alt="mainImage"/>
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="logoImage" class="img-fluid pad" th:src="@{${cinema.getLogoImage()}}" style="size: 100px" alt="logoImage"/>
+                            <img id="logoImage" class="img-fluid pad" th:src="@{${cinema.logoImagePath}}" style="width: 100px" alt="logoImage"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -83,7 +83,7 @@
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="upperBannerImage" class="img-fluid pad" th:src="@{${cinema.getUpperBannerImage()}}" style="size: 100px" alt="upperBannerImage"/>
+                            <img id="upperBannerImage" class="img-fluid pad" th:src="@{'/uploads/'+${cinema.upperBannerImage}}" style="width: 100px" alt="upperBannerImage"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -133,26 +133,22 @@
                                 </div>
                             </div>
 
-                            <div th:object="${image}" th:each="image:${cinema.getCinemaImages}" class="col-md-6">
+                            <div th:object="${cinemaImages}" th:each="cinemaImages:${cinema.getCinemaImages()}" class="col-md-6">
 
                                 <div class="card card-widget">
                                     <div class="card-header">
-                                        <div class="user-block">
-                                            <span th:text="*{getImage()}" class="description"><a href="#"></a></span>
-                                        </div>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool"  data-card-widget="collapse">
-                                                <i class="fas fa-minus"></i>
+                                                <i class="fas fa-minus" style="color: orange"></i>
                                             </button>
-                                            <button  onclick="removeImageCard(this)" type="button" class="btn btn-tool deleteButton" >
-                                                <input type="number"  hidden th:value="${image.getCinemaImageId()}">
+                                            <button type="button" class="btn btn-tool deleteButton" >
                                                 <i class="fas fa-times" style="color: red"></i>
                                             </button>
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <img id="cinemaImages" name="cinemaImages" class="img-fluid pad" onload="addNewImages()" th:src="@{'/images/'+ ${cinema.getCinemaImages()}}" alt="Photo">
-                                        <input hidden type="file" onchange="loadNewImages(this)" name="cinemaImages" >
+                                        <img id="cinemaImages" name="cinemaImages" class="img-fluid pad" th:src="@{'/uploads/'+${cinema.cinemaImages[0]}}" alt="Photo">
+                                        <input hidden type="file" onchange="loadNewImages(this)" name="cinemaImages">
                                     </div>
                                 </div>
                             </div>
@@ -234,12 +230,6 @@
 </div>
 </body>
 <script>
-    $(document).ready(function () {
-        $('#mainImage').change(function () {
-            showImageThumbnail(this);
-        });
-    });
-
     function addNewImages() {
         let emptyCard = $('#emptyCard');
         let emptyClone = $(emptyCard).clone();
@@ -263,6 +253,10 @@
             reader.readAsDataURL(file);
         });
         $(input).click();
+    }
+
+    function removeCard(button) {
+        $(button).parents('.col-md-6').remove();
     }
     function addMainImage() {
         $('#mainImageInput').click();
@@ -293,17 +287,6 @@
             $(imageToShow).attr('src',e.target.result);
         }
         reader.readAsDataURL(file)
-    }
-
-    function removeImageCard(button) {
-        let imageId = $(button).children('input').attr('value');
-        let deletedImageInput = $('#deletedImageInput');
-        let inputClone = $(deletedImageInput).clone();
-        $(inputClone).val(imageId);
-        $(inputClone).attr('name','deletedImage')
-        $(deletedImageInput).after(inputClone);
-        $(button).parents('.col-md-6').remove();
-
     }
 
 </script>

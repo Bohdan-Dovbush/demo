@@ -41,11 +41,9 @@ create table cinema (
     seos_id bigint,
     primary key (cinema_id)) engine=InnoDB;
 
-create table cinema_image (
-    cinema_image_id bigint not null auto_increment,
-    image varchar(255),
-    cinema_id bigint,
-    primary key (cinema_image_id)) engine=InnoDB;
+create table cinema_images (
+    cinema_id bigint not null,
+    images varchar(255)) engine=InnoDB;
 
 create table city (
     city_id bigint not null auto_increment,
@@ -180,7 +178,7 @@ alter table address add constraint FKqudc0k9tadm6qh4osayoh6cx3 foreign key (cine
 alter table address add constraint FKpo044ng5x4gynb291cv24vtea foreign key (city_id) references city (city_id);
 alter table address add constraint FK660ac8r9vntokuyh6agtj8pkh foreign key (contact_id) references contact (contact_id);
 alter table cinema add constraint FK19ikit6xpt3akertpg0vm7hkk foreign key (seos_id) references seo (seo_id);
-alter table cinema_image add constraint FKqb1pjp6n9bnok2767evedjmh1 foreign key (cinema_id) references cinema (cinema_id);
+alter table cinema_images add constraint FKruaty3jb5unrm8mv4mscahr90 foreign key (cinema_id) references cinema (cinema_id);
 alter table city add constraint FKeva9o92w3m9d6pj3byt08qrx9 foreign key (country_country_id) references country (country_id);
 alter table contact add constraint FKe07k4jcfdophemi6j1lt84b61 foreign key (user_id) references user (id);
 alter table contact_contact_address add constraint FKcqf7qxj4idas5bsmxe899xhu0 foreign key (contact_address_address_id) references address (address_id);
