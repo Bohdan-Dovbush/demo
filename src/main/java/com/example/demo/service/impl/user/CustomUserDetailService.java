@@ -2,7 +2,7 @@ package com.example.demo.service.impl.user;
 
 import com.example.demo.entity.user.Group;
 import com.example.demo.entity.user.UserEntity;
-import com.example.demo.repository.interfaces.user.UserEntityRepository;
+import com.example.demo.repository.interfaces.UserEntityRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

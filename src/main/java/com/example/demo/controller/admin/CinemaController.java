@@ -3,22 +3,15 @@ package com.example.demo.controller.admin;
 import com.example.demo.entity.film.Cinema;
 import com.example.demo.entity.film.Seo;
 import com.example.demo.service.interfaces.CinemaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("admin/cinema")
@@ -26,6 +19,7 @@ public class CinemaController {
 
     private final CinemaService cinemaService;
 
+    @Autowired
     public CinemaController(CinemaService cinemaService) {
         this.cinemaService = cinemaService;
     }
@@ -42,41 +36,11 @@ public class CinemaController {
         Optional<Cinema> optionalCinema = cinemaService.findWithImagesAndHallsById(cinemaId);
         if (optionalCinema.isPresent()) {
             model.addAttribute("userName", getUserName());
-            model.addAttribute("cinema", optionalCinema.get());
+            model.addAttribute("cinema", optionalCinema.get().getHalls());
             return "admin/editCinema";
         }
         return "redirect:/admin/cinema";
 
-    }
-
-    @PostMapping(value = "/addCinemaMainImage")
-    @ResponseBody
-    public String setCinemaMainImage(@RequestParam MultipartFile file, @RequestParam Long cinemaId) {
-        return cinemaService.setMainImageToCinema(cinemaId, file);
-    }
-
-//    @PostMapping(value = "/addCinemaLogoImage")
-//    @ResponseBody
-//    public String setCinemaLogoImage(@RequestParam MultipartFile file, @RequestParam Long cinemaId) {
-//        return cinemaService.setLogoImageToCinema(cinemaId, file);
-//    }
-
-    @PostMapping(value = "/addCinemaUpperBannerImage")
-    public String setCinemaUpperBannerImage(@RequestParam MultipartFile file, @RequestParam Long cinemaId) {
-        return cinemaService.setUpperBannerImageToCinema(cinemaId, file);
-    }
-
-    @PostMapping(value = "/addImageInCinema")
-    @ResponseBody
-    public String addImageInCinema(@RequestParam MultipartFile file, @RequestParam Long cinemaId) {
-        return cinemaService.addImageToCinema(cinemaId, file).getImage();
-    }
-
-    @DeleteMapping("/deleteImageInCinema")
-    @ResponseBody
-    public boolean deleteImageInCinema(@RequestParam String cinemaImageName) {
-        cinemaService.deleteCinemaImage(cinemaImageName);
-        return true;
     }
 
     @RequestMapping(value = "/updateCinema")
@@ -85,18 +49,18 @@ public class CinemaController {
             @RequestParam String cinemaName,
             @RequestParam String cinemaDescription,
             @RequestParam String cinemaRules,
+            @RequestParam Boolean isActive,
             @RequestParam(required = false) MultipartFile mainImageFile,
             @RequestParam(required = false) MultipartFile logoImageFile,
             @RequestParam(required = false) MultipartFile UpperBannerImageFile,
-            @RequestParam(required = false) List<MultipartFile> cinemaImages,
-            @RequestParam(required = false, name = "deletedImage") List<Long> deletedImages,
+            @RequestParam(required = false) MultipartFile[] cinemaImages,
             @RequestParam String seoURL,
             @RequestParam String seoTitle,
             @RequestParam String seoKeyWords,
             @RequestParam String seoDescription) {
 
-        cinemaService.updateCinema(cinemaId, cinemaName, cinemaDescription, cinemaRules,
-                mainImageFile, logoImageFile, UpperBannerImageFile, cinemaImages, deletedImages,
+        cinemaService.updateCinema(cinemaId, cinemaName, cinemaDescription, cinemaRules, isActive,
+                mainImageFile, logoImageFile, UpperBannerImageFile, cinemaImages,
                 new Seo(seoURL, seoTitle, seoKeyWords, seoDescription));
         return "redirect:/admin/cinema";
     }
@@ -108,29 +72,28 @@ public class CinemaController {
     }
 
     @PostMapping(value = "/saveCinema")
-    public String saveCinema(@ModelAttribute(name = "cinema") Cinema cinema,
-            @RequestParam("mainImageFile") MultipartFile multipartFile,
-            RedirectAttributes ra) throws IOException {
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        cinema.setLogoImage(fileName);
-        Cinema savedCinema = cinemaService.save(cinema);
+    public String saveCinema(
+            @RequestParam String cinemaName,
+            @RequestParam String cinemaDescription,
+            @RequestParam String cinemaRules,
+            @RequestParam(required = false) Boolean isActive,
+            @RequestParam(required = false) MultipartFile mainImageFile,
+            @RequestParam(required = false) MultipartFile logoImageFile,
+            @RequestParam(required = false) MultipartFile UpperBannerImageFile,
+            @RequestParam(required = false) MultipartFile[] cinemaImages,
+            @RequestParam String seoURL,
+            @RequestParam String seoTitle,
+            @RequestParam String seoKeyWords,
+            @RequestParam String seoDescription) {
+        String logo = cinemaService.saveImage(logoImageFile);
+        String main = cinemaService.saveImage(mainImageFile);
+        String banner = cinemaService.saveImage(UpperBannerImageFile);
+        Set<String> images = cinemaService.saveImageArray(cinemaImages);
 
-        String uploadDir = "./images/" + savedCinema.getCinemaId();
-        Path uploadPath = Paths.get(uploadDir);
+        Cinema cinema = new Cinema(images, cinemaName, isActive, cinemaDescription, cinemaRules, main, logo, banner,
+                new Seo(seoURL, seoTitle, seoKeyWords, seoDescription));
 
-        if(Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-
-        try {
-            InputStream inputStream = multipartFile.getInputStream();
-            Path filePath = uploadPath.resolve(fileName);
-            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e){
-            throw new IOException("Could not save uploaded file: " + fileName);
-        }
-
-        ra.addFlashAttribute("message", "The cinema has been saved successfully.");
+        cinemaService.save(cinema);
         return "redirect:/admin/cinema";
     }
 

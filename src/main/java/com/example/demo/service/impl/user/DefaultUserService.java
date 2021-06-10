@@ -8,7 +8,7 @@ import com.example.demo.exeption.UnkownIdentifierException;
 import com.example.demo.exeption.UserAlreadyExistException;
 import com.example.demo.repository.interfaces.user.GroupRepository;
 import com.example.demo.repository.interfaces.user.SecureTokenRepository;
-import com.example.demo.repository.interfaces.user.UserEntityRepository;
+import com.example.demo.repository.interfaces.UserEntityRepository;
 import com.example.demo.service.interfaces.user.EmailService;
 import com.example.demo.service.interfaces.user.SecureTokenService;
 import com.example.demo.service.interfaces.user.UserEntityService;

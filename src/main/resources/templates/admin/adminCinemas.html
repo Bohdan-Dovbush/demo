@@ -49,7 +49,7 @@
 
                             <td style="width: 64%; text-align: center" th:src="${cinema.logoImage}">
                                 <div class="card-body">
-                                    <img id="logoImage" class="img-fluid pad" th:src="@{${cinema.logoImagePath}}" style="size: 100px" alt="logoImage"/>
+                                    <img id="logoImage" class="img-fluid pad" th:src="@{'/Users/bohdandovbush/Downloads/demo/images/' + ${cinema.logoImage}}" style="size: 100px" alt="logoImage"/>
                                 </div>
                                 <input hidden type="file" id="logoImageInput" onload="loadNewLogoImage(this)" name="logoImageInput" >
                             </td>

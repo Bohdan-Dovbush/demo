@@ -1,7 +1,7 @@
 package com.example.demo.service.impl.user;
 
 import com.example.demo.entity.user.UserEntity;
-import com.example.demo.repository.interfaces.user.UserEntityRepository;
+import com.example.demo.repository.interfaces.UserEntityRepository;
 import com.example.demo.service.interfaces.user.BruteForceProtectionService;
 import com.example.demo.validation.FailedLogin;
 import lombok.Getter;

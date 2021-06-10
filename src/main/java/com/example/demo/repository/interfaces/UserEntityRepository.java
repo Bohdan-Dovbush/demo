@@ -1,4 +1,4 @@
-package com.example.demo.repository.interfaces.user;
+package com.example.demo.repository.interfaces;
 
 import com.example.demo.entity.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

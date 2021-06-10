@@ -1,7 +1,6 @@
 package com.example.demo.entity.film;
 
-import com.example.demo.entity.gallery.CinemaImage;
-import lombok.AllArgsConstructor;
+import com.example.demo.entity.gallery.Image;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,14 +9,14 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "cinema")
-public class Cinema {
+public class Cinema extends Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,20 +35,34 @@ public class Cinema {
     @JoinColumn(name = "seos_id")
     private Seo seo;
 
-    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CinemaImage> cinemaImages = new ArrayList<>();
+//    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<CinemaImage> cinemaImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Hall> halls = new ArrayList<>();
 
-    public void addCinemaImage(CinemaImage image){
-        cinemaImages.add(image);
-        image.setCinema(this);
-    }
+//    public void addCinemaImage(CinemaImage image){
+//        cinemaImages.add(image);
+//        image.setCinema(this);
+//    }
 
     public void addCinemaHall(Hall hall){
         halls.add(hall);
         hall.setCinema(this);
+    }
+
+    public Cinema(Set<String> imagesGallery, String name, Boolean active, String description,
+                  String rules, String mainImage, String logoImage,
+                  String upperBannerImage, Seo seo) {
+        super(imagesGallery);
+        this.name = name;
+        this.active = active;
+        this.description = description;
+        this.rules = rules;
+        this.mainImage = mainImage;
+        this.logoImage = logoImage;
+        this.upperBannerImage = upperBannerImage;
+        this.seo = seo;
     }
 
     public Boolean isActive() {
@@ -67,11 +80,5 @@ public class Cinema {
     @Override
     public int hashCode() {
         return Objects.hash(cinemaId);
-    }
-
-    @Transient
-    public String getLogoImagePath() {
-        if(logoImage == null || cinemaId == null) return null;
-        return "/images/" + logoImage;
     }
 }
