@@ -47,11 +47,10 @@
                                 <div class="card-body" th:text="${cinema.name}"></div>
                             </td>
 
-                            <td style="width: 64%; text-align: center" th:src="${cinema.logoImage}">
+                            <td style="width: 64%; text-align: center">
                                 <div class="card-body">
-                                    <img id="logoImage" class="img-fluid pad" th:src="@{${cinema.logoImagePath}}" style="size: 100px" alt="logoImage"/>
+                                    <img th:src="@{${cinema.logoImagePath}}" style="width: 100px"/>
                                 </div>
-                                <input hidden type="file" id="logoImageInput" onload="loadNewLogoImage(this)" name="logoImageInput" >
                             </td>
 
                             <td style="width: 10%; text-align: center" >
@@ -85,9 +84,6 @@
             loadImage(this);
         });
     });
-    function loadNewLogoImage(input) {
-        loadImage(input,$('#logoImage'));
-    }
     function loadImage(input) {
         let file = input.files[0];
         let reader = new FileReader();
