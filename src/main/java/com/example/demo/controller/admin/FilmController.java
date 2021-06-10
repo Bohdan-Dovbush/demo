@@ -7,11 +7,14 @@ import com.example.demo.entity.film.Actor;
 import com.example.demo.entity.film.Film;
 import com.example.demo.entity.film.Seo;
 import com.example.demo.service.interfaces.FilmService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -22,29 +25,28 @@ import java.util.Optional;
 @RequestMapping("admin/film")
 public class FilmController {
 
-    private final FilmService filmService;
+    FilmService filmService;
 
+    @Autowired
     public FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
 
     @GetMapping
     public String films(Model model) {
-        model.addAttribute("userName", getUserName());
         model.addAttribute("films", filmService.findAll());
         return "admin/adminFilm";
     }
 
     @GetMapping("/addFilm")
-    public String addFilm(Model model) {
-        model.addAttribute("userName", getUserName());
+    public String addFilm() {
         return "admin/createFilm";
     }
 
     @PostMapping(value = "/saveFilm")
     public String saveMovie(
             @RequestParam String filmName,
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate filmYear,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.NONE) LocalDate filmYear,
             @RequestParam String description,
             @RequestParam Genre genres,
             @RequestParam Type type,
@@ -53,7 +55,7 @@ public class FilmController {
             @RequestParam Language language,
             @RequestParam(required = false) List<Actor> actors,
             @RequestParam(required = false) MultipartFile mainImage,
-            @RequestParam(required = false) List<MultipartFile> images,
+            @RequestParam(required = false) MultipartFile[] images,
             @RequestParam String trailerLink,
             @RequestParam String seoURL,
             @RequestParam String seoTitle,
@@ -66,29 +68,22 @@ public class FilmController {
         return "redirect:/admin/film";
     }
 
-    @PostMapping(value = "/edit", params = {"id"})
+    @PostMapping(value = "/editFilm", params = {"id"})
     public String editMovie(Model model, @RequestParam Long id) {
         Optional<Film> filmOptional = filmService.findImagesById(id);
         if(filmOptional.isPresent()) {
-            model.addAttribute("userName", getUserName());
             model.addAttribute("film", filmOptional.get());
             return "admin/editFilm";
         }
         return "redirect:admin/film";
     }
 
-    @RequestMapping("/addMainImage")
-    @ResponseBody
-    public String addMainImage(@RequestParam MultipartFile file, @RequestParam Long id) {
-        return filmService.addMainImage(id, file);
-    }
-
     @RequestMapping(value = "/updateFilm")
     public String updateFilm(
-            @RequestParam LocalDate filmYear,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.NONE) LocalDate filmYear,
             @RequestParam Genre genres,
-            @RequestParam LocalDate dateRealise,
-            @RequestParam LocalDate dateFinish,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateRealise,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinish,
             @RequestParam Language language,
             @RequestParam List<Actor> actors,
             @RequestParam Type types,
@@ -96,8 +91,7 @@ public class FilmController {
             @RequestParam String name,
             @RequestParam String description,
             @RequestParam(required = false, name = "mainImage") MultipartFile mainImage,
-            @RequestParam(required = false, name = "deletedImages") List<Long> deletedImages,
-            @RequestParam(required = false) List<MultipartFile> images,
+            @RequestParam(required = false) MultipartFile[] filmImages,
             @RequestParam String trailerLink,
             @RequestParam String seoURL,
             @RequestParam String seoTitle,
@@ -105,31 +99,14 @@ public class FilmController {
             @RequestParam String seoDescription) {
 
         filmService.updateFilm(id, name, filmYear, description, genres, dateRealise, dateFinish, language,
-                actors, types, mainImage, deletedImages, images, trailerLink, new Seo(seoURL, seoTitle, seoKeyWords, seoDescription));
+                actors, types, mainImage, filmImages, trailerLink, new Seo(seoURL, seoTitle, seoKeyWords, seoDescription));
 
         return "redirect:/admin/adminFilm";
     }
 
-    @GetMapping(value = "/delete", params = {"id"})
+    @GetMapping(value = "/deleteFilm", params = {"id"})
     public String deleteFilm(@RequestParam Long id) {
         filmService.deleteById(id);
         return "redirect:admin/film";
-    }
-
-    @PostMapping(value = "/addFilmImage")
-    @ResponseBody
-    public String addFilmImage(@RequestParam MultipartFile file, @RequestParam Long id) {
-        return filmService.addImageToFilm(id, file).getImage();
-    }
-
-    @GetMapping("/deleteImageInMove")
-    @ResponseBody
-    public Boolean deleteImageInMove(@RequestParam String image) {
-        filmService.deleteFilmImage(image);
-        return true;
-    }
-
-    private String getUserName() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

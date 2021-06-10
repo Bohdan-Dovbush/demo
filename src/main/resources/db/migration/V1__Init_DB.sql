@@ -92,11 +92,9 @@ create table film (
     seos_id bigint,
     primary key (film_id)) engine=InnoDB;
 
-create table film_image (
-    film_image_id bigint not null auto_increment,
-    image varchar(255),
-    film_id bigint,
-    primary key (film_image_id)) engine=InnoDB;
+create table film_images (
+    film_id bigint not null,
+    images varchar(255)) engine=InnoDB;
 
 create table hall (
     hall_id bigint not null auto_increment,
@@ -108,11 +106,9 @@ create table hall (
     seos_id bigint,
     primary key (hall_id)) engine=InnoDB;
 
-create table hall_image (
-    hall_image_id bigint not null auto_increment,
-    image varchar(255),
-    hall_id bigint,
-    primary key (hall_image_id)) engine=InnoDB;
+create table hall_images (
+    hall_id bigint not null,
+    images varchar(255)) engine=InnoDB;
 
 create table news (
     news_id bigint not null auto_increment,
@@ -126,11 +122,9 @@ create table news (
     seo_id bigint,
     primary key (news_id)) engine=InnoDB;
 
-create table news_image (
-    news_image_id bigint not null auto_increment,
-    image varchar(255),
-    news_id bigint,
-    primary key (news_image_id)) engine=InnoDB;
+create table news_images (
+    news_id bigint not null,
+    images varchar(255)) engine=InnoDB;
 
 create table page (
     page_id bigint not null auto_increment,
@@ -142,11 +136,9 @@ create table page (
     seo_id bigint,
     primary key (page_id)) engine=InnoDB;
 
-create table page_image (
-    page_image_id bigint not null auto_increment,
-    image varchar(255),
-    page_id bigint,
-    primary key (page_image_id)) engine=InnoDB;
+create table page_images (
+    page_id bigint not null,
+    images varchar(255)) engine=InnoDB;
 
 create table place (
     place_id bigint not null auto_increment,
@@ -155,8 +147,9 @@ create table place (
     seats integer,
     hall_id bigint,
     primary key (place_id)) engine=InnoDB;
+
 create table promotion (promotion_id bigint not null auto_increment, active bit, creation_date datetime, description text, main_image varchar(255), name varchar(255), publish_date datetime, video_link varchar(255), seo_id bigint, primary key (promotion_id)) engine=InnoDB;
-create table promotion_image (promotion_image_id bigint not null auto_increment, image varchar(255), promotion_id bigint, primary key (promotion_image_id)) engine=InnoDB;
+create table promotion_images (promotion_id bigint not null, images varchar(255)) engine=InnoDB;
 create table role_type (id bigint not null auto_increment, code varchar(255) not null, name varchar(255), primary key (id)) engine=InnoDB;
 create table seance (seance_id bigint not null auto_increment, date date, time time, cinema_id bigint, film_id bigint, hall_id bigint, primary key (seance_id)) engine=InnoDB;
 create table secure_token (id bigint not null auto_increment, expire_at datetime not null, time_stamp datetime, token varchar(255), customer_id bigint, primary key (id)) engine=InnoDB;
@@ -185,18 +178,18 @@ alter table contact_contact_address add constraint FKcqf7qxj4idas5bsmxe899xhu0 f
 alter table contact_contact_address add constraint FKcb5emkgac2457jog6i94m96eg foreign key (contact_contact_id) references contact (contact_id);
 alter table details add constraint FK4nofffqdc6o09cect5lwxyjf2 foreign key (user_id) references user (id);
 alter table film add constraint FK8mkwfrgc46e20du3m0gr1evmv foreign key (seos_id) references seo (seo_id);
-alter table film_image add constraint FK5b24j4h1wq9yp1ythbkxwnjie foreign key (film_id) references film (film_id);
+alter table film_images add constraint FKqiylq9sk7s3l19vmf0cppq7jq foreign key (film_id) references film (film_id);
 alter table hall add constraint FKte75ikgkdmhfutuupvx2lhknr foreign key (cinema_id) references cinema (cinema_id);
 alter table hall add constraint FK5y3m1i2vxly44yo7wd5n15ke3 foreign key (seos_id) references seo (seo_id);
-alter table hall_image add constraint FKlam285smfu6djw1w1n6p1gfue foreign key (hall_id) references hall (hall_id);
+alter table hall_images add constraint FKr54hoxas5fj6c17idnf8nf111 foreign key (hall_id) references hall (hall_id);
 alter table news add constraint FK6bp62a0a7bs2lgyvp5rmucst2 foreign key (seo_id) references seo (seo_id);
-alter table news_image add constraint FKhwajir19rbhvdif5as4g6wcwf foreign key (news_id) references news (news_id);
+alter table news_images add constraint FKhcwu8kdkcw4mkqlygdq0g3dtq foreign key (news_id) references news (news_id);
 alter table page add constraint FKfmqij1l5l87xrkvej0dk32t4b foreign key (seo_id) references seo (seo_id);
-alter table page_image add constraint FKencjs4bkar23r0040n8v96o3k foreign key (page_id) references page (page_id);
+alter table page_images add constraint FKreqoxj2mxlbkfsoaxk6udjjsd foreign key (page_id) references page (page_id);
 alter table place add constraint FKi6xueble16lcu6ftbkb0jf0mf foreign key (hall_id) references hall (hall_id);
 alter table place add constraint FKbed1ktq5ep8fpk5s8q63jvu5l foreign key (place_id) references hall (hall_id);
 alter table promotion add constraint FKjfw9k1qi4nkj0cffvokmkg5x0 foreign key (seo_id) references seo (seo_id);
-alter table promotion_image add constraint FK1kk51vlapwvuxvgsptcnehh70 foreign key (promotion_id) references promotion (promotion_id);
+alter table promotion_images add constraint FKj8fo70ss4whfmjhqrcjdbtcbk foreign key (promotion_id) references promotion (promotion_id);
 alter table seance add constraint FKp28kgyjrwguokjh8gngcvxy14 foreign key (cinema_id) references cinema (cinema_id);
 alter table seance add constraint FKchlcmip8ejlfuo4c990k5ry8y foreign key (film_id) references film (film_id);
 alter table seance add constraint FKc33k6vbu1o9pneuqn6wius0ti foreign key (hall_id) references hall (hall_id);

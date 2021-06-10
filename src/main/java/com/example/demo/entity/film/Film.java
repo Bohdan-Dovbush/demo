@@ -3,14 +3,19 @@ package com.example.demo.entity.film;
 import com.example.demo.entity.enums.Genre;
 import com.example.demo.entity.enums.Language;
 import com.example.demo.entity.enums.Type;
-import com.example.demo.entity.gallery.FilmImage;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -25,12 +30,16 @@ public class Film {
     @Column(name = "film_id")
     private Long filmId;
     private String name;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate filmYear;
     @Column(columnDefinition = "text", length = 2000)
     private String description;
     private String mainImage;
+    @URL
     private String trailerLink;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.NONE)
     private LocalDate dateRelease;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.NONE)
     private LocalDate dateFinish;
     @Enumerated(EnumType.STRING)
     private Genre genre;
@@ -39,12 +48,15 @@ public class Film {
     @Enumerated(EnumType.STRING)
     private Language language;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "film_images", joinColumns = @JoinColumn(name = "film_id"))
+    @Column(name = "images")
+    private Set<String> filmImages;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "seos_id")
     private Seo seo;
 
-    @OneToMany(mappedBy = "film", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<FilmImage> filmImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "film", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Actor> filmActor = new ArrayList<>();
@@ -60,11 +72,6 @@ public class Film {
     @Override
     public int hashCode() {
         return Objects.hash(filmId);
-    }
-
-    public void addFilmImage(FilmImage image){
-        filmImages.add(image);
-        image.setFilm(this);
     }
 
     public void addFilmActor(Actor actor){

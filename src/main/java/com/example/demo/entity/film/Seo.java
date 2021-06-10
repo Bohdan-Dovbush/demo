@@ -1,6 +1,7 @@
 package com.example.demo.entity.film;
 
 import lombok.*;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -16,6 +17,7 @@ public class Seo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seo_id")
     private Long seoId;
+    @URL
     private String url;
     private String title;
     private String keywords;

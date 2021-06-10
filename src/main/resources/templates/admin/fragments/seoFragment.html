@@ -9,7 +9,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="seoURL">URL</label>
-                    <input type="text" th:value="${url}" class="form-control" name="seoURL" id="seoURL" placeholder="URL">
+                    <input type="url" th:value="${url}" class="form-control" name="seoURL" id="seoURL" placeholder="URL">
                 </div>
                 <div class="form-group">
                     <label for="seoTitle">Title</label>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-group">
                     <label for="seoDescription">Description</label>
-                    <input type="text" th:value="${description}" class="form-control" name="seoDescription" id="seoDescription" placeholder="Description">
+                    <textarea th:value="${description}" class="form-control" rows="3" name="seoDescription" id="seoDescription" placeholder="Description"></textarea>
                 </div>
 
             </div>

@@ -1,13 +1,11 @@
 package com.example.demo.entity.user;
 
 import com.example.demo.entity.film.Seo;
-import com.example.demo.entity.gallery.PromotionImage;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -31,15 +29,12 @@ public class Promotion {
     private String videoLink;
     private Boolean active;
 
-    @OneToMany(mappedBy = "promotion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<PromotionImage> promotionImages = new ArrayList<>();
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "promotion_images", joinColumns = @JoinColumn(name = "promotion_id"))
+    @Column(name = "images")
+    private Set<String> promotionImages;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "seo_id")
     private Seo seo;
-
-    public void addPromotionImage(PromotionImage image){
-        promotionImages.add(image);
-        image.setPromotion(this);
-    }
 }

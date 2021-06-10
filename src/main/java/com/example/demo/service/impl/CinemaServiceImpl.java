@@ -71,7 +71,6 @@ public class CinemaServiceImpl extends ImageServiceImpl implements CinemaService
     @Override
     public void deleteById(Long id) {
         Cinema cinema = new Cinema();
-
         deleteImage(cinema.getMainImage());
         deleteImage(cinema.getLogoImage());
         deleteImage(cinema.getUpperBannerImage());

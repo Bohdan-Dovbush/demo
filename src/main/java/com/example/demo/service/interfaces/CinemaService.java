@@ -13,14 +13,11 @@ public interface CinemaService {
     Optional<Cinema> findWithHallsById(long id);
     Optional<Cinema> findWithImagesAndHallsById(long id);
     List<Cinema> findAll();
-
     void addCinema(String name, String description, String rules, MultipartFile mainImage,
                      MultipartFile logoImage, MultipartFile upperBannerImage,
                      MultipartFile[] cinemaImages, Seo seo);
-
     void updateCinema(Long id, String name, String description, String rules, MultipartFile mainImage,
                       MultipartFile logoImage, MultipartFile upperBannerImage,
                       MultipartFile[] cinemaImages, Seo seo);
-
     void deleteById(Long id);
 }

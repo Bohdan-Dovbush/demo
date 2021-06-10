@@ -1,13 +1,13 @@
 package com.example.demo.entity.film;
 
 import com.example.demo.entity.booking.Place;
-import com.example.demo.entity.gallery.HallImage;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -36,8 +36,10 @@ public class Hall {
     @JoinColumn(name = "seos_id")
     private Seo seo;
 
-    @OneToMany(mappedBy = "hall",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<HallImage> hallImages = new ArrayList<>();
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "hall_images", joinColumns = @JoinColumn(name = "hall_id"))
+    @Column(name = "images")
+    private Set<String> hallImages;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
@@ -46,11 +48,6 @@ public class Hall {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "seance_id")
     private List<Seance> seances = new ArrayList<>();
-
-    public void addHallImage(HallImage image){
-        hallImages.add(image);
-        image.setHall(this);
-    }
 
     @Override
     public boolean equals(Object o) {

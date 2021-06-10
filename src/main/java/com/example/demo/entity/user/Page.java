@@ -1,13 +1,11 @@
 package com.example.demo.entity.user;
 
 import com.example.demo.entity.film.Seo;
-import com.example.demo.entity.gallery.PageImage;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -33,11 +31,8 @@ public class Page {
     @JoinColumn(name = "seo_id")
     private Seo seo;
 
-    @OneToMany(mappedBy = "page",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<PageImage> images = new ArrayList<>();
-
-    public void addPageImage(PageImage pageImage){
-        images.add(pageImage);
-        pageImage.setPage(this);
-    }
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "page_images", joinColumns = @JoinColumn(name = "page_id"))
+    @Column(name = "images")
+    private Set<String> pageImages;
 }

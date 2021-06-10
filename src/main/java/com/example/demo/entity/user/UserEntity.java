@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.*;
 
 @Getter
@@ -21,6 +22,7 @@ public class UserEntity {
     private Long id;
     private String firstName;
     private String lastName;
+    @Email(message = "Please enter the correct email")
     @Column(unique = true)
     private String email;
     private String password;
