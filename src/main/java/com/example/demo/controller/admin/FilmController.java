@@ -44,9 +44,9 @@ public class FilmController {
     }
 
     @PostMapping(value = "/saveFilm")
-    public String saveMovie(
+    public String saveFilm(
             @RequestParam String filmName,
-            @DateTimeFormat(iso = DateTimeFormat.ISO.NONE) LocalDate filmYear,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate filmYear,
             @RequestParam String description,
             @RequestParam Genre genres,
             @RequestParam Type type,
@@ -68,14 +68,14 @@ public class FilmController {
         return "redirect:/admin/film";
     }
 
-    @PostMapping(value = "/editFilm", params = {"id"})
-    public String editMovie(Model model, @RequestParam Long id) {
-        Optional<Film> filmOptional = filmService.findImagesById(id);
+    @GetMapping(value = "/editFilm", params = {"filmId"})
+    public String editFilm(Model model, @RequestParam Long filmId) {
+        Optional<Film> filmOptional = filmService.findImagesById(filmId);
         if(filmOptional.isPresent()) {
             model.addAttribute("film", filmOptional.get());
             return "admin/editFilm";
         }
-        return "redirect:admin/film";
+        return "redirect:/admin/film";
     }
 
     @RequestMapping(value = "/updateFilm")
@@ -104,9 +104,9 @@ public class FilmController {
         return "redirect:/admin/adminFilm";
     }
 
-    @GetMapping(value = "/deleteFilm", params = {"id"})
-    public String deleteFilm(@RequestParam Long id) {
-        filmService.deleteById(id);
-        return "redirect:admin/film";
+    @GetMapping(value = "/deleteFilm", params = {"filmId"})
+    public String deleteFilm(@RequestParam Long filmId) {
+        filmService.deleteById(filmId);
+        return "redirect:/admin/film";
     }
 }

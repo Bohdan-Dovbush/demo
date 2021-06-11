@@ -27,14 +27,19 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Description</label>
+                    <label for="description">Description</label>
                     <textarea required class="form-control" rows="3" name="description"
                               id="description" placeholder="Enter Description"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="filmYear">Film Year</label>
-                    <input required  type="date" class="form-control col-sm-12" name="filmYear" id="filmYear">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                                <i class="far fa-calendar-alt"></i>
+                        </span>
+                        <input required  type="date" class="form-control col-sm-12" name="filmYear" id="filmYear">
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -63,19 +68,40 @@
                 
                 <div class="form-group">
                     <label for="trailerLink">Trailer Link</label>
-                    <input required type="text" class="form-control" name="trailerLink"
+                    <input required type="url" class="form-control" name="trailerLink"
                            id="trailerLink" placeholder="Trailer Link">
                 </div>
 
                 <div class="form-group">
-                    <label>Date realise and finish:</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="far fa-calendar-alt"></i>
-                            </span>
-                        </div>
-                        <input required type="text" class="form-control float-left" id="reservation">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th style="width: 50%; text-align: center">Date film realise</th>
+                                <th style="width: 50%; text-align: center">Date film finish</th>
+                            </tr>
+                            </thead>
+                            <th:block>
+                                <tbody>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                             <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                        <input required  type="date" class="form-control" name="dateRealise" id="dateRealise">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                             <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                        <input required  type="date" class="form-control l" name="dateFinish" id="dateFinish">
+                                    </div>
+                                </td>
+                                </tbody>
+                            </th:block>
+                        </table>
                     </div>
                 </div>
 
@@ -141,10 +167,11 @@
 
                 <div >
                     <div th:insert="~{/admin/fragments/seoFragment :: seoFragment(
-                    url,
-                    title,
-                    keywords,
-                    description)}"></div>
+                    url = 'https://google.com',
+                    title = 'title',
+                    keywords = 'keywords',
+                    description = 'description')}">
+                    </div>
                 </div>
             </div>
             <!-- /.card-body -->

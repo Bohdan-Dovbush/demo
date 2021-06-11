@@ -57,7 +57,6 @@ public class Film {
     @JoinColumn(name = "seos_id")
     private Seo seo;
 
-
     @OneToMany(mappedBy = "film", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Actor> filmActor = new ArrayList<>();
 
@@ -77,5 +76,10 @@ public class Film {
     public void addFilmActor(Actor actor){
         filmActor.add(actor);
         actor.setFilm(this);
+    }
+
+    public String getMainImagePath() {
+        if(filmId == null || mainImage == null) return null;
+        return "/uploads/" + mainImage;
     }
 }

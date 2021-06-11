@@ -44,7 +44,7 @@
                     <div class="form-group ">
                         <div class="card-body childInCenter">
                             <div class="img-bordered">
-                                <img id="mainImage" class="img-fluid pad" th:src="@{'/uploads/'+${cinema.mainImage}}" style="width: 100px" alt="mainImage"/>
+                                <img id="mainImage" class="img-fluid pad" th:src="@{'/uploads/'+${cinema.mainImage}}" style="width: 200px" alt="mainImage"/>
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <input hidden type="file" id="mainImageInput" onchange="loadNewMainImage(this)" name="mainImageFile">
                         <div class="card-body">
                             <a onclick="addMainImage()"  class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-edit"></i> Edit
+                                <i class="fas fa-edit"></i>
                             </a>
                         </div>
                     </div>
@@ -64,14 +64,14 @@
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="logoImage" class="img-fluid pad" th:src="@{${cinema.logoImagePath}}" style="width: 100px" alt="logoImage"/>
+                            <img id="logoImage" class="img-fluid pad" th:src="@{${cinema.logoImagePath}}" style="width: 200px" alt="logoImage"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <input hidden type="file" id="logoImageInput" onchange="loadNewLogoImage(this)" name="logoImageFile" >
                         <div class="card-body">
                             <a  onclick="addLogoImage()" class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-edit" ></i> Edit
+                                <i class="fas fa-edit" ></i>
                             </a>
                         </div>
                     </div>
@@ -83,14 +83,14 @@
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="upperBannerImage" class="img-fluid pad" th:src="@{'/uploads/'+${cinema.upperBannerImage}}" style="width: 100px" alt="upperBannerImage"/>
+                            <img id="upperBannerImage" class="img-fluid pad" th:src="@{'/uploads/'+${cinema.upperBannerImage}}" style="width: 200px" alt="upperBannerImage"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <input hidden type="file" id="UpperBannerImageInput" onchange="loadNewUpperBannerImage(this)" name="UpperBannerImageFile" >
                         <div class="card-body">
                             <a  onclick="addUpperBannerImage()" class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-edit" ></i> Edit
+                                <i class="fas fa-edit" ></i>
                             </a>
                         </div>
                     </div>
@@ -117,7 +117,7 @@
                                         </div>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                <i class="fas fa-minus"></i>
+                                                <i class="fas fa-minus" style="color: orange"></i>
                                             </button>
                                             <button type="button" class="btn btn-tool  deleteButton" >
                                                 <input type="file"  hidden >

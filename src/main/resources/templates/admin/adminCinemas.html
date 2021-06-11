@@ -55,7 +55,7 @@
 
                             <td style="width: 10%; text-align: center" >
                                 <div class="card-body childInCenter">
-                                    <a th:href="@{/admin/cinema/edit (cinemaId = ${cinema.cinemaId})}">
+                                    <a th:href="@{/admin/cinema/edit (cinemaId = *{cinema.cinemaId})}">
                                         <button type="button" class="btn btn-warning btn-flat">Edit</button>
                                     </a>
                                 </div>
@@ -63,7 +63,7 @@
 
                             <td style="width: 10%; text-align: center">
                                 <div class="card-body childInCenter">
-                                    <a th:href="@{/admin/cinema/delete (cinemaId = ${cinema.cinemaId})}">
+                                    <a th:href="@{/admin/cinema/delete (cinemaId = *{cinema.cinemaId})}">
                                         <button type="button" class="btn btn-danger btn-flat">Delete</button>
                                     </a>
                                 </div>
