@@ -34,7 +34,7 @@ public class HallController {
         if (optionalHall.isPresent()) {
             model.addAttribute("cinemaId", cinemaId);
             model.addAttribute("hall", optionalHall.get());
-            return "admin/editHall";
+            return "admin/hall/editHall";
         }
         return "redirect:/admin/cinema";
     }
@@ -64,7 +64,7 @@ public class HallController {
     @GetMapping("/createHall")
     public ModelAndView createHall(ModelMap model, @RequestParam Long cinemaId) {
         model.addAttribute("cinemaId", cinemaId);
-        return new ModelAndView("admin/createHall", model);
+        return new ModelAndView("admin/hall/createHall", model);
     }
 
     @RequestMapping("/saveHall")

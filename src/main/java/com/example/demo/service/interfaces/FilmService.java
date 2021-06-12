@@ -26,4 +26,7 @@ public interface FilmService{
                  Type types, MultipartFile mainImage,
                  MultipartFile[] images, String trailerLink, Seo seo);
     void deleteById(Long id);
+    Integer findTotalCountFilm();
+    Integer findCurrentCountFilm();
+    Integer findFutureCountFilm();
 }

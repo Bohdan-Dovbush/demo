@@ -4,6 +4,7 @@ import com.example.demo.entity.film.Seo;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ public class Promotion {
     private Long promotionId;
     private String name;
     private LocalDateTime creationDate = LocalDateTime.now();
-    private LocalDateTime publishDate;
+    private LocalDate publishDate;
     @Column(columnDefinition = "text", length = 2000)
     private String description;
     private String mainImage;
@@ -37,4 +38,10 @@ public class Promotion {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "seo_id")
     private Seo seo;
+
+    @Transient
+    public String getMainImagePath() {
+        if(promotionId == null || mainImage == null) return null;
+        return "/uploads/" + mainImage;
+    }
 }

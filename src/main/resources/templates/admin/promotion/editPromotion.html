@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Promotion</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+</head>
+<body>
+<div th:insert="~{/admin/fragments/header :: header}"></div>
+<div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+
+<div class="content-wrapper">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Edit Promotion</h3>
+        </div>
+        <form enctype="multipart/form-data" method="post" th:action="@{/admin/promotion/update (promotionId= ${promotion.promotionId})}">
+            <input id="promotionId" th:value="${promotion.promotionId}" type="hidden" name="promotionId" >
+
+            <div class="card-body">
+
+                <div class="form-group">
+                    <label for="promotionName">Promotion Name</label>
+                    <input required  type="text" th:value="${promotion.name}" class="form-control" name="promotionName"
+                           id="promotionName" placeholder="Enter Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="promotionDescription">Description</label>
+                    <textarea th:text="${promotion.description}" class="form-control" rows="3" name="promotionDescription" id="promotionDescription"
+                               placeholder="Enter Description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="videoLink">Video Link</label>
+                    <input th:value="${promotion.videoLink}" type="text" class="form-control" name="promotionVideoLink"
+                           id="videoLink" placeholder="Video Link">
+                </div>
+
+                <div  class="form-group">
+                    <label for="promotionStatus">Status</label>
+                    <select   name="promotionStatus" id="promotionStatus" class="form-control select2bs4 select2-hidden-accessible" th:value="${promotion.active}" style="width: 100%;" >
+                        <option value=true th:selected="${promotion.active == true}" >On</option>
+                        <option value=false th:selected="${promotion.active == false}">Off</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="promotionPublishDate">Publish Date</label>
+                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                        <input required type="text" th:value="${promotion.publishDate}" name="promotionPublishDate" id="promotionPublishDate" class="form-control datetimepicker-input" data-target="#reservationdate">
+                    </div>
+                </div>
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                         <h3 class="card-title">Main Image</h3>
+                    </div>
+                    <div class="form-group ">
+                        <div class="card-body childInCenter">
+                            <img id="mainImage" th:src="@{${promotion.mainImagePath}}" class="img-fluid pad"  style="width: 200px" alt="mainImage"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input hidden type="file"  name="promotionMainImage" onchange="loadNewMainImage(this)" id="mainImageInput"  >
+                        <div class="card-body">
+                            <a onclick="addMainImage()" class="btn btn-app addSubImgButton" >
+                                <i class="fas fa-edit" ></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Additional Images</h3>
+                    </div>
+                    <div class="form-group">
+                        <div class="card-body">
+                            <a  onclick="addNewImages()" class="btn btn-app addSubImgButton" >
+                                <i class="fas fa-plus" ></i>
+                            </a>
+                        </div>
+                        <div id="imagesRow" class="row">
+                            <div style="display: none" id="emptyCard" class="col-md-6">
+                                <div class="card card-widget">
+                                    <div class="card-header">
+                                        <div class="user-block">
+                                            <span class="description"></span>
+                                        </div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                <i class="fas fa-minus" style="color: orange"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool  deleteButton" >
+                                                <input type="file" hidden >
+                                                <i class="fas fa-times" style="color: red"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <img class="img-fluid pad" src="" alt="Photo">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div th:object="${promotionImages}" th:each="promotionImages:${promotion.getPromotionImages()}" class="col-md-6">
+                                <div class="card card-widget">
+                                    <div class="card-header">
+                                        <div class="user-block">
+                                            <span th:text="${promotionImages.toString()}" class="description"><a href="#"></a></span>
+                                        </div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool"  data-card-widget="collapse">
+                                                <i class="fas fa-minus" style="color: orange"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool deleteButton" >
+                                                <i class="fas fa-times" style="color: red"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <img id="promotionImages" name="promotionImages" class="img-fluid pad" th:src="@{'/uploads/'+${promotion.promotionImages[0]}}" alt="Photo">
+                                        <input hidden type="file" onchange="loadNewImages(this)" name="promotionImages">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:object="${promotion}">
+                    <div th:insert="~{/admin/fragments/seoFragment :: seoFragment(
+                    url=*{seo != null} ? *{seo.url} : '',
+                    title=*{seo != null} ? *{seo.title} : '',
+                    keywords=*{seo != null} ? *{seo.keywords}  : '',
+                    description=*{seo != null} ? *{seo.description}  : '')}"></div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit"  class="btn btn-primary">Save</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+<script>
+    function addNewImages() {
+        let emptyCard = $('#emptyCard');
+        let emptyClone = $(emptyCard).clone();
+        let input = $(emptyClone).find('input');
+
+
+        $(input).attr('name','promotionImages');
+        $(input).change(function () {
+            let file = this.files[0];
+            let reader = new FileReader();
+
+
+            reader.onload = function (e) {
+                $(emptyClone).find('span').text(file.name);
+                $(emptyClone).find('img').attr('src',e.target.result);
+                $(emptyClone).find('.deleteButton').click(function () {
+                    removeCard(this);
+                });
+                $(emptyCard).after(emptyClone);
+                $(emptyClone).show();
+            }
+            reader.readAsDataURL(file);
+        });
+        $(input).click();
+    }
+    function removeCard(button) {
+        $(button).parents('.col-md-6').remove();
+    }
+    function removeImageCard(button) {
+        let imageId = $(button).children('input').attr('value');
+        let deletedImageInput = $('#deletedImageInput');
+        let inputClone = $(deletedImageInput).clone();
+        $(inputClone).val(imageId);
+        $(inputClone).attr('name','deletedImages')
+        $(deletedImageInput).after(inputClone);
+        $(button).parents('.col-md-6').remove();
+    }
+    function addMainImage() {
+        $('#mainImageInput').click();
+    }
+    function loadNewMainImage(input){
+        let file = input.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#mainImage').attr('src',e.target.result);
+        }
+        reader.readAsDataURL(file)
+    }
+</script>
+</html>

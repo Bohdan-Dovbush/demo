@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cinemas</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+    <style>
+        table, td, th {
+            border: 1px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        td {
+            height: 50%;
+            text-align: center;
+            vertical-align: center;
+        }
+    </style>
+</head>
+<body>
+<div th:insert="~{/admin/fragments/header :: header}"></div>
+<div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Cinema</h3>
+                </div>
+                <form  th:action="@{/admin/cinema/createCinema}" >
+                    <div class="card-body">
+                        <button   class="btn btn-app addSubImgButton" >
+                            <i class="fas fa-plus" ></i>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="card-body">
+                    <table class="table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Cinema Name</th>
+                            <th>Main image</th>
+                            <th>Status</th>
+                            <th style="width: 10%">Edit</th>
+                            <th style="width: 10%">Delete</th>
+                        </tr>
+                        </thead>
+                        <th:block th:each="cinema:${cinemas}">
+                            <tbody>
+                            <td>
+                                <div class="card-body" th:text="${cinema.cinemaId}"></div>
+                            </td>
+
+                            <td>
+                                <div class="card-body" th:text="${cinema.name}"></div>
+                            </td>
+
+                            <td>
+                                <div class="card-body">
+                                    <img th:src="@{${cinema.mainImagePath}}" style="width: 200px" alt="mainImage"/>
+                                </div>
+                            </td>
+
+                            <td>
+                                <label>
+                                    <select   name="isActive"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
+                                        <option value=true th:selected="${cinema.active == true}" >On</option>
+                                        <option value=false th:selected="${cinema.active == false}">Off</option>
+                                    </select>
+                                </label>
+                            </td>
+
+                            <td style="width: 10%">
+                                <div class="card-body childInCenter">
+                                    <a th:href="@{/admin/cinema/edit (cinemaId = *{cinema.cinemaId})}">
+                                        <button type="button" class="btn btn-warning btn-flat">Edit</button>
+                                    </a>
+                                </div>
+                            </td>
+
+                            <td style="width: 10%">
+                                <div class="card-body childInCenter">
+                                    <a th:href="@{/admin/cinema/delete (cinemaId = *{cinema.cinemaId})}">
+                                        <button type="button" class="btn btn-danger btn-flat">Delete</button>
+                                    </a>
+                                </div>
+                            </td>
+                            </tbody>
+                        </th:block>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#logoImageInput').change(function () {
+            loadImage(this);
+        });
+    });
+    function loadImage(input) {
+        let file = input.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#logoImage').attr('src',e.target.result);
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+</body>
+</html>

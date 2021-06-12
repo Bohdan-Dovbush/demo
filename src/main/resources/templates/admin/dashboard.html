@@ -2,12 +2,72 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Statistic</title>
     <style th:replace="/admin/fragments/style"></style>
     <div th:replace="/admin/fragments/script"></div>
 </head>
 <body>
 <div th:insert="~{/admin/fragments/header :: header}"></div>
 <div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+
+<div class="content-wrapper p-5">
+    <h1 class="m-0">Statistic</h1>
+    <hr class="pt-0 mt-0">
+    <div class="row">
+
+        <div class="col-3">
+            <!-- small card -->
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3 th:text="${users_count}"></h3>
+                    <p>User register</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <!-- small card -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3 th:text="${total_film}"></h3>
+                    <p>Total film</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <!-- small card -->
+            <div class="small-box bg-blue">
+                <div class="inner">
+                    <h3 th:text="${current_film}"></h3>
+                    <p>Current film</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <!-- small card -->
+            <div class="small-box bg-gradient-orange">
+                <div class="inner">
+                    <h3 th:text="${future_film}"></h3>
+                    <p>Future film</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

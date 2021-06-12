@@ -78,6 +78,7 @@ public class Film {
         actor.setFilm(this);
     }
 
+    @Transient
     public String getMainImagePath() {
         if(filmId == null || mainImage == null) return null;
         return "/uploads/" + mainImage;

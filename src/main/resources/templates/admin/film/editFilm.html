@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Film</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+</head>
+<body>
+<div th:insert="~{/admin/fragments/header :: header}"></div>
+<div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+
+<div class="content-wrapper">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Edit Film</h3>
+        </div>
+
+        <form id="saveFilmForm"  enctype="multipart/form-data" method="post" th:action="@{/admin/film/updateFilm (filmId= ${film.filmId})}">
+            <input id="filmId" type="hidden" th:value="${film.filmId}">
+            <div class="card-body">
+
+                <div class="form-group">
+                    <label for="name">Film Name</label>
+                    <input required th:value="${film.name}" type="text" class="form-control" name="name"
+                           id="name" placeholder="Enter Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea required th:text="${film.description}" class="form-control" rows="3" name="description"
+                              id="description" placeholder="Enter Description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="filmYear">Film Year</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                                <i class="far fa-calendar-alt"></i>
+                        </span>
+                        <input required type="date" class="form-control row-cols-1" placeholder="YYYY"
+                               th:value="${film.filmYear}" name="filmYear" id="filmYear">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="genres">Film genre</label>
+                    <select required class="form-control" name="genres" id="genres">
+                        <option th:each="genre : ${T(com.example.demo.entity.enums.Genre).values()}"
+                                th:value="${genre}" th:text="${genre.name}" th:selected="${film.genre}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="types">Film type</label>
+                    <select required class="form-control" name="types" id="types">
+                        <option th:each="types : ${T(com.example.demo.entity.enums.Type).values()}"
+                                th:value="${types}" th:text="${types.name}" th:selected="${film.type}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="language">Film language</label>
+                    <select required class="form-control" name="language" id="language">
+                        <option th:each="language : ${T(com.example.demo.entity.enums.Language).values()}"
+                                th:value="${language}" th:text="${language.name}" th:selected="${film.language}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="trailerLink">Trailer Link</label>
+                    <input required th:value="${film.trailerLink}" type="text" class="form-control" name="trailerLink"
+                           id="trailerLink" placeholder="Trailer Link">
+                </div>
+
+                <div class="form-group">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th style="width: 50%; text-align: center">Date film realise</th>
+                                <th style="width: 50%; text-align: center">Date film finish</th>
+                            </tr>
+                            </thead>
+                            <th:block>
+                                <tbody>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                             <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                        <label for="dateRealise"></label><input required type="date" th:value="${film.dateRelease}" class="form-control" name="dateRealise" id="dateRealise">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                             <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                        <label for="dateFinish"></label><input required type="date" th:value="${film.dateFinish}" class="form-control" name="dateFinish" id="dateFinish">
+                                    </div>
+                                </td>
+                                </tbody>
+                            </th:block>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                         <h3 class="card-title">Main Image</h3>
+                    </div>
+                    <div class="form-group ">
+                        <div class="card-body childInCenter">
+                            <input hidden type="file" id="mainImageInput" onchange="loadNewMainImage(this)" name="mainImageFile">
+                            <img id="mainImage" class="img-fluid pad" th:src="@{${film.mainImagePath}}" style="width: 200px" alt="mainImage"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="card-body">
+                            <a onclick="addMainImage()" class="btn btn-app addSubImgButton" >
+                                <i class="fas fa-edit" ></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Additional Images</h3>
+                    </div>
+                    <div class="form-group">
+                        <div class="card-body">
+                            <a  onclick="addNewImages()" class="btn btn-app addSubImgButton" >
+                                <i class="fas fa-plus" ></i>
+                            </a>
+                        </div>
+                        <label for="deletedImageInput"></label><input hidden type="number" id="deletedImageInput" >
+                        <div id="imagesRow" class="row">
+                            <div style="display: none" id="emptyCard" class="col-md-6">
+                                <div class="card card-widget">
+                                    <div class="card-header">
+                                        <div class="user-block">
+                                            <span class="description"></span>
+                                        </div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                <i class="fas fa-minus" style="color: orange"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool  deleteButton" >
+                                                <input type="file"  hidden >
+                                                <i class="fas fa-times" style="color: red"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <img class="img-fluid pad" src="" alt="Photo">
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div th:object="${filmImages}" th:each="filmImages:${film.getFilmImages()}" class="col-md-6">
+                                <div class="card card-widget">
+                                    <div class="card-header">
+                                        <div class="user-block">
+                                            <span th:text="${filmImages.toString()}" class="description"><a href="#"></a></span>
+                                        </div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool"  data-card-widget="collapse">
+                                                <i class="fas fa-minus" style="color: orange"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool deleteButton" >
+                                                <i class="fas fa-times" style="color: red"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <img id="filmImages" name="filmImages" class="img-fluid pad" th:src="@{'/uploads/'+${film.filmImages[0]}}" alt="Photo">
+                                        <input hidden type="file" onchange="loadNewImages(this)" name="filmImages">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div th:object="${film}">
+                    <div th:insert="~{/admin/fragments/seoFragment :: seoFragment(
+                    url=*{seo != null} ? *{seo.url} : '',
+                    title=*{seo != null} ? *{seo.title} : '',
+                    keywords=*{seo != null} ? *{seo.keywords}  : '',
+                    description=*{seo != null} ? *{seo.description}  : '')}"></div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" form="saveFilmForm" class="btn btn-primary">Save</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+<script>
+    function addMainImage() {
+        $('#mainImageInput').click();
+    }
+    function loadNewMainImage(input){
+        let file = input.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#mainImage').attr('src',e.target.result);
+        }
+        reader.readAsDataURL(file)
+    }
+    function loadNewImages(input) {
+        loadImage(input,$('#cinemaImages'));
+    }
+    function loadImage(input,imageToShow) {
+        let file = input.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $(imageToShow).attr('src',e.target.result);
+        }
+        reader.readAsDataURL(file)
+    }
+
+    function addNewImages() {
+        let emptyCard = $('#emptyCard');
+        let emptyClone = $(emptyCard).clone();
+        let input = $(emptyClone).find('input');
+
+
+        $(input).attr('name','filmImages');
+        $(input).change(function () {
+            let file = this.files[0];
+            let reader = new FileReader();
+
+
+            reader.onload = function (e) {
+                $(emptyClone).find('span').text(file.name);
+                $(emptyClone).find('img').attr('src',e.target.result);
+                $(emptyClone).find('.deleteButton').click(function () {
+                    removeImageCard(this);
+                });
+                $(emptyCard).after(emptyClone);
+                $(emptyClone).show();
+            }
+            reader.readAsDataURL(file);
+        });
+        $(input).click();
+    }
+</script>
+</html>

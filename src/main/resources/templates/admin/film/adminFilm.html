@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Films</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+</head>
+<body>
+<div th:insert="~{/admin/fragments/header :: header}"></div>
+<div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Film</h3>
+                </div>
+                <form  th:action="@{/admin/film/addFilm}" >
+                    <div class="card-body">
+                        <button   class="btn btn-app addSubImgButton" >
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="card-body">
+                    <table class="table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="width: 1%; text-align: center">Id</th>
+                            <th style="width: 19%; text-align: center">Name</th>
+                            <th style="width: 60%; text-align: center">Main image</th>
+                            <th style="width: 10%; text-align: center">Edit</th>
+                            <th style="width: 10%; text-align: center">Delete</th>
+                        </tr>
+                        </thead>
+                        <th:block th:each="film:${films}">
+                            <tbody>
+
+                            <td style="width: 1%; text-align: center">
+                                <div class="card-body" th:text="${film.filmId}"></div>
+                            </td>
+
+                            <td style="width: 19%; text-align: center">
+                                <div class="card-body" th:text="${film.name}"></div>
+                            </td>
+
+                            <td style="width: 60%; text-align: center">
+                                <div class="card-body">
+                                    <img th:src="@{${film.mainImagePath}}" style="width: 200px" alt="mainImage"/>
+                                </div>
+                            </td>
+
+                            <td style="width: 10%; text-align: center" >
+                                <div class="card-body childInCenter">
+                                    <a th:href="@{/admin/film/editFilm (filmId = ${film.filmId})}">
+                                        <button type="button" class="btn btn-warning btn-flat">Edit</button>
+                                    </a>
+                                </div>
+                            </td>
+
+                            <td style="width: 10%; text-align: center">
+                                <div class="card-body childInCenter">
+                                    <a th:href="@{/admin/film/deleteFilm (filmId = ${film.filmId})}">
+                                        <button type="button" class="btn btn-danger btn-flat">Delete</button>
+                                    </a>
+                                </div>
+                            </td>
+                            </tbody>
+                        </th:block>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>
+<script>
+    $(document).ready(function () {
+        $('#mainImageInput').change(function () {
+            loadImage(this);
+        });
+    });
+    function loadImage(input) {
+        let file = input.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#mainImage').attr('src',e.target.result);
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.film.Cinema;
 import com.example.demo.entity.film.Seo;
-import com.example.demo.repository.interfaces.CinemaRepository;
+import com.example.demo.repository.CinemaRepository;
 import com.example.demo.service.interfaces.CinemaService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,29 +42,48 @@ public class CinemaServiceImpl extends ImageServiceImpl implements CinemaService
     }
 
     @Override
-    public void addCinema(String name, String description, String rules, MultipartFile mainImage, MultipartFile logoImage, MultipartFile upperBannerImage, MultipartFile[] cinemaImages, Seo seo) {
+    public void addCinema(String name,
+                          String description,
+                          String rules,
+                          Boolean isActive,
+                          MultipartFile mainImage,
+                          MultipartFile logoImage,
+                          MultipartFile upperBannerImage,
+                          MultipartFile[] cinemaImages,
+                          Seo seo) {
         Cinema cinema = new Cinema();
         cinema.setName(name);
         cinema.setDescription(description);
         cinema.setRules(rules);
+        cinema.setActive(isActive);
         cinema.setSeo(seo);
         checkCinemaImage(cinema, mainImage, logoImage, upperBannerImage, cinemaImages);
         cinemaRepository.save(cinema);
     }
 
     @Override
-    public void updateCinema(Long id, String name, String description, String rules, MultipartFile mainImage, MultipartFile logoImage, MultipartFile upperBannerImage, MultipartFile[] cinemaImages, Seo seo) {
+    public void updateCinema(Long id,
+                             String name,
+                             String description,
+                             String rules,
+                             Boolean isActive,
+                             MultipartFile mainImage,
+                             MultipartFile logoImage,
+                             MultipartFile upperBannerImage,
+                             MultipartFile[] cinemaImages,
+                             Seo seo) {
         findWithImagesById(id).ifPresent(cinema -> {
             cinema.setName(name);
             cinema.setDescription(description);
             cinema.setRules(rules);
+            cinema.setActive(isActive);
 
             checkCinemaImage(cinema, mainImage, logoImage, upperBannerImage, cinemaImages);
 
             if (!cinema.getSeo().equals(seo)){
                 cinema.setSeo(seo);
             }
-            cinemaRepository.save(cinema);
+            cinemaRepository.saveAndFlush(cinema);
         });
     }
 

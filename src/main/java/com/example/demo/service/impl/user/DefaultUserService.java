@@ -6,9 +6,9 @@ import com.example.demo.entity.user.UserEntity;
 import com.example.demo.exeption.InvalidTokenException;
 import com.example.demo.exeption.UnkownIdentifierException;
 import com.example.demo.exeption.UserAlreadyExistException;
-import com.example.demo.repository.interfaces.user.GroupRepository;
-import com.example.demo.repository.interfaces.user.SecureTokenRepository;
-import com.example.demo.repository.interfaces.user.UserEntityRepository;
+import com.example.demo.repository.user.GroupRepository;
+import com.example.demo.repository.user.SecureTokenRepository;
+import com.example.demo.repository.user.UserEntityRepository;
 import com.example.demo.service.interfaces.user.EmailService;
 import com.example.demo.service.interfaces.user.SecureTokenService;
 import com.example.demo.service.interfaces.user.UserEntityService;
@@ -61,7 +61,7 @@ public class DefaultUserService implements UserEntityService {
 
     @Override
     public boolean checkIfUserExist(String email) {
-        return userRepository.findByEmail(email) != null ? true : false;
+        return userRepository.findByEmail(email) != null;
     }
 
     @Override
@@ -103,6 +103,11 @@ public class DefaultUserService implements UserEntityService {
             // we will ignore in case account is not verified or account does not exists
             throw new UnkownIdentifierException("unable to find account or account is not active");
         } return user;
+    }
+
+    @Override
+    public Integer findCountUser() {
+        return userRepository.findCountUser();
     }
 
     private void updateUserGroup(UserEntity userEntity) {

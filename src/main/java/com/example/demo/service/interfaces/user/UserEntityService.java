@@ -13,4 +13,5 @@ public interface UserEntityService {
     void sendRegistrationConfirmationEmail(final UserEntity user);
     boolean verifyUser(final String token) throws InvalidTokenException;
     UserEntity getUserById(final String id) throws UnkownIdentifierException;
+    Integer findCountUser();
 }

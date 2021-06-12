@@ -35,4 +35,10 @@ public class Page {
     @CollectionTable(name = "page_images", joinColumns = @JoinColumn(name = "page_id"))
     @Column(name = "images")
     private Set<String> pageImages;
+
+    @Transient
+    public String getMainImagePath() {
+        if(pageId == null || mainImage == null) return null;
+        return "/uploads/" + mainImage;
+    }
 }

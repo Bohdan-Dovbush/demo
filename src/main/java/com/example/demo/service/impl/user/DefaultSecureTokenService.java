@@ -1,7 +1,7 @@
 package com.example.demo.service.impl.user;
 
 import com.example.demo.entity.user.SecureToken;
-import com.example.demo.repository.interfaces.user.SecureTokenRepository;
+import com.example.demo.repository.user.SecureTokenRepository;
 import com.example.demo.service.interfaces.user.SecureTokenService;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;

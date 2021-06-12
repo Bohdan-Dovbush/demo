@@ -35,12 +35,12 @@ public class FilmController {
     @GetMapping
     public String films(Model model) {
         model.addAttribute("films", filmService.findAll());
-        return "admin/adminFilm";
+        return "admin/film/adminFilm";
     }
 
     @GetMapping("/addFilm")
     public String addFilm() {
-        return "admin/createFilm";
+        return "admin/film/createFilm";
     }
 
     @PostMapping(value = "/saveFilm")
@@ -73,22 +73,22 @@ public class FilmController {
         Optional<Film> filmOptional = filmService.findImagesById(filmId);
         if(filmOptional.isPresent()) {
             model.addAttribute("film", filmOptional.get());
-            return "admin/editFilm";
+            return "admin/film/editFilm";
         }
         return "redirect:/admin/film";
     }
 
     @RequestMapping(value = "/updateFilm")
     public String updateFilm(
-            @DateTimeFormat(iso = DateTimeFormat.ISO.NONE) LocalDate filmYear,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate filmYear,
             @RequestParam Genre genres,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateRealise,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFinish,
             @RequestParam Language language,
-            @RequestParam List<Actor> actors,
-            @RequestParam Type types,
-            @RequestParam Long id,
-            @RequestParam String name,
+            @RequestParam(required = false) List<Actor> actors,
+            @RequestParam(name = "types") Type types,
+            @RequestParam Long filmId,
+            @RequestParam(name = "name") String name,
             @RequestParam String description,
             @RequestParam(required = false, name = "mainImage") MultipartFile mainImage,
             @RequestParam(required = false) MultipartFile[] filmImages,
@@ -98,10 +98,10 @@ public class FilmController {
             @RequestParam String seoKeyWords,
             @RequestParam String seoDescription) {
 
-        filmService.updateFilm(id, name, filmYear, description, genres, dateRealise, dateFinish, language,
+        filmService.updateFilm(filmId, name, filmYear, description, genres, dateRealise, dateFinish, language,
                 actors, types, mainImage, filmImages, trailerLink, new Seo(seoURL, seoTitle, seoKeyWords, seoDescription));
 
-        return "redirect:/admin/adminFilm";
+        return "redirect:/admin/film";
     }
 
     @GetMapping(value = "/deleteFilm", params = {"filmId"})

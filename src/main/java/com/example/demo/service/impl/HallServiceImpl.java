@@ -2,8 +2,8 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.film.Hall;
 import com.example.demo.entity.film.Seo;
-import com.example.demo.repository.interfaces.CinemaRepository;
-import com.example.demo.repository.interfaces.HallRepository;
+import com.example.demo.repository.CinemaRepository;
+import com.example.demo.repository.HallRepository;
 import com.example.demo.service.interfaces.HallService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

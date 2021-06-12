@@ -69,8 +69,20 @@ public class Cinema {
     }
 
     @Transient
+    public String getMainImagePath() {
+        if(cinemaId == null || mainImage == null) return null;
+        return "/uploads/" + mainImage;
+    }
+
+    @Transient
     public String getLogoImagePath() {
         if(cinemaId == null || logoImage == null) return null;
         return "/uploads/" + logoImage;
+    }
+
+    @Transient
+    public String getUpperBannerImagePath() {
+        if(cinemaId == null || upperBannerImage == null) return null;
+        return "/uploads/" + upperBannerImage;
     }
 }

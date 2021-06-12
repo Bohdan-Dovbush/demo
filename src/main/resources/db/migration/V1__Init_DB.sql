@@ -117,7 +117,7 @@ create table news (
     description text,
     main_image varchar(255),
     name varchar(255),
-    publish_date datetime,
+    publish_date date,
     video_link varchar(255),
     seo_id bigint,
     primary key (news_id)) engine=InnoDB;
@@ -148,7 +148,7 @@ create table place (
     hall_id bigint,
     primary key (place_id)) engine=InnoDB;
 
-create table promotion (promotion_id bigint not null auto_increment, active bit, creation_date datetime, description text, main_image varchar(255), name varchar(255), publish_date datetime, video_link varchar(255), seo_id bigint, primary key (promotion_id)) engine=InnoDB;
+create table promotion (promotion_id bigint not null auto_increment, active bit, creation_date datetime, description text, main_image varchar(255), name varchar(255), publish_date date, video_link varchar(255), seo_id bigint, primary key (promotion_id)) engine=InnoDB;
 create table promotion_images (promotion_id bigint not null, images varchar(255)) engine=InnoDB;
 create table role_type (id bigint not null auto_increment, code varchar(255) not null, name varchar(255), primary key (id)) engine=InnoDB;
 create table seance (seance_id bigint not null auto_increment, date date, time time, cinema_id bigint, film_id bigint, hall_id bigint, primary key (seance_id)) engine=InnoDB;

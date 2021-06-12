@@ -61,4 +61,10 @@ public class Hall {
     public int hashCode() {
         return Objects.hash(hallId);
     }
+
+    @Transient
+    public String getMainImagePath() {
+        if(hallId == null || schemaImage == null) return null;
+        return "/uploads/" + schemaImage;
+    }
 }

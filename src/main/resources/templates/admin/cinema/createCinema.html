@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Movie</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+</head>
+<body>
+<div th:insert="~{/admin/fragments/header :: header}"></div>
+<div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+
+<div class="content-wrapper">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Create Cinema</h3>
+        </div>
+
+        <form  id="saveMovieForm" enctype="multipart/form-data" method="post"   th:action="@{/admin/cinema/saveCinema}">
+            <div class="card-body">
+
+                <div class="form-group">
+                    <label for="cinemaName">Cinema Name</label>
+                    <input required type="text" class="form-control" name="cinemaName"
+                           id="cinemaName" placeholder="Enter Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea required class="form-control" rows="3" name="cinemaDescription"
+                                                               id="description" placeholder="Enter Description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="rules">Rules</label>
+                    <textarea required class="form-control" rows="3" name="cinemaRules"
+                                                         id="rules" placeholder="Enter Rules"></textarea>
+                </div>
+
+                <div  class="form-group">
+                    <label for="isActive">Status</label>
+                    <select name="isActive" id="isActive" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;">
+                        <option value="true">On</option>
+                        <option value="false">Off</option>
+                    </select>
+                </div>
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                         <h3 class="card-title">Main Image</h3>
+                    </div>
+                    <div class="form-group ">
+                        <div class="card-body childInCenter">
+                            <img  id="mainImage" class="img-fluid pad" style="width: 200px" alt="mainImage"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <form method="post" enctype="multipart/form-data">
+                            <input hidden type="file" name="mainImageFile" id="mainImageInput" onchange="loadNewMainImage(this)">
+                        </form>
+                        <div class="card-body">
+                            <a onclick="addMainImage()"  class="btn btn-app addSubImgButton" >
+                                <i class="fas fa-edit" ></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Logo Image</h3>
+                    </div>
+                    <div class="form-group ">
+                        <div class="card-body childInCenter">
+                            <img id="logoImage" class="img-fluid pad"  style="width: 200px" alt="logoImage"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input hidden type="file" id="logoImageInput" onchange="loadNewLogoImage(this)" name="logoImageFile">
+                        <div class="card-body">
+                            <a onclick="addLogoImage()"  class="btn btn-app addSubImgButton" >
+                                <i class="fas fa-edit" ></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Upper Banner Image</h3>
+                    </div>
+                    <div class="form-group ">
+                        <div class="card-body childInCenter">
+                            <img id="upperBannerImage" class="img-fluid pad"  style="width: 200px" alt="upperBannerImage"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input hidden type="file" onchange="loadNewUpperBannerImage(this)" id="UpperBannerImageInput" name="UpperBannerImageFile" >
+                        <div class="card-body">
+                            <a  onclick="addUpperBannerImage()"  class="btn btn-app addSubImgButton" >
+                                <i class="fas fa-edit" ></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Additional Images</h3>
+                    </div>
+                    <div class="form-group">
+                        <div class="card-body">
+                            <a onclick="addNewImages()"  class="btn btn-app addSubImgButton">
+                                <i class="fas fa-plus" ></i>
+                            </a>
+                        </div>
+
+                        <div id="imagesRow" class="row">
+                            <div style="display: none" id="emptyCard" class="col-md-6">
+                                <div class="card card-widget">
+                                    <div class="card-header">
+                                        <div class="user-block">
+                                            <span class="description"></span>
+                                        </div>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                <i class="fas fa-minus" style="color: orange"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool  deleteButton" >
+                                                <input type="file" hidden>
+                                                <i class="fas fa-times" style="color: red"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <img class="img-fluid pad" src="" alt="Photo">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div >
+                    <div th:insert="~{/admin/fragments/seoFragment :: seoFragment(
+                    url = 'https://google.com',
+                    title = 'title',
+                    keywords = 'keywords',
+                    description = 'description')}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" form="saveMovieForm" class="btn btn-primary">Save</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+<script>
+    function addNewImages() {
+        let emptyCard = $('#emptyCard');
+        let emptyClone = $(emptyCard).clone();
+        let input = $(emptyClone).find('input');
+
+
+        $(input).attr('name','cinemaImages');
+        $(input).change(function () {
+            let file = this.files[0];
+            let reader = new FileReader();
+
+
+            reader.onload = function (e) {
+                $(emptyClone).find('span').text(file.name);
+                $(emptyClone).find('img').attr('src',e.target.result);
+                $(emptyClone).find('.deleteButton').click(function () {
+                    removeCard(this);
+                });
+                $(emptyCard).after(emptyClone);
+                $(emptyClone).show();
+            }
+            reader.readAsDataURL(file);
+        });
+        $(input).click();
+    }
+    function addMainImage() {
+        $('#mainImageInput').click();
+    }
+    function loadNewMainImage(input) {
+        loadImage(input,$('#mainImage'));
+    }
+    function addLogoImage() {
+        $('#logoImageInput').click();
+    }
+    function loadNewLogoImage(input) {
+        loadImage(input,$('#logoImage'));
+    }
+    function addUpperBannerImage() {
+        $('#UpperBannerImageInput').click();
+    }
+    function loadNewUpperBannerImage(input) {
+        loadImage(input,$('#upperBannerImage'));
+    }
+    function loadImage(input,imageToShow) {
+        let file = input.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $(imageToShow).attr('src',e.target.result);
+        }
+        reader.readAsDataURL(file)
+    }
+
+    function removeCard(button) {
+        $(button).parents('.col-md-6').remove();
+    }
+</script>
+</html>

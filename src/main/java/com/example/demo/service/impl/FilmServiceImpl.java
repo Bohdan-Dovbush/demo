@@ -6,7 +6,7 @@ import com.example.demo.entity.enums.Type;
 import com.example.demo.entity.film.Actor;
 import com.example.demo.entity.film.Film;
 import com.example.demo.entity.film.Seo;
-import com.example.demo.repository.interfaces.FilmRepository;
+import com.example.demo.repository.FilmRepository;
 import com.example.demo.service.interfaces.FilmService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,6 +100,21 @@ public class FilmServiceImpl extends ImageServiceImpl implements FilmService {
         deleteImage(film.getMainImage());
         deleteImageSet(film.getFilmImages());
         filmRepository.deleteById(id);
+    }
+
+    @Override
+    public Integer findTotalCountFilm() {
+        return filmRepository.findTotalCountFilm();
+    }
+
+    @Override
+    public Integer findCurrentCountFilm() {
+        return filmRepository.findCurrentCountFilm();
+    }
+
+    @Override
+    public Integer findFutureCountFilm() {
+        return filmRepository.findFutureCountFilm();
     }
 
     void checkFilmImage(Film film, MultipartFile mainImage, MultipartFile[] filmImages) {
