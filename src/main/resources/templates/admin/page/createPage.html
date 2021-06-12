@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Create Page</title>
@@ -25,8 +25,10 @@
 
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea  class="form-control" rows="3" name="pageDescription"
-                               placeholder="Enter Description"></textarea>
+                    <label>
+<textarea  class="form-control" rows="3" name="pageDescription"
+           placeholder="Enter Description"></textarea>
+                    </label>
                 </div>
                 <div class="form-group">
                     <label for="videoLink">Video Link</label>
@@ -35,10 +37,12 @@
                 </div>
                 <div  class="form-group">
                     <label >Status</label>
-                    <select   name="pageStatus"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
-                        <option value=true >On</option>
-                        <option value=false  >Off</option>
-                    </select>
+                    <label>
+                        <select   name="pageStatus"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
+                            <option value=true >On</option>
+                            <option value=false  >Off</option>
+                        </select>
+                    </label>
                 </div>
                 <div class="card card-primary">
                     <div class="card-header">
@@ -46,7 +50,7 @@
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="mainImage" class="img-fluid pad"  style="max-height: 400px"/>
+                            <img id="mainImage" class="img-fluid pad"  style="width: 200px" alt="mainImage"/>
                         </div>
                     </div>
                     <div class="form-group">

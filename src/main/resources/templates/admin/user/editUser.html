@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Edit User</title>
@@ -17,7 +17,9 @@
         </div>
 
         <form th:object="${user}" id="saveUserForm"    th:action="@{/admin/updateUser}">
-            <input hidden th:value="*{getUserId()}" name="userId">
+            <label>
+                <input hidden th:value="*{getUserId()}" name="userId">
+            </label>
             <div class="card-body">
                 <div class="form-group">
                     <label for="UserFirstName">First Name</label>
@@ -57,7 +59,9 @@
                 <div class="form-group">
                     <label>Date Of BirthDay</label>
                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                        <input required type="text" th:value="*{getDateOfBirthday()}" name="userDOB" class="form-control datetimepicker-input" data-target="#reservationdate">
+                        <label>
+                            <input required type="text" th:value="*{getDateOfBirthday()}" name="userDOB" class="form-control datetimepicker-input" data-target="#reservationdate">
+                        </label>
                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -65,30 +69,38 @@
                 </div>
                 <div  class="form-group">
                     <label >Gender</label>
-                    <select   name="userGender"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
-                        <option value="0" th:selected="*{getGender().name() == 'MALE'}">Male</option>
-                        <option value="1" th:selected="*{getGender().name() == 'FEMALE'}" >Female</option>
-                    </select>
+                    <label>
+                        <select   name="userGender"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
+                            <option value="0" th:selected="*{getGender().name() == 'MALE'}">Male</option>
+                            <option value="1" th:selected="*{getGender().name() == 'FEMALE'}" >Female</option>
+                        </select>
+                    </label>
                 </div>
                 <div  class="form-group">
                     <label  >City </label>
-                    <select   name="userCityId"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
-                        <option th:each="city : ${cities}" th:value="${city.getCityId()}" th:text="${city.getName()}"
-                                th:selected="${user.getCity().getCityId() == city.getCityId()}"></option>
-                    </select>
+                    <label>
+                        <select   name="userCityId"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
+                            <option th:each="city : ${cities}" th:value="${city.getCityId()}" th:text="${city.getName()}"
+                                    th:selected="${user.getCity().getCityId() == city.getCityId()}"></option>
+                        </select>
+                    </label>
                 </div>
                 <div  class="form-group">
                     <label  >Language </label>
-                    <select   name="userLanguageId"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
-                        <option th:each="language : ${languages}" th:value="${language.getLanguageId()}" th:text="${language.getName()}" th:selected="${user.getLanguage().getLanguageId() == language.getLanguageId()}"></option>
-                    </select>
+                    <label>
+                        <select   name="userLanguageId"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
+                            <option th:each="language : ${languages}" th:value="${language.getLanguageId()}" th:text="${language.getName()}" th:selected="${user.getLanguage().getLanguageId() == language.getLanguageId()}"></option>
+                        </select>
+                    </label>
                 </div>
                 <div  class="form-group">
                     <label >User type</label>
-                    <select   name="userType"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
-                        <option value="0" th:selected="*{getUserType().name() == 'USER'}">User</option>
-                        <option value="1" th:selected="*{getUserType().name() == 'ADMIN'}" >Admin</option>
-                    </select>
+                    <label>
+                        <select   name="userType"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
+                            <option value="0" th:selected="*{getUserType().name() == 'USER'}">User</option>
+                            <option value="1" th:selected="*{getUserType().name() == 'ADMIN'}" >Admin</option>
+                        </select>
+                    </label>
                 </div>
 
             </div>

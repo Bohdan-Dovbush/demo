@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Create Contacts Page</title>
@@ -24,10 +24,12 @@
                 </div>
                 <div  class="form-group">
                     <label >Status</label>
-                    <select   name="pageStatus"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
-                        <option value=true >On</option>
-                        <option value=false  >Off</option>
-                    </select>
+                    <label>
+                        <select   name="pageStatus"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
+                            <option value=true >On</option>
+                            <option value=false  >Off</option>
+                        </select>
+                    </label>
                 </div>
                 <div >
                     <div th:insert="~{/admin/fragments/seoFragment :: seoFragment(

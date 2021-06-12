@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
@@ -10,7 +10,6 @@
 <div th:insert="~{/admin/fragments/header :: header}"></div>
 <div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
 
-</div>
 <div class="content-wrapper">
     <section class="content">
         <div class="container-fluid">
@@ -42,7 +41,9 @@
                             <td th:text="${user.getEmail()}"></td>
                             <td>
                                 <form  th:action="@{/admin/user/edit}">
-                                    <input hidden th:value="${user.getUserId()}" name="userId">
+                                    <label>
+                                        <input hidden th:value="${user.getUserId()}" name="userId">
+                                    </label>
                                     <button type="button" class="btn btn-block btn-warning btn-flat">Edit</button>
                                 </form>
                             </td>
@@ -56,30 +57,10 @@
             </div>
         </div>
     </section>
-
 </div>
-
 
 <script>
 
-    function toggleModal(id) {
-        $('#userIdToDelete').val(id);
-        let modal = $('#modal-lg');
-        modal.modal('toggle');
-
-    }
-    function deleteUser() {
-        let userId = $('#userIdToDelete').val();
-        let modal = $('#modal-lg');
-        modal.modal('hide');
-        $.ajax({
-            url:'/admin/deleteUser',
-            data:{userId:userId},
-            success:function () {
-                $('#tr'+userId).remove();
-            }
-        });
-    }
 </script>
 </body>
 </html>

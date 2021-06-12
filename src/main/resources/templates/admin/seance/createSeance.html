@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Session</title>
+    <title>Create Session</title>
     <style th:replace="/admin/fragments/style"></style>
     <div th:replace="/admin/fragments/script"></div>
 </head>
@@ -13,17 +13,26 @@
 <div class="content-wrapper">
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Edit Session</h3>
+            <h3 class="card-title">Create Session</h3>
         </div>
 
-        <form th:object="${sessionn}"     th:action="@{/admin/updateSession}">
-            <input hidden th:value="*{getSessionId()}" name="sessionId">
-            <input hidden th:value="${hallId}" name="hallId">
+        <form      th:action="@{/admin/saveSession}">
+            <label>
+                <input hidden type="number" th:value="${hallId}"  name="hallId">
+            </label>
             <div class="card-body">
+                <!--<div class="form-group">
+                    <label>Date</label>
+                    <div class="input-group date"  >
+                        <input type="datetime-local"  name="sessionDate" class="form-control">
+                    </div>
+                </div>-->
                 <div class="form-group">
                     <label>Date and time:</label>
                     <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-                        <input type="text" name="sessionDate" th:value="${sessionn.getDate()}" class="form-control datetimepicker-input" data-target="#reservationdatetime">
+                        <label>
+                            <input type="text" name="sessionDate" class="form-control datetimepicker-input" data-target="#reservationdatetime">
+                        </label>
                         <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -31,9 +40,11 @@
                 </div>
                 <div  class="form-group">
                     <label >Movie</label>
-                    <select   name="movieId"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
-                        <option th:each="movie : ${movies}" th:value="${movie.getMovieId()}" th:text="${movie.getName()}" th:selected="${sessionn.getMovie().getMovieId() == movie.getMovieId()}"></option>
-                    </select>
+                    <label>
+                        <select   name="movieId"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
+                            <option th:each="movie : ${movies}" th:value="${movie.getMovieId()}" th:text="${movie.getName()}" ></option>
+                        </select>
+                    </label>
                 </div>
 
 

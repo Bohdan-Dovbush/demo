@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Edit Main Page</title>
@@ -16,7 +16,9 @@
             <h3 class="card-title">Create Main Page</h3>
         </div>
         <form th:object="${mainPage}" enctype="multipart/form-data"  th:action="@{/admin/updateMainPage}">
-            <input type="number" hidden th:value="*{getMainPageId()}" name="mainPageId">
+            <label>
+                <input type="number" hidden th:value="*{getMainPageId()}" name="mainPageId">
+            </label>
             <div class="card-body">
                 <div class="form-group">
                     <label for="pageName">Main Page Name</label>
@@ -29,7 +31,9 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                         </div>
-                        <input type="text" th:value="*{getFirstPhone()}" name="firstPhone" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                        <label>
+                            <input type="text" th:value="*{getFirstPhone()}" name="firstPhone" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                        </label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -38,22 +42,28 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                         </div>
-                        <input type="text" th:value="*{getSecondPhone()}" name="secondPhone" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                        <label>
+                            <input type="text" th:value="*{getSecondPhone()}" name="secondPhone" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                        </label>
                     </div>
                 </div>
 
 
                 <div class="form-group">
                     <label>SEO Text</label>
-                    <textarea th:text="*{getSEOText()}" class="form-control" rows="3" name="SEOText"
-                               placeholder="Enter Description"></textarea>
+                    <label>
+<textarea th:text="*{getSEOText()}" class="form-control" rows="3" name="SEOText"
+           placeholder="Enter Description"></textarea>
+                    </label>
                 </div>
                 <div  class="form-group">
                     <label >Status</label>
-                    <select   name="pageStatus"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
-                        <option value=true th:selected="*{isActive() == true}" >On</option>
-                        <option value=false th:selected="*{isActive() == false}">Off</option>
-                    </select>
+                    <label>
+                        <select   name="pageStatus"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
+                            <option value=true th:selected="*{isActive() == true}" >On</option>
+                            <option value=false th:selected="*{isActive() == false}">Off</option>
+                        </select>
+                    </label>
                 </div>
 
                 <div th:object="${mainPage}">

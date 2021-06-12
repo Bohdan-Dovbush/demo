@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Edit Page</title>
@@ -26,15 +26,19 @@
 
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea th:text="*{getDescription()}" class="form-control" rows="3" name="pageDescription"
-                               placeholder="Enter Description"></textarea>
+                    <label>
+<textarea th:text="*{getDescription()}" class="form-control" rows="3" name="pageDescription"
+           placeholder="Enter Description"></textarea>
+                    </label>
                 </div>
                 <div  class="form-group">
                     <label >Status</label>
-                    <select   name="pageStatus"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
-                        <option value=true th:selected="*{isActive() == true}" >On</option>
-                        <option value=false th:selected="*{isActive() == false}">Off</option>
-                    </select>
+                    <label>
+                        <select   name="pageStatus"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
+                            <option value=true th:selected="*{isActive() == true}" >On</option>
+                            <option value=false th:selected="*{isActive() == false}">Off</option>
+                        </select>
+                    </label>
                 </div>
                 <div class="card card-primary">
                     <div class="card-header">
@@ -42,7 +46,7 @@
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="mainImage" th:src="*{'/'+getMainImage()}" class="img-fluid pad"  style="max-height: 400px"/>
+                            <img id="mainImage" th:src="*{'/'+getMainImage()}" class="img-fluid pad"  style="width: 200px" alt="mainImage"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -64,7 +68,7 @@
                                 <i class="fas fa-plus" ></i>Add
                             </a>
                         </div>
-                        <input hidden type="number" id="deletedImageInput" >
+                        <label for="deletedImageInput"></label><input hidden type="number" id="deletedImageInput" >
 
                         <div id="imagesRow" class="row">
                             <div style="display: none" id="emptyCard" class="col-md-6">
@@ -101,7 +105,9 @@
                                                 <i class="fas fa-minus"></i>
                                             </button>
                                             <button onclick="removeImageCard(this)" type="button" class="btn btn-tool deleteButton" >
-                                                <input type="number"  hidden th:value="${image.getPageImageId()}">
+                                                <label>
+                                                    <input type="number"  hidden th:value="${image.getPageImageId()}">
+                                                </label>
                                                 <i class="fas fa-times" style="color: red"></i>
                                             </button>
                                         </div>
