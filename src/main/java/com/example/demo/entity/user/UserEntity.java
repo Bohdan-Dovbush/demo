@@ -20,11 +20,11 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
     @Email(message = "Please enter the correct email")
     @Column(unique = true)
     private String email;
+    private String firstName;
+    private String lastName;
     private String password;
     private String token;
     private Boolean accountVerified;
@@ -34,11 +34,9 @@ public class UserEntity {
     @OneToMany(mappedBy = "user")
     private Set<SecureToken> tokens;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Details> userDetails = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Contact> userContact = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "details_id")
+    private Details details;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_groups",
@@ -51,26 +49,12 @@ public class UserEntity {
         group.getUsers().add(this);
     }
 
-    public void addUserDetails(Details details){
-        userDetails.add(details);
-        details.setUsers(this);
-    }
-
-    public void addUserContact(Contact contact){
-        userContact.add(contact);
-        contact.setUsers(this);
-    }
-
     public Boolean isAccountVerified() {
         return accountVerified;
     }
 
     public Boolean isLoginDisabled() {
         return loginDisabled;
-    }
-
-    public void setLoginDisabled(boolean loginDisabled) {
-        this.loginDisabled = loginDisabled;
     }
 
     @Override

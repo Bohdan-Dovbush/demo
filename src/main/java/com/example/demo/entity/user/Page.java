@@ -12,7 +12,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Data
 @Table(name = "page")
 public class Page {
 
@@ -24,6 +23,8 @@ public class Page {
     private LocalDateTime creationDate = LocalDateTime.now();
     @Column(columnDefinition = "text", length = 2000)
     private String description;
+    private Integer fPhone;
+    private Integer sPhone;
     private String mainImage;
     private Boolean active;
 

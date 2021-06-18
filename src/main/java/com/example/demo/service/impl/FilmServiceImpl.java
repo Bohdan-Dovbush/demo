@@ -38,9 +38,9 @@ public class FilmServiceImpl extends ImageServiceImpl implements FilmService {
 
     @Override
     public String addActor(Long id) {
-        Optional<Film> optionalMovie = filmRepository.findById(id);
-        if(optionalMovie.isPresent() ) {
-            Film film = optionalMovie.get();
+        Optional<Film> optionalFilm = filmRepository.findById(id);
+        if(optionalFilm.isPresent() ) {
+            Film film = optionalFilm.get();
             Actor actor = new Actor();
             film.addFilmActor(actor);
             filmRepository.saveAndFlush(film);
@@ -50,7 +50,7 @@ public class FilmServiceImpl extends ImageServiceImpl implements FilmService {
     }
 
     @Override
-    public void updateFilm(Long id, String name, LocalDate filmYear, String description, Genre genres,
+    public void updateFilm(Long id, String name, String filmYear, String description, Genre genres,
                            LocalDate dateRealise, LocalDate dateFinish, Language language, List<Actor> actors,
                            Type types, MultipartFile mainImage,
                            MultipartFile[] images, String trailerLink, Seo seo) {
@@ -74,7 +74,7 @@ public class FilmServiceImpl extends ImageServiceImpl implements FilmService {
     }
 
     @Override
-    public void addFilm(String name, LocalDate filmYear, String description, Genre genres,
+    public void addFilm(String name, String filmYear, String description, Genre genres,
                         LocalDate dateRealise, LocalDate dateFinish, Language language, List<Actor> actors,
                         Type types, MultipartFile mainImage,
                         MultipartFile[] images, String trailerLink, Seo seo) {
@@ -115,6 +115,16 @@ public class FilmServiceImpl extends ImageServiceImpl implements FilmService {
     @Override
     public Integer findFutureCountFilm() {
         return filmRepository.findFutureCountFilm();
+    }
+
+    @Override
+    public List<Film> findCurrentFilm() {
+        return filmRepository.findCurrentFilm();
+    }
+
+    @Override
+    public List<Film> findFutureFilm() {
+        return filmRepository.findFutureFilm();
     }
 
     void checkFilmImage(Film film, MultipartFile mainImage, MultipartFile[] filmImages) {

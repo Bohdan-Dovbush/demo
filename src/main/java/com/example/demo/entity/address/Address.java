@@ -1,7 +1,5 @@
 package com.example.demo.entity.address;
 
-import com.example.demo.entity.film.Cinema;
-import com.example.demo.entity.user.Contact;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +10,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Data
 @Table(name = "address")
 public class Address {
 
@@ -20,21 +17,16 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")
     private Long addressId;
+    @Column(nullable = false, length = 50)
     private String streetAddress;
+    @Column(nullable = false, length = 5)
     private Integer postalCode;
+    @Column(nullable = false, length = 30)
     private String region;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
     private City city;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "contact_id")
-    private Contact contact;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "cinema_id")
-    private Cinema cinema;
 
     @Override
     public boolean equals(Object o) {

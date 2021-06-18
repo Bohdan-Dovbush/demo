@@ -16,10 +16,11 @@
             <h3 class="card-title">Create Hall</h3>
         </div>
 
-        <form  id="saveHallForm" enctype="multipart/form-data" method="post"  th:action="@{/admin/saveHall}">
-            <input id="hallId" name="hallId" type="hidden" >
-            <input th:value="${cinemaId}" name="cinemaId" type="hidden" >
+        <form  id="saveHallForm" enctype="multipart/form-data" method="post"  th:action="@{/admin/hall/save}">
+            <input id="hallId" name="hallId" type="hidden">
+            <input th:value="${cinemaId}" name="cinemaId" type="hidden">
             <div class="card-body">
+
                 <div class="form-group">
                     <label for="hallName">Hall Name</label>
                     <input required  type="text" class="form-control" name="hallName"
@@ -44,18 +45,19 @@
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="schemaImage" class="img-fluid pad"  style="width: 200px" alt="shemaImage"/>
+                            <img id="schemaImage" class="img-fluid pad"  style="width: 200px" alt="schemaImage"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <input hidden type="file" id="schemaImageInput" onchange="loadNewSchemaImage(this)" name="hallSchemaImage" >
                         <div class="card-body">
                             <a  onclick="addSchemaImage()" class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-edit" ></i>Edit
+                                <i class="fas fa-edit" ></i>
                             </a>
                         </div>
                     </div>
                 </div>
+
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Banner Image</h3>
@@ -69,7 +71,7 @@
                         <input hidden type="file" id="bannerImageInput" onchange="loadNewBannerImage(this)" name="hallBannerImage" >
                         <div class="card-body">
                             <a  onclick="addBannerImage()" class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-edit" ></i>Edit
+                                <i class="fas fa-edit" ></i>
                             </a>
                         </div>
                     </div>
@@ -82,7 +84,7 @@
                     <div class="form-group">
                         <div class="card-body">
                             <a  onclick="addNewImages()" class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-plus" ></i>Add
+                                <i class="fas fa-plus" ></i>
                             </a>
                         </div>
 
@@ -95,16 +97,14 @@
                                         </div>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                <i class="fas fa-minus"></i>
+                                                <i class="fas fa-minus" style="color: orange"></i>
                                             </button>
                                             <button type="button" class="btn btn-tool  deleteButton" >
                                                 <input type="file" hidden >
                                                 <i class="fas fa-times" style="color: red"></i>
                                             </button>
                                         </div>
-
                                     </div>
-
                                     <div class="card-body">
                                         <img class="img-fluid pad" src="" alt="Photo">
                                     </div>
@@ -117,10 +117,11 @@
 
                 <div >
                     <div th:insert="~{/admin/fragments/seoFragment :: seoFragment(
-                    url='',
-                    title='',
-                    keywords='',
-                    description='')}"></div>
+                    url = 'https://google.com',
+                    title = 'title',
+                    keywords = 'keywords',
+                    description = 'description')}">
+                    </div>
                 </div>
             </div>
 
@@ -180,12 +181,5 @@
         }
         reader.readAsDataURL(file)
     }
-
-    function removeCard(button) {
-        $(button).parents('.col-md-6').remove();
-    }
-
-
-
 </script>
 </html>

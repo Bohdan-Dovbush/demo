@@ -1,10 +1,11 @@
 package com.example.demo.entity.booking;
 
 import com.example.demo.entity.film.Seance;
+import com.example.demo.entity.user.UserEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Getter
@@ -22,15 +23,20 @@ public class Ticket {
     private Long ticketId;
     private Integer price;
     private Boolean isBooked;
-    private LocalDateTime createTicket = LocalDateTime.now();
+    private Boolean isPurchased;
+    private LocalDate createTicket = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seance_id")
     private Seance seance;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "booking_id")
-    private Booking booking;
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
+
+    public Ticket(Integer price) {
+        this.price = price;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -47,5 +53,9 @@ public class Ticket {
 
     public Boolean getIsBooked() {
         return isBooked;
+    }
+
+    public Boolean isPurchased() {
+        return isPurchased;
     }
 }

@@ -10,15 +10,14 @@
 <div th:insert="~{/admin/fragments/header :: header}"></div>
 <div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
 
-</div>
 <div class="content-wrapper">
     <section class="content">
         <div class="container-fluid">
-            <div class="card">
+            <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Sessions</h3>
+                    <h3 class="card-title">Seance</h3>
                 </div>
-                <form  th:action="@{/admin/createSession}" >
+                <form  th:action="@{/admin/seance/create}" >
                     <div class="card-body">
                         <button   class="btn btn-app addSubImgButton" >
                             <i class="fas fa-plus" ></i>
@@ -27,68 +26,52 @@
                 </form>
 
                 <div class="card-body">
-                    <table class="table table-bordered">
+                    <table class="table-bordered">
                         <thead>
                         <tr>
                             <th style="width: 10px">Id</th>
                             <th>Date </th>
-                            <th>Movie Name</th>
+                            <th>Film Name</th>
                             <th style="width: 40px">Edit</th>
                             <th style="width: 40px">Delete</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr th:each="sessionn:${sessions}" th:object="${sessionn}" th:id="${'tr'}+*{getSessionId()}" >
-                            <td th:text="*{getSessionId()}"></td>
-                            <td th:text="*{getDate()}"></td>
-                            <td th:text="*{getMovie().getName()}"></td>
-
-                            <td>
-                                <form  th:action="@{/admin/editSession}">
-                                    <label>
-                                        <input hidden th:value="*{getSessionId()}" name="sessionId">
-                                    </label>
-                                    <button  class="btn btn-block btn-warning btn-flat">Edit</button>
-                                </form>
-                            </td>
-                            <td>
-                                <button th:onclick="'toggleModal(\'' + *{getSessionId()} + '\')'"  class="btn btn-block btn-danger btn-flat">Delete</button>
+                        <th:block th:each="seance:${seanceList}" >
+                            <tbody>
+                            <td style="width: 1%" >
+                                <div class="card-body childInCenter" th:text="${seance.seanceId}"></div>
                             </td>
 
-                        </tr>
+                            <td style="width: 10%">
+                                <div class="card-body childInCenter" th:text="${seance.date}"></div>
+                            </td>
 
-                        </tbody>
+                            <td style="width: 10%">
+                                <div class="card-body childInCenter" th:text="${seance.film.name}"></div>
+                            </td>
+
+                            <td style="width: 10%">
+                                <div class="card-body childInCenter">
+                                    <a th:href="@{/admin/seance/edit (seanceId = ${seance.seanceId}, hallId = ${hall.hallId})}">
+                                        <button type="button" class="btn btn-warning btn-flat">Edit</button>
+                                    </a>
+                                </div>
+                            </td>
+
+                            <td style="width: 10%">
+                                <div class="card-body childInCenter">
+                                    <a th:href="@{/admin/seance/delete (seanceId = ${seance.seanceId})}">
+                                        <button type="button" class="btn btn-danger btn-flat">Delete</button>
+                                    </a>
+                                </div>
+                            </td>
+                            </tbody>
+                        </th:block>
                     </table>
                 </div>
-
             </div>
-
         </div>
     </section>
-
 </div>
-
-
-<script>
-
-    function toggleModal(id) {
-        $('#sessionIdToDelete').val(id);
-        let modal = $('#modal-lg');
-        modal.modal('toggle');
-
-    }
-    function deleteSession() {
-        let sessionId = $('#userIdToDelete').val();
-        let modal = $('#modal-lg');
-        modal.modal('hide');
-        $.ajax({
-            url:'/admin/deleteSession',
-            data:{sessionId:sessionId},
-            success:function () {
-                $('#tr'+sessionId).remove();
-            }
-        });
-    }
-</script>
 </body>
 </html>

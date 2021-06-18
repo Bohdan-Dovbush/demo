@@ -1,0 +1,108 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<body>
+<div th:fragment="header">
+
+    <nav class="main-header navbar navbar-expand navbar-light childInCenter" style="margin: 0">
+        <section class="content col-9">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Left navbar links -->
+                <ul class="navbar-nav">
+
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a th:href="@{/account/home}" class="nav-link">Home</a>
+                    </li>
+
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a th:href="@{/account/poster}" class="nav-link">Poster</a>
+                    </li>
+
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a th:href="@{/account/poster}" class="nav-link">Schedule</a>
+                    </li>
+
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a th:href="@{/account/soon}" class="nav-link">Soon</a>
+                    </li>
+
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a th:href="@{/account/poster}" class="nav-link">Cinema</a>
+                    </li>
+
+                    <li class="nav-item dropdown d-sm-inline-block">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">About Cinema <span class="caret"></span></a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" tabindex="-1" href="#">News</a>
+                            <a class="dropdown-item" tabindex="-1" href="#">Promotion</a>
+                            <a class="dropdown-item" tabindex="-1" href="#">Contact</a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <!-- Right navbar links -->
+                <ul class="navbar-nav float-right">
+
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a th:href="@{/admin/statistic}" class="nav-link"><i class="nav-icon fas fa-tools"></i></a>
+                    </li>
+
+                    <li class="nav-item dropdown user user-menu ml-auto" sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin <i class="nav-icon fas fa-user"></i></a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img th:src="@{/dist/img/avatar5.png}" class="img-circle" alt="User Image">
+                                <span sec:authentication="name"></span>
+                                <p>
+                                    You want logout?
+                                    <small>Press</small>
+                                </p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-right childInCenter">
+                                    <a href="javascript: document.logoutForm.submit()" class="btn btn-default btn-flat">Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown user user-menu ml-auto" sec:authorize="hasAnyAuthority('CUSTOMER')">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User <i class="nav-icon fas fa-user"></i></a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img th:src="@{/dist/img/avatar5.png}" class="img-circle" alt="User Image">
+                                <span sec:authentication="name"></span>
+                                <p>
+                                    You want logout?
+                                    <small>Press</small>
+                                </p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-right childInCenter">
+                                    <a href="javascript: document.logoutForm.submit()" class="btn btn-default btn-flat">Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </a>
+                    </li>
+
+                    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                        <input hidden type="submit" value="Logout"/>
+                    </form>
+                </ul>
+            </div>
+        </div>
+        </section>
+    </nav>
+</div>
+</body>
+</html>

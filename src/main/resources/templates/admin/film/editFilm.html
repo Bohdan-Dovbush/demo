@@ -16,7 +16,7 @@
             <h3 class="card-title">Edit Film</h3>
         </div>
 
-        <form id="saveFilmForm"  enctype="multipart/form-data" method="post" th:action="@{/admin/film/updateFilm (filmId= ${film.filmId})}">
+        <form id="saveFilmForm"  enctype="multipart/form-data" method="post" th:action="@{/admin/film/update (filmId= ${film.filmId})}">
             <input id="filmId" type="hidden" th:value="${film.filmId}">
             <div class="card-body">
 
@@ -34,12 +34,11 @@
 
                 <div class="form-group">
                     <label for="filmYear">Film Year</label>
-                    <div class="input-group">
-                        <span class="input-group-text">
-                                <i class="far fa-calendar-alt"></i>
-                        </span>
-                        <input required type="date" class="form-control row-cols-1" placeholder="YYYY"
-                               th:value="${film.filmYear}" name="filmYear" id="filmYear">
+                    <div class="input-group date" id="filmYear" data-target-input="nearest">
+                        <div class="input-group-append" data-target="#filmYear" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                        <input required type="text" class="form-control datetimepicker-input" th:value="${film.filmYear}" name="filmYear" data-target="#filmYear">
                     </div>
                 </div>
 
@@ -47,7 +46,7 @@
                     <label for="genres">Film genre</label>
                     <select required class="form-control" name="genres" id="genres">
                         <option th:each="genre : ${T(com.example.demo.entity.enums.Genre).values()}"
-                                th:value="${genre}" th:text="${genre.name}" th:selected="${film.genre}"></option>
+                                th:value="${genre}" th:text="${genre.name}" th:selected="${film.genre.getName()}"></option>
                     </select>
                 </div>
 
@@ -55,7 +54,7 @@
                     <label for="types">Film type</label>
                     <select required class="form-control" name="types" id="types">
                         <option th:each="types : ${T(com.example.demo.entity.enums.Type).values()}"
-                                th:value="${types}" th:text="${types.name}" th:selected="${film.type}"></option>
+                                th:value="${types}" th:text="${types.name}" th:selected="${film.type.name}"></option>
                     </select>
                 </div>
 
@@ -63,7 +62,7 @@
                     <label for="language">Film language</label>
                     <select required class="form-control" name="language" id="language">
                         <option th:each="language : ${T(com.example.demo.entity.enums.Language).values()}"
-                                th:value="${language}" th:text="${language.name}" th:selected="${film.language}"></option>
+                                th:value="${language}" th:text="${language.name}" th:selected="${film.language.name}"></option>
                     </select>
                 </div>
 

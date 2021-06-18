@@ -30,16 +30,15 @@ public class Film {
     @Column(name = "film_id")
     private Long filmId;
     private String name;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate filmYear;
+    private String filmYear;
     @Column(columnDefinition = "text", length = 2000)
     private String description;
     private String mainImage;
     @URL
     private String trailerLink;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.NONE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dateRelease;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.NONE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dateFinish;
     @Enumerated(EnumType.STRING)
     private Genre genre;

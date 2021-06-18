@@ -1,6 +1,10 @@
 package com.example.demo.entity.address;
 
-import lombok.*;
+import com.example.demo.entity.user.Details;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,7 +16,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Data
 @Table(name = "country")
 public class Country {
 
@@ -22,6 +25,10 @@ public class Country {
     private Long countryId;
     @Column(nullable = false, length = 30)
     private String name;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "details_id")
+    private Details details;
 
     @OneToMany(mappedBy = "country",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<City> cities = new ArrayList<>();

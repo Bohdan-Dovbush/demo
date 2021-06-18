@@ -16,19 +16,19 @@
             <h3 class="card-title">Edit Hall</h3>
         </div>
 
-        <form th:object="${hall}" id="saveMovieForm"  enctype="multipart/form-data" method="post" th:action="@{/admin/hall/updateHall}">
-            <input id="hallId" name="hallId" type="hidden" th:value="*{getHallId()}">
+        <form id="saveMovieForm"  enctype="multipart/form-data" method="post" th:action="@{/admin/hall/update (hallId= ${hall.hallId}, cinemaId = ${cinemaId})}">
+            <input id="hallId" name="hallId" type="hidden" th:value="${hall.hallId}">
             <input id="cinemaId" name="cinemaId" type="hidden" th:value="${cinemaId}">
             <div class="card-body">
                 <div class="form-group">
                     <label for="hallName">Hall Name</label>
-                    <input th:value="*{getName()}" type="text" class="form-control" name="hallName"
+                    <input th:value="${hall.name}" type="text" class="form-control" name="hallName"
                            id="hallName" placeholder="Enter Name">
                 </div>
 
                 <div class="form-group">
-                    <label>Description</label>
-                    <label for="description"></label><textarea th:text="*{getDescription()}" class="form-control" rows="3" name="hallDescription"
+                    <label for="description">Description</label>
+                    <textarea th:text="${hall.description}" class="form-control" rows="3" name="hallDescription"
                                                                id="description" placeholder="Enter Description"></textarea>
                 </div>
 
@@ -38,15 +38,14 @@
                         <h3 class="card-title">Seances</h3>
                     </div>
                     <div class="card-body">
-                        <label>
-                            <input hidden th:value="*{getHallId()}" name="hallId">
-                        </label>
                         <div class="card-body">
-                            <a th:href="@{/admin/seance/createSeance (hallId=${hallId})}"  class="btn btn-app addSubImgButton" >
+                            <a th:href="@{/admin/seance/create (hallId= ${hall.hallId})}"  class="btn btn-app addSubImgButton" >
+                        <label for="hall"></label>
+                            <input hidden th:value="${hall.hallId}" name="hallId" id="hall">
                                 <i class="fas fa-plus" ></i>
                             </a>
                         </div>
-                        <table class="table table-bordered">
+                        <table class="table-bordered">
                             <thead>
                             <tr>
                                 <th style="width: 10px">Id</th>
@@ -55,20 +54,27 @@
                                 <th style="width: 40px">Delete</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr th:object="${seance}" th:each="seance:${hall.getSeances()}">
-                                <td th:text="*{getSeanceId()}"></td>
-                                <td th:text="*{getDate()}"></td>
-                                <td>
-                                    <a th:href="@{/admin/editSession(sessionId=*{getSessionId()},hallId=${hall.getHallId()})}"  class="btn btn-block btn-warning btn-flat">Edit</a>
-                                </td>
-                                <td>
-                                    <a th:onclick="'toggleModal(\'' + *{getSessionId()} + '\')'"  class="btn btn-block btn-danger btn-flat">Delete</a>
+                            <th:block th:object="${seance}" th:each="seance:${hall.getSeances()}">
+                                <tbody>
+                                <td th:text="${seance.seanceId}"></td>
+                                <td th:text="${seance.time}"></td>
+                                <td style="width: 10%">
+                                    <div class="card-body childInCenter">
+                                        <a th:href="@{/admin/seance/edit (seanceId = ${seance.seanceId}, hallId = ${hall.hallId})}">
+                                            <button type="button" class="btn btn-warning btn-flat">Edit</button>
+                                        </a>
+                                    </div>
                                 </td>
 
-                            </tr>
-
-                            </tbody>
+                                <td style="width: 10%">
+                                    <div class="card-body childInCenter">
+                                        <a th:href="@{/admin/seance/delete (seanceId = ${seance.seanceId})}">
+                                            <button type="button" class="btn btn-danger btn-flat">Delete</button>
+                                        </a>
+                                    </div>
+                                </td>
+                                </tbody>
+                            </th:block>
                         </table>
                     </div>
                 </div>
@@ -79,32 +85,33 @@
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="schemaImage" class="img-fluid pad" th:src="*{'/'+getSchemaImage()}" style="width: 200px" alt="shemaImage"/>
+                            <img id="schemaImage" class="img-fluid pad" th:src="@{${hall.schemaImagePath}}" style="width: 200px" alt="schemaImage"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <input hidden type="file" id="schemaImageInput" onchange="loadNewSchemaImage(this)" name="hallSchemaImage" >
                         <div class="card-body">
                             <a  onclick="addSchemaImage()" class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-edit" ></i>Edit
+                                <i class="fas fa-edit" ></i>
                             </a>
                         </div>
                     </div>
                 </div>
+
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Banner Image</h3>
                     </div>
                     <div class="form-group ">
                         <div class="card-body childInCenter">
-                            <img id="bannerImage" class="img-fluid pad" th:src="*{'/'+getBannerImage()}" style="width: 00px" alt="bannerImage"/>
+                            <img id="bannerImage" class="img-fluid pad" th:src="@{${hall.bannerImagePath}}" style="width: 200px" alt="bannerImage"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <input hidden type="file" id="bannerImageInput" onchange="loadNewBannerImage(this)" name="hallBannerImage" >
                         <div class="card-body">
                             <a  onclick="addBannerImage()" class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-edit" ></i>Edit
+                                <i class="fas fa-edit" ></i>
                             </a>
                         </div>
                     </div>
@@ -118,7 +125,7 @@
                         <input hidden type="file" id="additionalImage" >
                         <div class="card-body">
                             <a  onclick="addNewImages()" class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-plus" ></i>Add
+                                <i class="fas fa-plus" ></i>
                             </a>
                         </div>
                         <label for="deletedImageInput"></label><input hidden type="number" id="deletedImageInput" >
@@ -132,16 +139,14 @@
                                         </div>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                <i class="fas fa-minus"></i>
+                                                <i class="fas fa-minus" style="color: orange"></i>
                                             </button>
                                             <button  type="button" class="btn btn-tool  deleteButton" >
                                                 <input type="file"  hidden >
                                                 <i class="fas fa-times" style="color: red"></i>
                                             </button>
                                         </div>
-
                                     </div>
-
                                     <div class="card-body">
                                         <img class="img-fluid pad" src="" alt="Photo">
                                     </div>
@@ -150,27 +155,24 @@
 
 
 
-                            <div th:object="${image}" th:each="image:${hall.getImages()}" class="col-md-6">
+                            <div th:object="${hallImages}" th:each="hallImages:${hall.getHallImages()}" class="col-md-6">
 
                                 <div class="card card-widget">
                                     <div class="card-header">
                                         <div class="user-block">
-                                            <span th:text="*{getImage()}" class="description"><a href="#"></a></span>
+                                            <span th:text="${hallImages.toString()}" class="description"><a href="#"></a></span>
                                         </div>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool"  data-card-widget="collapse">
-                                                <i class="fas fa-minus"></i>
+                                                <i class="fas fa-minus" style="color: orange"></i>
                                             </button>
-                                            <button  onclick="removeImageCard(this)" type="button" class="btn btn-tool deleteButton" >
-                                                <label>
-                                                    <input type="number"  hidden th:value="${image.getHallImageId()}">
-                                                </label>
+                                            <button type="button" class="btn btn-tool deleteButton" >
                                                 <i class="fas fa-times" style="color: red"></i>
                                             </button>
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <img class="img-fluid pad" th:src="*{'/'+getImage()}" alt="Photo">
+                                        <img class="img-fluid pad" th:src="@{'/uploads/'+${hall.hallImages[0]}}" alt="Photo">
                                     </div>
                                 </div>
                             </div>
@@ -179,7 +181,7 @@
                 </div>
 
 
-                <div >
+                <div th:object="${hall}">
                     <div th:insert="~{/admin/fragments/seoFragment :: seoFragment(
                     url=*{seo != null} ? *{seo.url} : '',
                     title=*{seo != null} ? *{seo.title} : '',
@@ -196,104 +198,4 @@
     </div>
 </div>
 </body>
-<script>
-    function addNewImages() {
-        let emptyCard = $('#emptyCard');
-        let emptyClone = $(emptyCard).clone();
-        let input = $(emptyClone).find('input');
-
-
-        $(input).attr('name','hallImages');
-        $(input).change(function () {
-            let file = this.files[0];
-            let reader = new FileReader();
-
-
-            reader.onload = function (e) {
-                $(emptyClone).find('span').text(file.name);
-                $(emptyClone).find('img').attr('src',e.target.result);
-                $(emptyClone).find('.deleteButton').click(function () {
-                    removeCard(this);
-                });
-                $(emptyCard).after(emptyClone);
-                $(emptyClone).show();
-            }
-            reader.readAsDataURL(file);
-        });
-        $(input).click();
-    }
-    function addSchemaImage() {
-        $('#schemaImageInput').click();
-    }
-    function loadNewSchemaImage(input) {
-        loadImage(input,$('#schemaImage'));
-    }
-    function addBannerImage() {
-        $('#bannerImageInput').click();
-    }
-    function loadNewBannerImage(input) {
-        loadImage(input,$('#bannerImage'));
-    }
-    function loadImage(input,imageToShow) {
-        let file = input.files[0];
-        let reader = new FileReader();
-
-        reader.onload = function (e) {
-            $(imageToShow).attr('src',e.target.result);
-        }
-        reader.readAsDataURL(file)
-    }
-    function toggleModal(id) {
-        $('#sessionIdToDelete').val(id);
-        let modal = $('#modal-lg');
-        modal.modal('toggle');
-
-    }
-    function deleteSession() {
-        let sessionId = $('#sessionIdToDelete').val();
-        let modal = $('#modal-lg');
-        modal.modal('hide');
-        $.ajax({
-            url:'/admin/deleteSession',
-            data:{sessionId:sessionId},
-            success:function () {
-                $('#tr'+sessionId).remove();
-            }
-        });
-    }
-
-
-    function removeImageCard(button) {
-        let imageId = $(button).children('input').attr('value');
-        let deletedImageInput = $('#deletedImageInput');
-        let inputClone = $(deletedImageInput).clone();
-        $(inputClone).val(imageId);
-        $(inputClone).attr('name','deletedImage')
-        $(deletedImageInput).after(inputClone);
-        $(button).parents('.col-md-6').remove();
-    }
-    function removeCard(button) {
-        $(button).parents('.col-md-6').remove();
-    }
-
-
-
-    function addNewImageBlock(imagePath){
-        let emptyCard = $('#emptyCard');
-        let emptyClone = $(emptyCard).clone();
-
-
-        $(emptyClone).find('img').attr('src',imagePath);
-        $(emptyClone).find('span').text(imagePath.substring(1));
-        $(emptyClone).find('input').attr('value',imagePath.substring(1));
-        $(emptyClone).find('.deleteButton').click(function () {
-            removeCard(this);
-        })
-        $(emptyCard).after(emptyClone);
-        $(emptyClone).show();
-
-    }
-
-
-</script>
 </html>

@@ -19,6 +19,7 @@
         <form id="updateCinemaForm" th:object="${cinema}"   enctype="multipart/form-data" method="post" th:action="@{/admin/cinema/updateCinema}">
             <input id="cinemaId" name="cinemaId" type="hidden" th:value="*{getCinemaId()}">
             <div class="card-body">
+
                 <div class="form-group">
                     <label for="cinemaName">Cinema Name</label>
                     <input th:value="*{getName()}" type="text" class="form-control" name="cinemaName"
@@ -163,6 +164,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!--HALLS-->
                 <div class="card card-primary">
                     <div class="card-header">
@@ -173,10 +175,10 @@
                             <input hidden th:value="*{getCinemaId()}" name="cinemaId">
                         </label>
                         <div class="card-body">
-                                <a th:href="@{/admin/createHall(cinemaId=*{getCinemaId()})}"  class="btn btn-app addSubImgButton" >
+                                <a th:href="@{/admin/hall/create (cinemaId=*{getCinemaId()})}"  class="btn btn-app addSubImgButton" >
                                     <i class="fas fa-plus" ></i>
                                 </a>
-                            </div>
+                        </div>
                         <table class="table table-bordered">
                             <thead>
                             <tr>
@@ -186,24 +188,22 @@
                                 <th style="width: 10%; text-align: center">Delete</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr th:object="${hall}" th:each="hall:${cinema.getHalls()}">
-
+                            <th:block th:each="hall:${cinema.getHalls()}">
+                                <tbody>
                                 <td style="width: 1%" >
-                                    <div class="card-body childInCenter" th:text="*{getHallId()}"></div>
+                                    <div class="card-body childInCenter" th:text="${hall.hallId}"></div>
                                 </td>
 
                                 <td style="width: 10%" >
-                                    <div class="card-body childInCenter" th:text="*{getName()}"></div>
+                                    <div class="card-body childInCenter" th:text="${hall.name}"></div>
                                 </td>
 
                                 <td style="width: 10%">
                                     <div class="card-body childInCenter">
-                                        <a th:href="@{/admin/hall/edit (hallId = ${hall.hallId})}">
+                                        <a th:href="@{/admin/hall/edit (hallId = ${hall.hallId}, cinemaId = ${cinema.cinemaId})}">
                                             <button type="button" class="btn btn-warning btn-flat">Edit</button>
                                         </a>
                                     </div>
-<!--                                    <a th:href="@{/admin/hall/edit (hallId=*{getHallId()},cinemaId=${cinema.getCinemaId()})}"  class="btn btn-block btn-warning btn-flat">Edit</a>-->
                                 </td>
 
                                 <td style="width: 10%">
@@ -213,10 +213,8 @@
                                         </a>
                                     </div>
                                 </td>
-
-                            </tr>
-
-                            </tbody>
+                                </tbody>
+                            </th:block>
                         </table>
                     </div>
                 </div>

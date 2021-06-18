@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Soon</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+</head>
+<body>
+<div th:insert="~{/account/fragments/header :: header}"></div>
+<div class="content-wrapper" style="margin: 0">
+    <div class="content mt-3">
+        <div class="align-content-center">
+            <div class="container-fluid">
+                <div class="card card-solid">
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column" th:each="film:${filmList}">
+                                <div class="card bg-light d-flex flex-fill">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <a th:href="@{/account/film (filmId=${film.filmId})}">
+                                                <div class="typeBlock m-4" >
+                                                    <span class="badge badge-pill badge-info" style="margin: 1px" th:text="${film.type.name}"></span>
+                                                    <span class="badge badge-pill badge-danger" style="margin: 1px" th:text="${film.language.name}"></span>
+                                                    <span class="badge badge-pill badge-danger" style="margin: 1px" th:text="${film.genre.name}"></span>
+                                                </div>
+                                                <div class="poster childInCenter m-auto">
+                                                    <img th:src="${film.mainImagePath}" alt="">
+                                                </div>
+                                                <div class="small-box-footer childInCenter" th:text="${film.name}"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,10 +1,12 @@
 package com.example.demo.entity.film;
 
+import com.example.demo.entity.booking.Ticket;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -12,7 +14,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Data
 @Table(name = "seance")
 public class Seance {
 
@@ -20,20 +21,24 @@ public class Seance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seance_id")
     private Long seanceId;
-    private LocalDate date;
     private LocalTime time;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cinema_id")
-    private Cinema cinema;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "hall_id")
     private Hall hall;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "film_id")
     private Film film;
+
+    @OneToMany(mappedBy = "seance",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Ticket> tickets = new ArrayList<>();
+
+    public Seance(LocalTime time, Hall hall, Film film) {
+        this.time = time;
+        this.hall = hall;
+        this.film = film;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -46,5 +51,11 @@ public class Seance {
     @Override
     public int hashCode() {
         return Objects.hash(seanceId);
+    }
+
+    public void addTicket(Ticket ticket){
+        tickets.add(ticket);
+        ticket.setSeance(this);
+        ticket.getPrice();
     }
 }

@@ -5,6 +5,26 @@
     <title>Users</title>
     <style th:replace="/admin/fragments/style"></style>
     <div th:replace="/admin/fragments/script"></div>
+    <style>
+        table, td, th {
+            border: 1px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        td {
+            height: 50%;
+            text-align: center;
+            vertical-align: center;
+        }
+    </style>
 </head>
 <body>
 <div th:insert="~{/admin/fragments/header :: header}"></div>
@@ -18,49 +38,46 @@
                     <h3 class="card-title">Users</h3>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered">
+                    <table class="table-bordered">
                         <thead>
                         <tr>
-                            <th style="width: 10px">Id</th>
-                            <th>Date of registration</th>
-                            <th>Nick Name</th>
+                            <th>Id</th>
+                            <th>Email Name</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th>Email Name</th>
-                            <th style="width: 40px">Edit</th>
-                            <th style="width: 40px">Delete</th>
+                            <th>Birthday</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr th:id="${'tr'}+${user.getUserId()}" th:each="user:${users}">
-                            <td th:text="${user.getUserId()}"></td>
-                            <td th:text="${user.getDateOfRegistration()}"></td>
-                            <td th:text="${user.getNickName()}"></td>
-                            <td th:text="${user.getFirstName()}"></td>
-                            <td th:text="${user.getLastName()}"></td>
-                            <td th:text="${user.getEmail()}"></td>
-                            <td>
-                                <form  th:action="@{/admin/user/edit}">
-                                    <label>
-                                        <input hidden th:value="${user.getUserId()}" name="userId">
-                                    </label>
-                                    <button type="button" class="btn btn-block btn-warning btn-flat">Edit</button>
-                                </form>
+                        <block th:each="detail:${detailsList}">
+                            <tbody>
+                            <td style="width: 1%" th:text="${detail.users.id}"></td>
+                            <td style="width: 10%" th:text="${detail.users.email}"></td>
+                            <td style="width: 10%" th:text="${detail.users.firstName}"></td>
+                            <td style="width: 10%" th:text="${detail.users.lastName}"></td>
+                            <td style="width: 10%" th:text="${detail.birthday}"></td>
+
+                            <td style="width: 10%; text-align: center" >
+                                <div class="card-body childInCenter">
+                                    <a th:href="@{/admin/user/edit (userId = ${detail.users.id})}">
+                                        <button type="button" class="btn btn-warning btn-flat">Edit</button>
+                                    </a>
+                                </div>
                             </td>
-                            <td>
-                                <button type="button"  class="btn btn-block btn-danger btn-flat">Delete</button>
+
+                            <td style="width: 10%; text-align: center">
+                                <div class="card-body childInCenter">
+                                        <button disabled type="button" class="btn btn-danger btn-flat">Delete</button>
+                                </div>
                             </td>
-                        </tr>
-                        </tbody>
+                            </tbody>
+                        </block>
                     </table>
                 </div>
             </div>
         </div>
     </section>
 </div>
-
-<script>
-
-</script>
 </body>
 </html>

@@ -23,12 +23,6 @@ create table address (
     contact_id bigint,
     primary key (address_id)) engine=InnoDB;
 
-create table booking (
-    booking_id bigint not null auto_increment,
-    create_date datetime,
-    pay bit,
-    primary key (booking_id)) engine=InnoDB;
-
 create table cinema (
     cinema_id bigint not null auto_increment,
     active bit,
@@ -99,6 +93,7 @@ create table film_images (
 create table hall (
     hall_id bigint not null auto_increment,
     banner_image varchar(255),
+    count_ticket integer,
     description text,
     name varchar(255),
     schema_image varchar(255),
@@ -151,10 +146,23 @@ create table place (
 create table promotion (promotion_id bigint not null auto_increment, active bit, creation_date datetime, description text, main_image varchar(255), name varchar(255), publish_date date, video_link varchar(255), seo_id bigint, primary key (promotion_id)) engine=InnoDB;
 create table promotion_images (promotion_id bigint not null, images varchar(255)) engine=InnoDB;
 create table role_type (id bigint not null auto_increment, code varchar(255) not null, name varchar(255), primary key (id)) engine=InnoDB;
-create table seance (seance_id bigint not null auto_increment, date date, time time, cinema_id bigint, film_id bigint, hall_id bigint, primary key (seance_id)) engine=InnoDB;
+create table seance (
+    seance_id bigint not null auto_increment,
+    date datetime,
+    film_id bigint,
+    hall_id bigint,
+    primary key (seance_id)) engine=InnoDB;
 create table secure_token (id bigint not null auto_increment, expire_at datetime not null, time_stamp datetime, token varchar(255), customer_id bigint, primary key (id)) engine=InnoDB;
 create table seo (seo_id bigint not null auto_increment, description text, keywords varchar(255), title varchar(255), url varchar(255), primary key (seo_id)) engine=InnoDB;
-create table ticket (ticket_id bigint not null auto_increment, create_ticket datetime, is_booked bit, price integer, booking_id bigint, seance_id bigint, primary key (ticket_id)) engine=InnoDB;
+create table ticket (
+    ticket_id bigint not null auto_increment,
+    create_ticket datetime,
+    is_booked bit,
+    is_purchased bit,
+    price integer,
+    seance_id bigint,
+    user_id bigint,
+    primary key (ticket_id)) engine=InnoDB;
 create table user (id bigint not null auto_increment, account_verified bit, email varchar(255), failed_login_attempts integer, first_name varchar(255), last_name varchar(255), login_disabled bit, password varchar(255), token varchar(255), primary key (id)) engine=InnoDB;
 create table user_groups (customer_id bigint not null, group_id bigint not null, primary key (customer_id, group_id)) engine=InnoDB;
 create table user_user_contact (user_entity_id bigint not null, user_contact_contact_id bigint not null) engine=InnoDB;
@@ -190,14 +198,12 @@ alter table place add constraint FKi6xueble16lcu6ftbkb0jf0mf foreign key (hall_i
 alter table place add constraint FKbed1ktq5ep8fpk5s8q63jvu5l foreign key (place_id) references hall (hall_id);
 alter table promotion add constraint FKjfw9k1qi4nkj0cffvokmkg5x0 foreign key (seo_id) references seo (seo_id);
 alter table promotion_images add constraint FKj8fo70ss4whfmjhqrcjdbtcbk foreign key (promotion_id) references promotion (promotion_id);
-alter table seance add constraint FKp28kgyjrwguokjh8gngcvxy14 foreign key (cinema_id) references cinema (cinema_id);
 alter table seance add constraint FKchlcmip8ejlfuo4c990k5ry8y foreign key (film_id) references film (film_id);
 alter table seance add constraint FKc33k6vbu1o9pneuqn6wius0ti foreign key (hall_id) references hall (hall_id);
 alter table seance add constraint FKdlc80tinyerpcl3vsshmo21hn foreign key (seance_id) references hall (hall_id);
 alter table secure_token add constraint FKfptf8yfhbkbudeeqfvu8uu6xq foreign key (customer_id) references user (id);
-alter table ticket add constraint FKrg7x158t96nucwslhq2bad6qm foreign key (booking_id) references booking (booking_id);
 alter table ticket add constraint FK8dikts18gyohd5ind6ooffxj1 foreign key (seance_id) references seance (seance_id);
-alter table ticket add constraint FKdqyx4timmnwp3v59972hfemcf foreign key (ticket_id) references booking (booking_id);
+alter table ticket add constraint FKdvt57mcco3ogsosi97odw563o foreign key (user_id) references user (id);
 alter table user_groups add constraint FKmjx8pc13na72qvkscnvrlton foreign key (group_id) references role_type (id);
 alter table user_groups add constraint FKt6bf937mtvbgcacyplxsgd1c0 foreign key (customer_id) references user (id);
 alter table user_user_contact add constraint FKnwgcrdxrulqti82lsgnqn23o0 foreign key (user_contact_contact_id) references contact (contact_id);

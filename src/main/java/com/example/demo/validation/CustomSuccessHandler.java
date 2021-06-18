@@ -20,7 +20,7 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         if(isAdminAuthority(authentication)){
-            String targetUrl = "/admin/home";
+            String targetUrl = "/admin/statistic";
             clearAuthenticationAttributes(request);
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
         }

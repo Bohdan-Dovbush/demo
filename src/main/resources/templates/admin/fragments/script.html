@@ -38,25 +38,94 @@
 
 <script>
     $(function () {
-    //Datemask dd/mm/yyyy
-    //$('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-    //Datemask2 mm/dd/yyyy
-    //$('#datemask2').inputmask('mm/dd/yyyy yyyy-mm-dd', { 'placeholder': 'mm/dd/yyyy' })
-    //Money Euro
-    $('[data-mask]').inputmask()
-    //Date picker
-    $('#reservationdate').datetimepicker({
-        format: 'yyyy-MM-DD'
+        //Date picker
+        $('#reservationdate').datetimepicker({
+            format: 'yyyy-MM-DD'
+        });
+        $('#filmYear').datetimepicker({
+            format: 'yyyy-MM-DD'
+        });
+        $('#dateRealise').datetimepicker({
+            format: 'yyyy-MM-DD'
+        });
+        $('#dateFinish').datetimepicker({
+            format: 'yyyy-MM-DD'
+        });
     });
-        $('#reservation').daterangepicker({
-            locale: {
-                format: 'YYYY-MM-DD'
+
+    function addNewImages() {
+        let emptyCard = $('#emptyCard');
+        let emptyClone = $(emptyCard).clone();
+        let input = $(emptyClone).find('input');
+
+
+        $(input).attr('name','hallImages');
+        $(input).change(function () {
+            let file = this.files[0];
+            let reader = new FileReader();
+
+            reader.onload = function (e) {
+                $(emptyClone).find('span').text(file.name);
+                $(emptyClone).find('img').attr('src',e.target.result);
+                $(emptyClone).find('.deleteButton').click(function () {
+                    removeCard(this);
+                });
+                $(emptyCard).after(emptyClone);
+                $(emptyClone).show();
             }
-        })
-     //Date and time picker
-     $('#reservationdatetime').datetimepicker({
-         icons: { time: 'far fa-clock' },
-         format: 'YYYY-MM-DD HH:mm'
-     });
+            reader.readAsDataURL(file);
+        });
+        $(input).click();
+    }
+
+    $(function() {
+        // Multiple images preview in browser
+        let imagesPreview = function (input, ImagePreview) {
+            if (input.files) {
+                let filesAmount = input.files.length;
+                for (let i = 0; i < filesAmount; i++) {
+                    let reader = new FileReader();
+                    reader.onload = function (event) {
+                        $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(ImagePreview);
+                    }
+                    reader.readAsDataURL(input.files[i]);
+                }
+            }
+        };
+
+        $('#filmImages').on('change', function() {
+            imagesPreview(this, 'div.images');
+        });
+    });
+
+    $(function addSchemaImage() {
+        $('#schemaImageInput').click();
+    });
+
+    $(function loadNewSchemaImage(input) {
+        loadImage(input,$('#schemaImage'));
+    });
+
+    $(function addBannerImage() {
+        $('#bannerImageInput').click();
+    });
+
+    $(function loadNewBannerImage(input) {
+        loadImage(input,$('#bannerImage'));
+    });
+
+    $(document).ready(function () {
+        $('#mainImageInput').change(function () {
+            loadImage(this);
+        });
+    });
+    $(function loadImage(input) {
+        let file = input.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#mainImage').attr('src',e.target.result);
+        };
+        reader.readAsDataURL(file);
     });
 </script>

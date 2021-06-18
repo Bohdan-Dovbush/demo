@@ -16,104 +16,68 @@
             <h3 class="card-title">Edit User</h3>
         </div>
 
-        <form th:object="${user}" id="saveUserForm"    th:action="@{/admin/updateUser}">
-            <label>
-                <input hidden th:value="*{getUserId()}" name="userId">
-            </label>
+        <form id="saveUserForm" enctype="multipart/form-data" method="post"  th:action="@{/admin/user/update (userId = ${user.id}, detailsId = ${user.details.detailsId})}">
+            <label><input hidden name="userId" id="userId"></label>
+            <label><input hidden th:value="${user.details.detailsId}" name="detailsId" id="detailsId"></label>
+
             <div class="card-body">
                 <div class="form-group">
-                    <label for="UserFirstName">First Name</label>
-                    <input th:value="*{getFirstName()}" type="text" class="form-control" name="userFirstName"
-                           id="UserFirstName" placeholder="Enter First Name">
+                    <label for="firstName">First Name</label>
+                    <input th:value="${user.firstName}" type="text" class="form-control" name="firstName"
+                           id="firstName" placeholder="Enter First Name">
                 </div>
+
                 <div class="form-group">
-                    <label for="UserLastName">Last Name</label>
-                    <input th:value="*{getLastName()}" type="text" class="form-control" name="userLastName"
-                           id="UserLastName" placeholder="Enter Last Name">
+                    <label for="lastName">Last Name</label>
+                    <input th:value="${user.lastName}" type="text" class="form-control" name="lastName"
+                           id="lastName" placeholder="Enter Last Name">
                 </div>
-                <div class="form-group">
-                    <label for="UserNickName">Nick Name</label>
-                    <input th:value="*{getNickName()}" type="text" class="form-control" name="userNickName"
-                           id="UserNickName" placeholder="Enter Nick Name">
-                </div>
+
                 <div class="form-group">
                     <label for="UserEmail">Email</label>
-                    <input th:value="*{getEmail()}" type="text" class="form-control" name="userEmail"
+                    <input th:value="${user.email}" type="text" class="form-control" name="userEmail"
                            id="UserEmail" placeholder="Enter Email">
                 </div>
-                <div class="form-group">
-                    <label for="UserAddress">Address</label>
-                    <input th:value="*{getAddress()}" type="text" class="form-control" name="userAddress"
-                           id="UserAddress" placeholder="Enter Address">
-                </div>
+
                 <div class="form-group">
                     <label for="UserPhone">Phone</label>
-                    <input th:value="*{getPhone()}" type="text" class="form-control" name="userPhone"
-                           id="UserPhone" placeholder="Enter Phone">
+                    <input th:value="${user.details.phone}" type="text" class="form-control" name="userPhone"
+                           id="UserPhone" placeholder="Enter phone">
                 </div>
+
                 <div class="form-group">
-                    <label for="UserCardNumber">Card Number</label>
-                    <input th:value="*{getCardNumber()}" type="text" class="form-control" name="userCardNumber"
-                           id="UserCardNumber" placeholder="Enter Card Number">
-                </div>
-                <div class="form-group">
-                    <label>Date Of BirthDay</label>
+                    <label for="userBirthday">Birthday</label>
                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                        <label>
-                            <input required type="text" th:value="*{getDateOfBirthday()}" name="userDOB" class="form-control datetimepicker-input" data-target="#reservationdate">
-                        </label>
                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
+                        <input required type="text" th:value="${user.details.birthday}" name="userBirthday" id="userBirthday" class="form-control datetimepicker-input" data-target="#reservationdate">
                     </div>
                 </div>
-                <div  class="form-group">
-                    <label >Gender</label>
-                    <label>
-                        <select   name="userGender"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
-                            <option value="0" th:selected="*{getGender().name() == 'MALE'}">Male</option>
-                            <option value="1" th:selected="*{getGender().name() == 'FEMALE'}" >Female</option>
-                        </select>
-                    </label>
+
+                <div class="form-group">
+                    <label for="genders">Gender</label>
+                    <select required class="form-control" name="genders" id="genders">
+                        <option th:each="genders : ${T(com.example.demo.entity.enums.Gender).values()}"
+                                th:value="${genders}" th:text="${genders.name}" th:selected="${user.details.gender}"></option>
+                    </select>
                 </div>
-                <div  class="form-group">
-                    <label  >City </label>
-                    <label>
-                        <select   name="userCityId"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
-                            <option th:each="city : ${cities}" th:value="${city.getCityId()}" th:text="${city.getName()}"
-                                    th:selected="${user.getCity().getCityId() == city.getCityId()}"></option>
-                        </select>
-                    </label>
-                </div>
-                <div  class="form-group">
-                    <label  >Language </label>
-                    <label>
-                        <select   name="userLanguageId"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
-                            <option th:each="language : ${languages}" th:value="${language.getLanguageId()}" th:text="${language.getName()}" th:selected="${user.getLanguage().getLanguageId() == language.getLanguageId()}"></option>
-                        </select>
-                    </label>
-                </div>
-                <div  class="form-group">
-                    <label >User type</label>
-                    <label>
-                        <select   name="userType"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" >
-                            <option value="0" th:selected="*{getUserType().name() == 'USER'}">User</option>
-                            <option value="1" th:selected="*{getUserType().name() == 'ADMIN'}" >Admin</option>
-                        </select>
-                    </label>
+
+                <div class="form-group">
+                    <label for="language">Language</label>
+                    <select required class="form-control" name="language" id="language">
+                        <option th:each="language : ${T(com.example.demo.entity.enums.Language).values()}"
+                                th:value="${language}" th:text="${language.name}" th:selected="${user.details.language}"></option>
+                    </select>
                 </div>
 
             </div>
             <div class="card-footer">
-                <button type="submit"  class="btn btn-primary">Save</button>
+                <button type="submit" form="saveUserForm" class="btn btn-primary">Save</button>
             </div>
         </form>
     </div>
 
 </div>
-<script>
-
-
-</script>
 </body>
 </html>

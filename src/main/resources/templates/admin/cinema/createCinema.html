@@ -166,7 +166,6 @@
         let emptyClone = $(emptyCard).clone();
         let input = $(emptyClone).find('input');
 
-
         $(input).attr('name','cinemaImages');
         $(input).change(function () {
             let file = this.files[0];
@@ -186,6 +185,7 @@
         });
         $(input).click();
     }
+
     function addMainImage() {
         $('#mainImageInput').click();
     }

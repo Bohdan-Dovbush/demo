@@ -17,11 +17,11 @@ public interface FilmService{
     Optional<Film> findImagesById(Long id);
     List<Film> findAll();
     String addActor(Long id);
-    void updateFilm(Long id, String name, LocalDate filmYear, String description, Genre genres,
+    void updateFilm(Long id, String name, String filmYear, String description, Genre genres,
                     LocalDate dateRealise, LocalDate dateFinish, Language language, List<Actor> actors,
                     Type types, MultipartFile mainImage,
                     MultipartFile[] images, String trailerLink, Seo seo);
-    void addFilm(String name, LocalDate filmYear, String description, Genre genres,
+    void addFilm(String name, String filmYear, String description, Genre genres,
                  LocalDate dateRealise, LocalDate dateFinish, Language language, List<Actor> actors,
                  Type types, MultipartFile mainImage,
                  MultipartFile[] images, String trailerLink, Seo seo);
@@ -29,4 +29,6 @@ public interface FilmService{
     Integer findTotalCountFilm();
     Integer findCurrentCountFilm();
     Integer findFutureCountFilm();
+    List<Film> findCurrentFilm();
+    List<Film> findFutureFilm();
 }

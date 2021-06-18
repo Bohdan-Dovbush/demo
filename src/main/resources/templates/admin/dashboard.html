@@ -67,7 +67,41 @@
             </div>
         </div>
     </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Your Active Sessions</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+                <thead>
+                <tr>
+                    <th>Session ID</th>
+                    <th>Last Used</th>
+                    <th>Logout</th>
+                </tr>
+                </thead>
+                <th:block th:each="activesession : ${currentSession}">
+                    <tbody>
+                    <td th:text="${activesession.sessionId}"></td>
+                    <td th:text="${#calendars.format(activesession.lastRequest, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${activesession.principal}"></td>
+                    </tbody>
+                </th:block>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
 </div>
+
+<div class="row">
+    <div class="col-1">
+
+        <!-- /.card -->
+    </div>
+</div>
+<!-- /.content-header -->
 
 </body>
 </html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create address</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+</head>
+<body>
+<div th:insert="~{/admin/fragments/header :: header}"></div>
+<div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+<div class="content-wrapper">
+    <section class="content col-md-12 mt-3">
+        <div class="container-fluid">
+            <div class="card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Create address</h3>
+                </div>
+                <div class="card card-solid">
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form id="createAddress" name="createAddress" enctype="multipart/form-data" method="post" th:action="@{/admin/address/save}">
+                                    <label for="addressId">
+                                        <input hidden id="addressId" name="addressId">
+                                    </label>
+                                    <label for="cityId">
+                                        <input hidden id="cityId" name="cityId" th:value="${cityId}">
+                                    </label>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="street">Street Name</label>
+                                            <div class="input-group">
+                                                <input required  type="text" class="form-control" name="street" id="street" placeholder="Enter street">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="region">Region</label>
+                                            <div class="input-group">
+                                                <input required type="text" class="form-control" name="region" id="region" placeholder="Enter region">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="postalCode">Postal code</label>
+                                            <div class="input-group">
+                                                <input required type="text" maxlength="5" class="form-control" name="postalCode" id="postalCode" placeholder="Enter postal code">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <a href="/admin/city">
+                                                    <button type="button" class="btn btn-outline-secondary btn-outline-primary">Cancel</button>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="submit" form="createAddress" class="btn btn-outline-secondary btn-outline-primary float-right" value="Save">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

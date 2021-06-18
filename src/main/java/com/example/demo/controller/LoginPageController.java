@@ -31,7 +31,7 @@ public class LoginPageController {
             if(StringUtils.isNotEmpty(userName) && customerAccountService.loginDisabled(userName)){
                 model.addAttribute("accountLocked", Boolean.TRUE);
                 model.addAttribute("forgotPassword", new ResetPasswordData());
-                return "account/login";
+                return "login";
             }
         }
         if(invalidSession){
@@ -39,7 +39,7 @@ public class LoginPageController {
         }
         model.addAttribute("forgotPassword", new ResetPasswordData());
         model.addAttribute("accountLocked", Boolean.FALSE);
-        return "account/login";
+        return "login";
     }
 
 

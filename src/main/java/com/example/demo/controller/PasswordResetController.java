@@ -56,7 +56,7 @@ public class PasswordResetController {
         data.setToken(token);
         setResetPasswordForm(model, data);
 
-        return "/account/changePassword";
+        return "changePassword";
     }
 
     @PostMapping("/change")
@@ -69,13 +69,13 @@ public class PasswordResetController {
                     messageSource.getMessage("user.registration.verification.invalid.token", null, LocaleContextHolder.getLocale())
             );
 
-            return "/account/changePassword";
+            return "changePassword";
         }
         model.addAttribute("passwordUpdateMsg",
                 messageSource.getMessage("user.password.updated.msg", null, LocaleContextHolder.getLocale())
         );
         setResetPasswordForm(model, new ResetPasswordData());
-        return "/account/changePassword";
+        return "changePassword";
     }
 
     private void setResetPasswordForm(final Model model, ResetPasswordData data){

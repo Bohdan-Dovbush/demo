@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create country</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+</head>
+<body>
+<div th:insert="~{/admin/fragments/header :: header}"></div>
+<div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+<div class="content-wrapper">
+    <section class="content col-md-12 mt-3">
+        <div class="container-fluid">
+            <div class="card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Create country</h3>
+                </div>
+                <div class="card card-solid">
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form id="createAddress" name="createAddress" enctype="multipart/form-data" method="post" th:action="@{/admin/country/save}">
+                                    <label for="countryId">
+                                        <input hidden id="countryId" name="countryId">
+                                    </label>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="name">Country name</label>
+                                            <div class="input-group">
+                                                <input required  type="text" class="form-control" name="name" id="name" placeholder="Enter name">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <a href="/admin/country">
+                                                    <button type="button" class="btn btn-outline-secondary btn-outline-primary">Cancel</button>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="submit" form="createAddress" class="btn btn-outline-secondary btn-outline-primary float-right" value="Save">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

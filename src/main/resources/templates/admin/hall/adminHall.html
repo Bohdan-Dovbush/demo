@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hall</title>
+    <style th:replace="/admin/fragments/style"></style>
+    <div th:replace="/admin/fragments/script"></div>
+    <style>
+        table, td, th {
+            border: 1px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        td {
+            height: 50%;
+            text-align: center;
+            vertical-align: center;
+        }
+    </style>
+</head>
+<body>
+<div th:insert="~{/admin/fragments/header :: header}"></div>
+<div th:insert="~{/admin/fragments/left_side :: left_side}"></div>
+
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+            <!--HALLS-->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Halls</h3>
+                </div>
+                <div class="card-body">
+
+                    <table class="table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="width: 1%; text-align: center">Id</th>
+                            <th>Cinema name</th>
+                            <th style="width: 79%; text-align: center">Hall Name</th>
+                            <th style="width: 10%; text-align: center">Edit</th>
+                            <th style="width: 10%; text-align: center">Delete</th>
+                        </tr>
+                        </thead>
+                        <th:block th:each="hall:${hallList}">
+                            <tbody>
+                            <td style="width: 1%" >
+                                <div class="card-body childInCenter" th:text="${hall.hallId}"></div>
+                            </td>
+
+                            <td style="width: 10%">
+                                <div class="card-body childInCenter" th:text="${hall.cinema.name}"></div>
+                            </td>
+
+                            <td style="width: 10%" >
+                                <div class="card-body childInCenter" th:text="${hall.name}"></div>
+                            </td>
+
+                            <td style="width: 10%">
+                                <div class="card-body childInCenter">
+                                    <a th:href="@{/admin/hall/edit (hallId = ${hall.hallId}, cinemaId = ${hall.cinema.cinemaId})}">
+                                        <button type="button" class="btn btn-warning btn-flat">Edit</button>
+                                    </a>
+                                </div>
+                            </td>
+
+                            <td style="width: 10%">
+                                <div class="card-body childInCenter">
+                                    <a th:href="@{/admin/hall/delete (hallId = ${hall.hallId})}">
+                                        <button type="button" class="btn btn-danger btn-flat">Delete</button>
+                                    </a>
+                                </div>
+                            </td>
+                            </tbody>
+                        </th:block>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

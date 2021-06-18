@@ -35,24 +35,24 @@ public class RegistrationController {
     @GetMapping
     public String register(final Model model){
         model.addAttribute("userData", new UserData());
-        return "account/register";
+        return "register";
     }
 
     @PostMapping
     public String userRegistration(final @Valid  UserData userData, final BindingResult bindingResult, final Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("registrationForm", userData);
-            return "account/register";
+            return "register";
         }
         try {
             userEntityService.register(userData);
         }catch (UserAlreadyExistException e){
             bindingResult.rejectValue("email", "userData.email","An account already exists for this email.");
             model.addAttribute("registrationForm", userData);
-            return "account/register";
+            return "register";
         }
         model.addAttribute("registrationMsg", messageSource.getMessage("user.registration.verification.email.msg", null, LocaleContextHolder.getLocale()));
-        return "account/register";
+        return "register";
     }
 
     @GetMapping("/verify")
