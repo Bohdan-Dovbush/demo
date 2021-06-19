@@ -34,11 +34,11 @@
 
                 <div class="form-group">
                     <label for="filmYear">Film Year</label>
-                    <div class="input-group date" id="filmYear" data-target-input="nearest">
+                    <div class="input-group date" data-target-input="nearest">
                         <div class="input-group-append" data-target="#filmYear" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
-                        <input required type="text" class="form-control datetimepicker-input" th:value="${film.filmYear}" name="filmYear" data-target="#filmYear">
+                        <input required type="text" id="filmYear" class="form-control datetimepicker-input" th:value="${film.filmYear}" name="filmYear" data-target="#filmYear">
                     </div>
                 </div>
 
@@ -105,33 +105,28 @@
                     </div>
                 </div>
 
-                <div class="card card-primary">
                     <div class="card-header">
-                         <h3 class="card-title">Main Image</h3>
+                        <h3 class="card-title">Main Image</h3>
                     </div>
                     <div class="form-group ">
-                        <div class="card-body childInCenter">
-                            <input hidden type="file" id="mainImageInput" onchange="loadNewMainImage(this)" name="mainImageFile">
-                            <img id="mainImage" class="img-fluid pad" th:src="@{${film.mainImagePath}}" style="width: 200px" alt="mainImage"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <div class="card-body">
                             <a onclick="addMainImage()" class="btn btn-app addSubImgButton" >
                                 <i class="fas fa-edit" ></i>
                             </a>
                         </div>
+                        <div class="card-body childInCenter">
+                            <input hidden type="file" id="mainImageInput" onchange="loadNewMainImage(this)" name="mainImageFile">
+                            <img id="mainImage" class="img-fluid pad" th:src="@{${film.mainImagePath}}" style="width: 200px" alt="mainImage"/>
+                        </div>
                     </div>
-                </div>
 
-                <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Additional Images</h3>
                     </div>
                     <div class="form-group">
                         <div class="card-body">
                             <a  onclick="addNewImages()" class="btn btn-app addSubImgButton" >
-                                <i class="fas fa-plus" ></i>
+                                <i class="fas fa-plus-circle" ></i>
                             </a>
                         </div>
                         <label for="deletedImageInput"></label><input hidden type="number" id="deletedImageInput" >
@@ -143,9 +138,6 @@
                                             <span class="description"></span>
                                         </div>
                                         <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                <i class="fas fa-minus" style="color: orange"></i>
-                                            </button>
                                             <button type="button" class="btn btn-tool  deleteButton" >
                                                 <input type="file"  hidden >
                                                 <i class="fas fa-times" style="color: red"></i>
@@ -158,29 +150,19 @@
                                 </div>
                             </div>
 
-
-
                             <div th:object="${filmImages}" th:each="filmImages:${film.getFilmImages()}" class="col-md-6">
                                 <div class="card card-widget">
-                                    <div class="card-header">
-                                        <div class="user-block">
-                                            <span th:text="${filmImages.toString()}" class="description"><a href="#"></a></span>
-                                        </div>
+                                    <div class="card-body childInCenter m-auto">
                                         <div class="card-tools">
-                                            <button type="button" class="btn btn-tool"  data-card-widget="collapse">
-                                                <i class="fas fa-minus" style="color: orange"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-tool deleteButton" >
+                                            <button onclick="removeImageCard(this)" type="button" class="btn btn-tool deleteButton" >
                                                 <i class="fas fa-times" style="color: red"></i>
                                             </button>
                                         </div>
-                                    </div>
-                                    <div class="card-body">
                                         <img id="filmImages" name="filmImages" class="img-fluid pad" th:src="@{'/uploads/'+${film.filmImages[0]}}" alt="Photo">
-                                        <input hidden type="file" onchange="loadNewImages(this)" name="filmImages">
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -193,7 +175,6 @@
                     keywords=*{seo != null} ? *{seo.keywords}  : '',
                     description=*{seo != null} ? *{seo.description}  : '')}"></div>
                 </div>
-            </div>
             <div class="card-footer">
                 <button type="submit" form="saveFilmForm" class="btn btn-primary">Save</button>
             </div>

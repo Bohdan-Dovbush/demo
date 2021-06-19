@@ -106,7 +106,7 @@
                                                                 <div class="input-group-append" data-target="#dateFinish" data-toggle="datetimepicker">
                                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                                 </div>
-                                                                <label for="dateRealise" hidden></label>
+                                                                <label for="dateFinish" hidden></label>
                                                                 <input required type="text" class="form-control datetimepicker-input" name="dateFinish" data-target="#dateFinish" placeholder="yyyy-mm-dd">
                                                             </div>
                                                         </td>
@@ -116,33 +116,40 @@
                                             </div>
                                         </div>
 
+                                        <!--Main image-->
                                         <div class="card-header">
                                             <label for="mainImageInput" class="card-title">Main Image</label>
                                         </div>
-                                        <div class="form-group ">
+                                        <div class="form-group">
+                                            <div class="card-body">
+                                                <a onclick="addMainImage()"  class="btn btn-app addSubImgButton" >
+                                                    <i class="fas fa-plus-circle"></i>
+                                                </a>
+                                            </div>
                                             <div class="portrait childInCenter m-auto">
-                                                <img id="mainImage"/>
+                                                <img id="mainImage" alt="Main image"/>
                                             </div>
                                             <form method="post" enctype="multipart/form-data">
                                                 <input hidden type="file" name="mainImage" id="mainImageInput" onchange="loadNewMainImage(this)"  >
                                             </form>
-                                            <div class="card-body">
-                                                <a onclick="addMainImage()"  class="btn btn-app addSubImgButton" >
-                                                    <i class="fas fa-edit" ></i>
-                                                </a>
-                                            </div>
                                         </div>
 
+                                        <!--Additional images-->
                                         <div class="card-header">
-                                            <label for="mainImageInput" class="card-title">Additional image</label>
+                                            <label for="filmImagesInput" class="card-title">Additional image</label>
                                         </div>
                                         <div class="form-group ">
-                                            <div class="container">
-                                                <input type="file" multiple id="filmImages">
-                                                <div class="images col-md-12">
-
-                                                </div>
+                                            <div class="card-body">
+                                                <a onclick="addAdditionalImages()" class="btn btn-app addSubImgButton" >
+                                                    <i class="fas fa-plus-circle" ></i>
+                                                </a>
                                             </div>
+                                            <div class="portrait childInCenter m-auto">
+                                                <img id="filmImages" alt="Film Images"/>
+                                            </div>
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input hidden type="file" name="filmImages" id="filmImagesInput" onchange="loadNewFilmImages(this)"  >
+                                            </form>
                                         </div>
 
                                         <div>
